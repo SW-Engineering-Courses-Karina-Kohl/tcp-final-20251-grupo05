@@ -3,3 +3,6 @@
 
 ## Relatório da Etapa 0:
 https://docs.google.com/document/d/11V7BhHWySlldTjr7x67E2izcYQKPxxS3izheoDdTDOo/edit?usp=sharing
+
+## Relatório da Etapa 1:
+https://docs.google.com/document/d/1XlIx6Ygw6K_56ijwSTLRBDx0f2xXzNW24xjxFFQOfTs/edit?usp=sharing
