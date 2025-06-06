@@ -1,4 +1,4 @@
 package pokeclicker;
 
-public class PokemonAgua {
+public class PokemonAgua extends Pokemon {
 }
