@@ -1,4 +1,4 @@
 package src;
 
-public class PokemonGrama {
+public class PokemonGrama extends Pokemon {
 }
