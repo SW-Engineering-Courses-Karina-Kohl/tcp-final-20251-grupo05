@@ -1,4 +1,4 @@
-package pokeclicker;
+package pokeclicker.model;
 
 public class Habilidade {
     private String nome;

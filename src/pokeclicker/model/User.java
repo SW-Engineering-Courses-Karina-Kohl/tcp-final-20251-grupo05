@@ -1,8 +1,10 @@
-package pokeclicker;
+package pokeclicker.model;
 
 import java.util.List;
 
-public class Usuario {
+import pokeclicker.model.pokemon.Pokemon;
+
+public class User {
     private String nome;
     private Pokemon favorito;
     private List<Pokemon> pokemons;
