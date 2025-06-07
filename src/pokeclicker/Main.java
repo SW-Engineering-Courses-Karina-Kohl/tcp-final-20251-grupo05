@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("initialScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("views/initialScene.fxml"));
             Scene scene = new Scene(root);
 
 
