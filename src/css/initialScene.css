@@ -1,12 +1,22 @@
 .root
 {
-    -fx-background-color: "black";
+    -fx-background-color: "white";
 }
 
-.label
+#titleLabel
 {
-    -fx-font-size: 20;
+    -fx-font-size: 15;
     -fx-font-family: "SansSerif";
-    -fx-text-fill: "White";
+    -fx-text-fill: "black";
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+#exceptionLabel
+{
+    -fx-font-size: 15;
+    -fx-font-family: "SansSerif";
+    -fx-text-fill: "red";
+    -fx-text-alignment: center;
     -fx-alignment: center;
 }
