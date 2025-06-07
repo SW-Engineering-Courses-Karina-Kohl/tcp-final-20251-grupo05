@@ -16,7 +16,7 @@ public class Main extends Application {
             Scene scene = new Scene(root);
 
 
-            String cssPath = this.getClass().getResource("initialScene.css").toExternalForm();
+            String cssPath = this.getClass().getResource("/css/initialScene.css").toExternalForm();
             scene.getStylesheets().add(cssPath);
 
             // Set window icon
