@@ -1,6 +1,8 @@
-package pokeclicker;
+package pokeclicker.model;
 
 import java.util.List;
+
+import pokeclicker.model.pokemon.Pokemon;
 
 public class User {
     private String name;
