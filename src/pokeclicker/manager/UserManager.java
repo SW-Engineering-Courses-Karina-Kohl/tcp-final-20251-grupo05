@@ -1,136 +1,76 @@
 package pokeclicker.manager;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import pokeclicker.PokemonFogo;
+import java.util.stream.Collectors;
+import pokeclicker.model.Item;
 import pokeclicker.model.User;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class UserManager {
-    private List<User> users;
-    private static final String FILE_PATH = "users.txt";
+    private static List<User> users = new ArrayList<>();
+    private static User currentUser;
+    private static final String PATH = "src/pokeclicker/users.txt";
 
-    public UserManager() {
-        this.users = loadUsersFromFile();
+    private UserManager() {
     }
 
-    private List<User> loadUsersFromFile() {
-        List<User> userList = new ArrayList<>();
-        File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            return userList;
+    public static User createUser(String name) throws IllegalArgumentException {
+        if (userNameExists(name)) {
+            throw new IllegalArgumentException("The User name already exists!");
         }
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                String name = parts[0];
-                String favPokemonName = parts.length > 1 && !"null".equals(parts[1]) ? parts[1] : null;
-                double money = (parts.length > 2 && !"null".equals(parts[2])) ? Double.parseDouble(parts[2]) : 0.0;
-
-                User user = new User(name);
-                if (favPokemonName != null) {
-                    // LEMBRAR: metodo buscarPokemonPorNome deve ser implementado
-                    // Pokemon favPokemon = buscarPokemonPorNome(favPokemonName);
-                    // user.setFavPokemon(favPokemon);
-                }
-                user.earnMoney(money);
-                userList.add(user);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return userList;
-    }
-
-    public void registerUser(String name, Pokemon favPokemon, double money) throws IOException {
-        File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-
-        if (isUserInFile(name)) {
-            throw new IllegalArgumentException("User already exists");
-        }
-
-        String favPokemonName = (favPokemon == null) ? "null" : favPokemon.getName();
-        String moneyStr = String.valueOf(money);
-
         User newUser = new User(name);
-        newUser.setFavPokemon(favPokemon);
-        newUser.earnMoney(money);
         users.add(newUser);
+        currentUser = newUser;
+        saveToFile();
+        return newUser;
+    }
 
-        try (FileWriter fw = new FileWriter(FILE_PATH, true);
-                BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write(name + "," + favPokemonName + "," + moneyStr);
-            bw.newLine();
+    private static boolean userNameExists(String name) {
+        return users.stream()
+                .anyMatch(u -> u.getName().equalsIgnoreCase(name));
+    }
+
+    private static void saveToFile() {
+        try (FileWriter writer = new FileWriter(PATH, true)) {
+            // favPokemon
+            String favPokemon = (currentUser.getFavPokemon() != null)
+                    ? currentUser.getFavPokemon().getName()
+                    : "null";
+            // pokemons
+            String pokemons = (currentUser.getPokemons() != null && !currentUser.getPokemons().isEmpty())
+                    ? currentUser.getPokemons().stream().map(Pokemon::getName).collect(Collectors.joining(";"))
+                    : "null";
+            // items
+            String items = (currentUser.getItems() != null && !currentUser.getItems().isEmpty())
+                    ? currentUser.getItems().stream().map(Item::getName).collect(Collectors.joining(";"))
+                    : "null";
+            // money
+            double money = currentUser.getMoney();
+
+            String line = String.format("%s,%s,%s,%s,%.2f%n",
+                    currentUser.getName(),
+                    favPokemon,
+                    pokemons,
+                    items,
+                    money);
+
+            writer.write(line);
+        } catch (IOException e) {
+            System.err.println("Error on saving users to file: " + e.getMessage());
         }
     }
 
-    private boolean isUserInFile(String name) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.trim().equals(name)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public static List<User> getAllUsers() {
+        return new ArrayList<>(users);
     }
 
-    public User getUserByName(String name) {
-        for (User user : users) {
-            if (user.getName().equals(name)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public List<User> getAllUsers() {
-        return users;
-    }
-
-    public void checkPC(String userName) {
-        User user = getUserByName(userName);
-        if (user == null) {
-            System.out.println("User not found: " + userName);
-            return;
-        }
-        List<Pokemon> pokemons = user.getPokemons();
-        if (pokemons.isEmpty()) {
-            System.out.println("PC is empty.");
-        } else {
-            System.out.println("Pokémons in " + userName + "'s PC:");
-            for (Pokemon p : pokemons) {
-                System.out.println("- " + p.getName());
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        UserManager userManager = new UserManager();
-        Pokemon charmander = new PokemonFogo("Charmander", 36);
-        try {
-            // Teste de cadastro
-            userManager.registerUser("Ash", charmander, 100.0);
-            userManager.registerUser("Misty", null, 50.0);
-
-            // Teste de busca
-            System.out.println("Usuário Ash: " + userManager.getUserByName("Ash"));
-            System.out.println("Usuários cadastrados: " + userManager.getAllUsers());
-
-            // Teste de verificação do PC
-            userManager.checkPC("Ash");
-            userManager.checkPC("Misty");
-            userManager.checkPC("Brock"); // Usuário não cadastrado
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static User getUserByName(String name) {
+        return users.stream()
+                .filter(u -> u.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
     }
 }
