@@ -1,9 +1,8 @@
 package pokeclicker.game;
 
 import java.util.List;
-
-import pokeclicker.model.Item;
 import pokeclicker.model.User;
+import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class PC {

@@ -1,15 +1,18 @@
 package pokeclicker.model;
 
 import java.util.List;
-
+import pokeclicker.model.common.Activatable;
+import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
-public class User {
+public class User
+        implements Activatable {
     private String name;
     private Pokemon favPokemon = null;
     private List<Pokemon> pokemons = null;
     private List<Item> items = null;
     private double money = 0.0;
+    private double moneyMultiplier = 1.0;
 
     public User(String name) {
         this.name = name;
@@ -35,12 +38,23 @@ public class User {
         return money;
     }
 
+    public double getMoneyMultiplier() {
+        return moneyMultiplier;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setFavPokemon(Pokemon favPokemon) {
         this.favPokemon = favPokemon;
+    }
+
+    public void updateMultiplier(double multiplier) {
+        if (multiplier <= 0) {
+            throw new IllegalArgumentException("Multiplier must be greater than zero");
+        }
+        this.moneyMultiplier += multiplier;
     }
 
     public void addPokemon(Pokemon pokemon) {
@@ -65,6 +79,6 @@ public class User {
         if (money < 0) {
             throw new IllegalArgumentException("Cannot earn negative money");
         }
-        this.money += money;
+        this.money += money * moneyMultiplier;
     }
 }

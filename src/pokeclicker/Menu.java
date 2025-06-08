@@ -2,7 +2,7 @@ package pokeclicker;
 
 import java.util.List;
 import pokeclicker.model.Habilidade;
-import pokeclicker.model.Item;
+import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class Menu {
