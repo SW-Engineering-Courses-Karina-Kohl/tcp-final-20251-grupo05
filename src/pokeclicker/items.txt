@@ -1,0 +1,2 @@
+item1,3,primeiro item,true,5,000000
+item2,7,segundo item,true,8,000000

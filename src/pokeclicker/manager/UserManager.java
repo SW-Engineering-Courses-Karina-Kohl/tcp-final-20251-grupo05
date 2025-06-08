@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import pokeclicker.model.Item;
 import pokeclicker.model.User;
+import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class UserManager {
