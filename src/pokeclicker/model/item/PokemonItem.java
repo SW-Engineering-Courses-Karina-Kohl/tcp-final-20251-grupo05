@@ -6,19 +6,19 @@ import pokeclicker.model.pokemon.Pokemon;
 
 public class PokemonItem extends Item {
 
-    private String pokemonName;
+    private double damage;
 
-    public PokemonItem(String name, int price, String description, String pokemonName) {
+    public PokemonItem(String name, int price, String description, double damage) {
         super(name, price, description);
-        this.pokemonName = pokemonName;
+        this.damage = damage;
     }
 
-    public String getPokemonName() {
-        return pokemonName;
+    public double getDamage() {
+        return damage;
     }
 
-    public void setPokemonName(String pokemonName) {
-        this.pokemonName = pokemonName;
+    public void setDamage(double damage) {
+        this.damage = damage;
     }
 
     @Override
