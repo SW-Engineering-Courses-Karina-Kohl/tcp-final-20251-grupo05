@@ -5,4 +5,5 @@ public class Habilidade {
     private String descricao;
     private String tipo;
     private double dano;
+    private double poder;
 }
