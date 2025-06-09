@@ -2,7 +2,8 @@ package pokeclicker.manager;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import pokeclicker.game.Shop;
 import pokeclicker.model.User;
@@ -11,7 +12,7 @@ import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class ShopManager {
-    private static List<Shop> shops = new ArrayList<>();
+    private static List<Shop> shops;
     private static final String PATH = "src/pokeclicker/shops.txt";
     private static Shop currentShop;
 
@@ -37,41 +38,56 @@ public class ShopManager {
             case Pokemon pokemon -> currentShop.addPokemon(pokemon);
             default -> throw new IllegalArgumentException("Unsupported type: " + pokemonOrItem.getClass());
         }
-        saveToFile();
+        updateShopFile(pokemonOrItem);
 
         return pokemonOrItem;
     }
 
-    public static void buyPokemonOrItem(Purchasable pokemonOrItem) {
-        if (currentShop == null) {
-            throw new IllegalStateException("No current shop available.");
+    private static void saveToFile() {
+        try (FileWriter writer = new FileWriter(PATH, true)) {
+            String line = String.format("%s,,%n",
+                    currentShop.getUser().getName());
+            writer.write(line);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        currentShop.buyPokemonOrItem(pokemonOrItem);
-        saveToFile();
     }
 
-    private static void saveToFile() {
-        for (Shop shop : shops) {
-            try (FileWriter writer = new FileWriter(PATH, true)) {
-                String line = String.format("%s,",
-                        shop.getUser().getName());
+    private static void updateShopFile(Purchasable pokemonOrItem) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(PATH));
 
-                if (!shop.getPokemons().isEmpty()) {
-                    for (Pokemon pokemon : shop.getPokemons()) {
-                        line += String.format("Pokemon: %s Price: %.2f ", pokemon.getName(), pokemon.getPrice());
+            for (int i = 0; i < lines.size(); i++) {
+                String[] parts = lines.get(i).split(",");
+                if (parts[0].equals(currentShop.getUser().getName())) {
+                    StringBuilder newLine = new StringBuilder(parts[0]);
+
+                    if (pokemonOrItem instanceof Pokemon pokemon) {
+                        newLine.append(",").append(pokemon.getName());
+                        if (parts.length > 2) {
+                            newLine.append(",").append(parts[2]);
+                        } else {
+                            newLine.append(",");
+                        }
+                    } else {
+                        if (parts.length > 1) {
+                            newLine.append(",").append(parts[1]);
+                        } else {
+                            newLine.append(",");
+                        }
+                        Item item = (Item) pokemonOrItem;
+                        newLine.append(",").append(item.getName());
                     }
-                    line += ",";
+
+                    lines.set(i, newLine.toString());
+                    break;
                 }
-                if (!shop.getItems().isEmpty()) {
-                    for (Item item : shop.getItems()) {
-                        line += String.format("Item: %s, Price: %.2f ", item.getName(), item.getPrice());
-                    }
-                }
-                line += "\n";
-                writer.write(line);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+            Files.write(Paths.get(PATH), lines);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
