@@ -47,6 +47,7 @@ public class ItemManager {
 
         items.add(newItem);
         currentItem = newItem;
+        ShopManager.saveNewToShop(newItem);
         saveToFile();
         return newItem;
     }

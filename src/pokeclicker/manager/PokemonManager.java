@@ -46,6 +46,7 @@ public class PokemonManager {
 
         pokemons.add(newPokemon);
         currentPokemon = newPokemon;
+        ShopManager.saveNewToShop(newPokemon);
         saveToFile();
         return newPokemon;
     }

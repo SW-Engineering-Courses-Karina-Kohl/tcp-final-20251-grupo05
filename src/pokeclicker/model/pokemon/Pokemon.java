@@ -3,8 +3,9 @@ package pokeclicker.model.pokemon;
 import java.util.List;
 import pokeclicker.model.Habilidade;
 import pokeclicker.model.common.Activatable;
+import pokeclicker.model.common.Purchasable;
 
-public abstract class Pokemon implements Activatable {
+public abstract class Pokemon implements Activatable, Purchasable {
     private String name;
     private Level level;
     private List<Habilidade> habilities;

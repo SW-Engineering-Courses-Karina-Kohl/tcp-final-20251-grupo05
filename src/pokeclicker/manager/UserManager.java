@@ -25,6 +25,7 @@ public class UserManager {
         users.add(newUser);
         currentUser = newUser;
         saveToFile();
+        ShopManager.createShopForUser(newUser);
         return newUser;
     }
 

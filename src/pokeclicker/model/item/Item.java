@@ -1,8 +1,9 @@
 package pokeclicker.model.item;
 
 import pokeclicker.model.common.Activatable;
+import pokeclicker.model.common.Purchasable;
 
-public abstract class Item {
+public abstract class Item implements Purchasable {
     private String name;
     private int price;
     private boolean available = true;
