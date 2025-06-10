@@ -10,11 +10,10 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("views/initialScene.fxml"));
             Scene scene = new Scene(root);
-
 
             String cssPath = this.getClass().getResource("/css/initialScene.css").toExternalForm();
             scene.getStylesheets().add(cssPath);
@@ -25,14 +24,13 @@ public class Main extends Application {
 
             // Set title
             stage.setTitle("PokeClicker - Click and evolve your Pokemons!");
-            
+
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             throw e;
         }
-        
-        
+
     }
 
     public static void main(String[] args) {
