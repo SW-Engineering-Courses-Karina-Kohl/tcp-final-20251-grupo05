@@ -4,10 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import pokeclicker.model.User;
-import pokeclicker.model.item.Item;
-import pokeclicker.model.pokemon.Pokemon;
 
 public class UserManager {
     private static List<User> users = new ArrayList<>();
@@ -25,6 +22,7 @@ public class UserManager {
         users.add(newUser);
         currentUser = newUser;
         saveToFile();
+        ShopManager.createShopForUser(newUser);
         return newUser;
     }
 
@@ -39,22 +37,12 @@ public class UserManager {
             String favPokemon = (currentUser.getFavPokemon() != null)
                     ? currentUser.getFavPokemon().getName()
                     : "null";
-            // pokemons
-            String pokemons = (currentUser.getPokemons() != null && !currentUser.getPokemons().isEmpty())
-                    ? currentUser.getPokemons().stream().map(Pokemon::getName).collect(Collectors.joining(";"))
-                    : "null";
-            // items
-            String items = (currentUser.getItems() != null && !currentUser.getItems().isEmpty())
-                    ? currentUser.getItems().stream().map(Item::getName).collect(Collectors.joining(";"))
-                    : "null";
             // money
             double money = currentUser.getMoney();
 
-            String line = String.format("%s,%s,%s,%s,%.2f%n",
+            String line = String.format("%s,%s,%.2f%n",
                     currentUser.getName(),
                     favPokemon,
-                    pokemons,
-                    items,
                     money);
 
             writer.write(line);

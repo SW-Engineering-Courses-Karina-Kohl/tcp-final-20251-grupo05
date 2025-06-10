@@ -7,7 +7,7 @@ public class MoneyMultiplierItem extends Item {
 
     private double multiplier;
 
-    public MoneyMultiplierItem(String name, int price, String description, double multiplier) {
+    public MoneyMultiplierItem(String name, double price, String description, double multiplier) {
         super(name, price, description);
         this.multiplier = multiplier;
     }

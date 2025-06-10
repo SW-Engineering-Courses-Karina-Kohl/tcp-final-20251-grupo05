@@ -1,14 +1,15 @@
 package pokeclicker.model.item;
 
 import pokeclicker.model.common.Activatable;
+import pokeclicker.model.common.Purchasable;
 
-public abstract class Item {
+public abstract class Item implements Purchasable {
     private String name;
-    private int price;
+    private double price;
     private boolean available = true;
     private String description;
 
-    public Item(String name, int price, String description) {
+    public Item(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -18,7 +19,7 @@ public abstract class Item {
         return name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

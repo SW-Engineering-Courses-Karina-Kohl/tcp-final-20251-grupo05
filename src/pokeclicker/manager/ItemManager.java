@@ -17,7 +17,8 @@ public class ItemManager {
     private ItemManager() {
     }
 
-    public static Item createItem(String name, int price, String description, ItemType type, double damageOrMultiplier)
+    public static Item createItem(String name, double price, String description, ItemType type,
+            double damageOrMultiplier)
             throws IllegalArgumentException {
         if (itemNameExists(name)) {
             throw new IllegalArgumentException("This item name already exists");
@@ -47,6 +48,7 @@ public class ItemManager {
 
         items.add(newItem);
         currentItem = newItem;
+        ShopManager.saveNewToShop(newItem);
         saveToFile();
         return newItem;
     }
@@ -57,8 +59,8 @@ public class ItemManager {
     }
 
     private static void saveToFile() {
-        try (FileWriter writer = new FileWriter(PATH, true)) {
-            String line = String.format("%s,%d,%s,%b,%f%n",
+        try (FileWriter writer = new FileWriter(PATH)) {
+            String line = String.format("%s,%f,%s,%b,%f%n",
                     currentItem.getName(),
                     currentItem.getPrice(),
                     currentItem.getDescription(),

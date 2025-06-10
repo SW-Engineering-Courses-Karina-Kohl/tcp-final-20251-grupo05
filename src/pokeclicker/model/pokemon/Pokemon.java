@@ -1,24 +1,37 @@
 package pokeclicker.model.pokemon;
 
 import java.util.List;
-import pokeclicker.model.Habilidade;
+import pokeclicker.model.Ability;
 import pokeclicker.model.common.Activatable;
+import pokeclicker.model.common.Purchasable;
 
-public abstract class Pokemon implements Activatable {
+public abstract class Pokemon implements Activatable, Purchasable {
     private String name;
     private Level level;
-    private List<Habilidade> habilities;
+    private List<Ability> habilities;
     private double xp = 0.0;
     private int health;
     private int totalHealth;
     private boolean captured = false;
+    private double price;
 
-    public Pokemon(String name, List<Habilidade> habilities, int totalHealth) {
+    public Pokemon(String name, List<Ability> habilities, int totalHealth, double price) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if (totalHealth <= 0) {
+            throw new IllegalArgumentException("Total health must be greater than zero");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+
         this.name = name;
         this.habilities = habilities;
         this.totalHealth = health;
         this.health = totalHealth;
         this.level = new Level();
+        this.price = price;
     }
 
     public String getName() {
@@ -29,7 +42,7 @@ public abstract class Pokemon implements Activatable {
         return level.getCurrentLevel();
     }
 
-    public List<Habilidade> getHabilities() {
+    public List<Ability> getHabilities() {
         return habilities;
     }
 
@@ -45,11 +58,15 @@ public abstract class Pokemon implements Activatable {
         return captured;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public void addHabilities(Habilidade hability) {
+    public void addHabilities(Ability hability) {
         this.habilities.add(hability);
     }
 

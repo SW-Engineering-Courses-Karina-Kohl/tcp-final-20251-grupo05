@@ -1,6 +1,6 @@
 package pokeclicker.model.item;
 
-import pokeclicker.model.Habilidade;
+import pokeclicker.model.Ability;
 import pokeclicker.model.common.Activatable;
 import pokeclicker.model.pokemon.Pokemon;
 
@@ -8,7 +8,7 @@ public class PokemonItem extends Item {
 
     private double damage;
 
-    public PokemonItem(String name, int price, String description, double damage) {
+    public PokemonItem(String name, double price, String description, double damage) {
         super(name, price, description);
         this.damage = damage;
     }
@@ -30,7 +30,7 @@ public class PokemonItem extends Item {
             throw new IllegalArgumentException("This item can only be used on Users");
         }
 
-        for (Habilidade habilidade : ((Pokemon) activatable).getHabilities()) {
+        for (Ability habilidade : ((Pokemon) activatable).getHabilities()) {
             // Aumentar o dano da habilidade
         }
 
