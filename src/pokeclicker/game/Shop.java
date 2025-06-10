@@ -58,7 +58,7 @@ public class Shop {
         if (pokemonOrItem instanceof Pokemon pokemon) {
             if (user.getMoney() >= pokemon.getPrice()) {
                 user.spendMoney(pokemon.getPrice());
-                pc.addPokemon(pokemon);
+                // adicionar ao pc
                 removePokemon(pokemon);
             } else {
                 throw new IllegalArgumentException("Not enough money to buy this Pokemon.");
@@ -66,7 +66,7 @@ public class Shop {
         } else if (pokemonOrItem instanceof Item item) {
             if (user.getMoney() >= item.getPrice()) {
                 user.spendMoney(item.getPrice());
-                pc.addItem(item);
+                // adicionar ao pc
                 removeItem(item);
             } else {
                 throw new IllegalArgumentException("Not enough money to buy this item.");

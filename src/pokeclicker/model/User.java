@@ -5,7 +5,7 @@ import pokeclicker.model.common.Activatable;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class User
-    implements Activatable {
+        implements Activatable {
     private String name;
     private Pokemon favPokemon = null;
     private double money = 0.0;
