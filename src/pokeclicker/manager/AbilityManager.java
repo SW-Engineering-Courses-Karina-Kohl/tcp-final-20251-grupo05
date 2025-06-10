@@ -7,7 +7,6 @@ import java.util.Locale;
 import pokeclicker.model.Ability;
 import pokeclicker.model.common.PokeType;
 
-
 public class AbilityManager {
 
     private static final List<Ability> abilities = new ArrayList<>();
@@ -71,12 +70,12 @@ public class AbilityManager {
                     ability.getDamage(),
                     ability.getCure());
 
-                writer.write(line);
+            writer.write(line);
 
-            } catch (IOException e) {
-                System.err.println("Error saving ability to file: " + e.getMessage());
-            }
+        } catch (IOException e) {
+            System.err.println("Error saving ability to file: " + e.getMessage());
         }
+    }
 
     private static boolean abilityNameExists(String name) {
         return abilities.stream()
