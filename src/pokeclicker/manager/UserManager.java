@@ -40,7 +40,7 @@ public class UserManager {
             // money
             double money = currentUser.getMoney();
 
-            String line = String.format("%s,%s,%s,%s,%.2f%n",
+            String line = String.format("%s,%s,%.2f%n",
                     currentUser.getName(),
                     favPokemon,
                     money);

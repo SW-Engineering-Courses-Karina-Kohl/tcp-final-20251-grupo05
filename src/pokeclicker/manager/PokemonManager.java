@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import pokeclicker.model.Habilidade;
+import pokeclicker.model.Ability;
 import pokeclicker.model.pokemon.FirePokemon;
 import pokeclicker.model.pokemon.GrassPokemon;
 import pokeclicker.model.pokemon.PokeType;
@@ -19,7 +19,7 @@ public class PokemonManager {
     private PokemonManager() {
     }
 
-    public static Pokemon createPokemon(String name, int totalHealth, List<Habilidade> habilities, double price,
+    public static Pokemon createPokemon(String name, int totalHealth, List<Ability> habilities, double price,
             PokeType type)
             throws IllegalArgumentException {
         if (pokemonNameExists(name)) {

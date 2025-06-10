@@ -1,21 +1,21 @@
 package pokeclicker.model.pokemon;
 
 import java.util.List;
-import pokeclicker.model.Habilidade;
+import pokeclicker.model.Ability;
 import pokeclicker.model.common.Activatable;
 import pokeclicker.model.common.Purchasable;
 
 public abstract class Pokemon implements Activatable, Purchasable {
     private String name;
     private Level level;
-    private List<Habilidade> habilities;
+    private List<Ability> habilities;
     private double xp = 0.0;
     private int health;
     private int totalHealth;
     private boolean captured = false;
     private double price;
 
-    public Pokemon(String name, List<Habilidade> habilities, int totalHealth, double price) {
+    public Pokemon(String name, List<Ability> habilities, int totalHealth, double price) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -42,7 +42,7 @@ public abstract class Pokemon implements Activatable, Purchasable {
         return level.getCurrentLevel();
     }
 
-    public List<Habilidade> getHabilities() {
+    public List<Ability> getHabilities() {
         return habilities;
     }
 
@@ -66,7 +66,7 @@ public abstract class Pokemon implements Activatable, Purchasable {
         this.name = name;
     }
 
-    public void addHabilities(Habilidade hability) {
+    public void addHabilities(Ability hability) {
         this.habilities.add(hability);
     }
 

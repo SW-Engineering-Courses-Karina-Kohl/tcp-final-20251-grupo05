@@ -2,6 +2,7 @@ package pokeclicker.manager;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import pokeclicker.game.Shop;
 import pokeclicker.model.User;
@@ -10,7 +11,7 @@ import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class ShopManager {
-    private static List<Shop> shops;
+    private static List<Shop> shops = new ArrayList<>();
     private static final String PATH = "src/pokeclicker/shops.txt";
     private static Shop currentShop;
 
@@ -41,7 +42,7 @@ public class ShopManager {
         return pokemonOrItem;
     }
 
-    public void buyPokemonOrItem(Purchasable pokemonOrItem) {
+    public static void buyPokemonOrItem(Purchasable pokemonOrItem) {
         if (currentShop == null) {
             throw new IllegalStateException("No current shop available.");
         }
