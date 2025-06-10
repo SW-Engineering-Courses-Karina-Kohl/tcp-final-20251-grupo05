@@ -13,13 +13,25 @@ public abstract class Pokemon implements Activatable, Purchasable {
     private int health;
     private int totalHealth;
     private boolean captured = false;
+    private double price;
 
-    public Pokemon(String name, List<Habilidade> habilities, int totalHealth) {
+    public Pokemon(String name, List<Habilidade> habilities, int totalHealth, double price) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if (totalHealth <= 0) {
+            throw new IllegalArgumentException("Total health must be greater than zero");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+
         this.name = name;
         this.habilities = habilities;
         this.totalHealth = health;
         this.health = totalHealth;
         this.level = new Level();
+        this.price = price;
     }
 
     public String getName() {
@@ -44,6 +56,10 @@ public abstract class Pokemon implements Activatable, Purchasable {
 
     public boolean isCaptured() {
         return captured;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public void setName(String name) {

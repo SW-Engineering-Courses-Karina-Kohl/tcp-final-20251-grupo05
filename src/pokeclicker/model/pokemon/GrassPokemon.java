@@ -5,7 +5,7 @@ import pokeclicker.model.Habilidade;
 
 public class GrassPokemon extends Pokemon {
 
-    public GrassPokemon(String name, List<Habilidade> habilities, int totalHealth) {
-        super(name, habilities, totalHealth);
+    public GrassPokemon(String name, List<Habilidade> habilities, int totalHealth, double price) {
+        super(name, habilities, totalHealth, price);
     }
 }

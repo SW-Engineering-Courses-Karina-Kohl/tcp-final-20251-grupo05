@@ -17,7 +17,8 @@ public class ItemManager {
     private ItemManager() {
     }
 
-    public static Item createItem(String name, int price, String description, ItemType type, double damageOrMultiplier)
+    public static Item createItem(String name, double price, String description, ItemType type,
+            double damageOrMultiplier)
             throws IllegalArgumentException {
         if (itemNameExists(name)) {
             throw new IllegalArgumentException("This item name already exists");

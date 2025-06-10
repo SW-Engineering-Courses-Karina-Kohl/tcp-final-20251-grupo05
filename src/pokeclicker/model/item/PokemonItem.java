@@ -8,7 +8,7 @@ public class PokemonItem extends Item {
 
     private double damage;
 
-    public PokemonItem(String name, int price, String description, double damage) {
+    public PokemonItem(String name, double price, String description, double damage) {
         super(name, price, description);
         this.damage = damage;
     }
