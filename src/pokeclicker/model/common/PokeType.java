@@ -1,4 +1,4 @@
-package pokeclicker.model.pokemon;
+package pokeclicker.model.common;
 
 public enum PokeType {
     GRASS("Grass"),

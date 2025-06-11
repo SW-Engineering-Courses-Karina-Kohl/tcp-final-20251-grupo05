@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import pokeclicker.model.Ability;
+import pokeclicker.model.common.PokeType;
 import pokeclicker.model.pokemon.FirePokemon;
 import pokeclicker.model.pokemon.GrassPokemon;
-import pokeclicker.model.pokemon.PokeType;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.model.pokemon.WaterPokemon;
 
@@ -33,13 +33,13 @@ public class PokemonManager {
         } else
             switch (type) {
                 case FIRE:
-                    newPokemon = new FirePokemon(name, habilities, totalHealth, price);
+                    newPokemon = new FirePokemon(name, habilities, totalHealth, price, price);
                     break;
                 case WATER:
-                    newPokemon = new WaterPokemon(name, habilities, totalHealth, price);
+                    newPokemon = new WaterPokemon(name, habilities, totalHealth, price, price);
                     break;
                 case GRASS:
-                    newPokemon = new GrassPokemon(name, habilities, totalHealth, price);
+                    newPokemon = new GrassPokemon(name, habilities, totalHealth, price, price);
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid Pokemon type!");
@@ -47,6 +47,7 @@ public class PokemonManager {
 
         pokemons.add(newPokemon);
         currentPokemon = newPokemon;
+        ShopManager.saveNewToShop(newPokemon);
         ShopManager.saveNewToShop(newPokemon);
         saveToFile();
         return newPokemon;
