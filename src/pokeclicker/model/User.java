@@ -46,6 +46,13 @@ public class User
         this.name = name;
     }
 
+    public void setMoney(double money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("Money cannot be negative");
+        }
+        this.money = money;
+    }
+
     public void setFavPokemon(Pokemon favPokemon) {
         this.favPokemon = favPokemon;
     }

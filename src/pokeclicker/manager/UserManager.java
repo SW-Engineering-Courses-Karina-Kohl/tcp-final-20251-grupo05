@@ -1,76 +1,98 @@
 package pokeclicker.manager;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import pokeclicker.SQLiteConnection;
 import pokeclicker.model.User;
-import pokeclicker.model.item.Item;
-import pokeclicker.model.pokemon.Pokemon;
 
 public class UserManager {
-    private static List<User> users = new ArrayList<>();
-    private static User currentUser;
-    private static final String PATH = "src/pokeclicker/users.txt";
-
     private UserManager() {
     }
 
-    public static User createUser(String name) throws IllegalArgumentException {
-        if (userNameExists(name)) {
-            throw new IllegalArgumentException("The User name already exists!");
+    // Cria um novo usuário no banco
+    public static boolean createUser(User user) {
+        if (getUserByName(user.getName()) != null) {
+            System.out.println("Usuário já existe!");
+            return false;
         }
-        User newUser = new User(name);
-        users.add(newUser);
-        currentUser = newUser;
-        saveToFile();
-        return newUser;
+        SQLiteConnection.insertUser(
+                user.getName(),
+                user.getFavPokemon() != null ? user.getFavPokemon().getName() : null,
+                user.getMoney(),
+                user.getMoneyMultiplier());
+        return true;
     }
 
-    private static boolean userNameExists(String name) {
-        return users.stream()
-                .anyMatch(u -> u.getName().equalsIgnoreCase(name));
-    }
-
-    private static void saveToFile() {
-        try (FileWriter writer = new FileWriter(PATH, true)) {
-            // favPokemon
-            String favPokemon = (currentUser.getFavPokemon() != null)
-                    ? currentUser.getFavPokemon().getName()
-                    : "null";
-            // pokemons
-            String pokemons = (currentUser.getPokemons() != null && !currentUser.getPokemons().isEmpty())
-                    ? currentUser.getPokemons().stream().map(Pokemon::getName).collect(Collectors.joining(";"))
-                    : "null";
-            // items
-            String items = (currentUser.getItems() != null && !currentUser.getItems().isEmpty())
-                    ? currentUser.getItems().stream().map(Item::getName).collect(Collectors.joining(";"))
-                    : "null";
-            // money
-            double money = currentUser.getMoney();
-
-            String line = String.format("%s,%s,%s,%s,%.2f%n",
-                    currentUser.getName(),
-                    favPokemon,
-                    pokemons,
-                    items,
-                    money);
-
-            writer.write(line);
-        } catch (IOException e) {
-            System.err.println("Error on saving users to file: " + e.getMessage());
-        }
-    }
-
+    // Busca todos os usuários do banco
     public static List<User> getAllUsers() {
-        return new ArrayList<>(users);
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM user";
+        try (Connection conn = SQLiteConnection.connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                User user = new User(rs.getString("name"));
+                // Adapte para buscar o Pokémon real se quiser
+                user.setFavPokemon(null);
+                user.setMoney(rs.getDouble("money"));
+                user.updateMultiplier(rs.getDouble("money_multiplier") - 1.0); // moneyMultiplier default é 1.0
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar usuários: " + e.getMessage());
+        }
+        return users;
     }
 
+    // Busca um usuário pelo nome
     public static User getUserByName(String name) {
-        return users.stream()
-                .filter(u -> u.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
+        String sql = "SELECT * FROM user WHERE name = ?";
+        try (Connection conn = SQLiteConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                User user = new User(rs.getString("name"));
+                user.setFavPokemon(null); // Adapte se quiser buscar o Pokémon real
+                user.setMoney(rs.getDouble("money"));
+                user.updateMultiplier(rs.getDouble("money_multiplier") - 1.0);
+                return user;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar usuário: " + e.getMessage());
+        }
+        return null;
+    }
+
+    // Atualiza dados do usuário
+    public static boolean updateUser(User user) {
+        String sql = "UPDATE user SET fav_pokemon = ?, money = ?, money_multiplier = ? WHERE name = ?";
+        try (Connection conn = SQLiteConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, user.getFavPokemon() != null ? user.getFavPokemon().getName() : null);
+            pstmt.setDouble(2, user.getMoney());
+            pstmt.setDouble(3, user.getMoneyMultiplier());
+            pstmt.setString(4, user.getName());
+            int affected = pstmt.executeUpdate();
+            return affected > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar usuário: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Remove usuário do banco
+    public static boolean deleteUser(String name) {
+        String sql = "DELETE FROM user WHERE name = ?";
+        try (Connection conn = SQLiteConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            int affected = pstmt.executeUpdate();
+            return affected > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar usuário: " + e.getMessage());
+            return false;
+        }
     }
 }
