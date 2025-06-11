@@ -21,8 +21,7 @@ public class SQLiteConnection {
 
     public static void createUserTable() {
         String sql = "CREATE TABLE IF NOT EXISTS user (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT NOT NULL UNIQUE," +
+                "name TEXT PRIMARY KEY," +
                 "fav_pokemon TEXT," +
                 "money REAL," +
                 "money_multiplier REAL" +
@@ -84,21 +83,4 @@ public class SQLiteConnection {
         }
     }
 
-    public static void printAllUsers() {
-        String sql = "SELECT * FROM user";
-        try (Connection conn = connect();
-                Statement stmt = conn.createStatement();
-                java.sql.ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                System.out.println(
-                        "ID: " + rs.getInt("id") +
-                                ", Nome: " + rs.getString("name") +
-                                ", FavPokemon: " + rs.getString("fav_pokemon") +
-                                ", Dinheiro: " + rs.getDouble("money") +
-                                ", Multiplicador: " + rs.getDouble("money_multiplier"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar usuários: " + e.getMessage());
-        }
-    }
 }
