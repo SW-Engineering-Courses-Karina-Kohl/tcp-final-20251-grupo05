@@ -11,9 +11,11 @@ public class Shop {
     private User user;
     private List<Pokemon> pokemons = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
+    private PC pc;
 
     public Shop(User user) {
         this.user = user;
+        this.pc = pc;
     }
 
     public User getUser() {
@@ -56,7 +58,7 @@ public class Shop {
         if (pokemonOrItem instanceof Pokemon pokemon) {
             if (user.getMoney() >= pokemon.getPrice()) {
                 user.spendMoney(pokemon.getPrice());
-                // adicionar ao pc
+                pc.addPokemon(pokemon);
                 removePokemon(pokemon);
             } else {
                 throw new IllegalArgumentException("Not enough money to buy this Pokemon.");
@@ -64,7 +66,7 @@ public class Shop {
         } else if (pokemonOrItem instanceof Item item) {
             if (user.getMoney() >= item.getPrice()) {
                 user.spendMoney(item.getPrice());
-                // adicionar ao pc
+                pc.addItem(item);
                 removeItem(item);
             } else {
                 throw new IllegalArgumentException("Not enough money to buy this item.");
