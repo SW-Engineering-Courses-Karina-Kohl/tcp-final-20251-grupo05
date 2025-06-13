@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,7 +13,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("views/initialScene.fxml"));
+            Parent root = FXMLLoader.load(Main.class.getResource("/pokeclicker/views/initialScene.fxml"));
             Scene scene = new Scene(root);
 
 
@@ -22,10 +23,10 @@ public class Main extends Application {
             // Set window icon
             Image windowIcon = new Image("/img/windowIcon.png");
             stage.getIcons().add(windowIcon);
-
+            scene.setFill(Color.BLUE);
             // Set title
             stage.setTitle("PokeClicker - Click and evolve your Pokemons!");
-            
+            stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
