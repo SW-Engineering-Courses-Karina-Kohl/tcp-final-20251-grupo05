@@ -2,6 +2,8 @@ package pokeclicker.database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import pokeclicker.manager.ability.AbilityFilter;
 import pokeclicker.model.Ability;
 
 public class AbilityDB {
@@ -58,8 +60,14 @@ public class AbilityDB {
         return null;
     }
 
-    public static List<Ability> getAllAbilities() {
+    public static List<Ability> getAllAbilities(Optional<AbilityFilter> filter) {
         String sql = "SELECT * FROM ability";
+        if (filter != null && filter.isPresent()) {
+            String conditions = buildAbilityFilter(filter.get());
+            if (!conditions.equals("1")) {
+                sql += " WHERE " + conditions;
+            }
+        }
         List<Ability> abilities = new ArrayList<>();
         try (java.sql.Connection conn = SQLiteConnection.connect();
                 java.sql.Statement stmt = conn.createStatement();
@@ -104,5 +112,29 @@ public class AbilityDB {
         } catch (java.sql.SQLException e) {
             System.out.println("Error deleting ability: " + e.getMessage());
         }
+    }
+
+    private static String buildAbilityFilter(AbilityFilter filter) {
+        List<String> conditions = new ArrayList<>();
+        if (filter.getType() != null) {
+            conditions.add("type = '" + filter.getType().toString() + "'");
+        }
+        if (filter.getMinDamage() != null) {
+            conditions.add("damage >= " + filter.getMinDamage());
+        }
+        if (filter.getMaxDamage() != null) {
+            conditions.add("damage <= " + filter.getMaxDamage());
+        }
+        if (filter.getMinCure() != null) {
+            conditions.add("cure >= " + filter.getMinCure());
+        }
+        if (filter.getMaxCure() != null) {
+            conditions.add("cure <= " + filter.getMaxCure());
+        }
+
+        if (conditions.isEmpty()) {
+            return "1"; // No filter, return all
+        }
+        return String.join(" AND ", conditions);
     }
 }

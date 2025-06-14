@@ -1,6 +1,7 @@
-package pokeclicker.manager;
+package pokeclicker.manager.ability;
 
 import java.util.List;
+import java.util.Optional;
 import pokeclicker.database.AbilityDB;
 import pokeclicker.model.Ability;
 import pokeclicker.model.common.PokeType;
@@ -24,8 +25,11 @@ public class AbilityManager {
         return newAbility;
     }
 
-    public static List<Ability> getAllAbilities() {
-        return AbilityDB.getAllAbilities();
+    public static List<Ability> getAllAbilities(Optional<AbilityFilter> filter) {
+        if (filter.isPresent()) {
+            return AbilityDB.getAllAbilities(filter);
+        }
+        return AbilityDB.getAllAbilities(null);
     }
 
     public static Ability getAbilityByName(String name) {
