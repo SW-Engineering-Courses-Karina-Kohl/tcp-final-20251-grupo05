@@ -25,4 +25,21 @@ public enum LevelType {
         }
         throw new IllegalArgumentException("Invalid Level type: " + text);
     }
+
+    public static LevelType fromInt(int number) {
+        return switch (number) {
+            case 1 -> BEGINNER;
+            case 2 -> INTERMEDIATE;
+            case 3 -> ADVANCED;
+            default -> throw new IllegalArgumentException("Invalid level number: " + number);
+        };
+    }
+
+    public int toInt() {
+        return switch (this) {
+            case BEGINNER -> 1;
+            case INTERMEDIATE -> 2;
+            case ADVANCED -> 3;
+        };
+    }
 }

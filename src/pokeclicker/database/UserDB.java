@@ -13,7 +13,6 @@ public class UserDB {
                 "name TEXT PRIMARY KEY," +
                 "money REAL," +
                 "money_multiplier REAL" +
-                "foreign key(fav_pokemon) references pokemon(name)" +
                 ");";
         try (Connection conn = SQLiteConnection.connect();
                 Statement stmt = conn.createStatement()) {
@@ -29,12 +28,12 @@ public class UserDB {
         double money = user.getMoney();
         double moneyMultiplier = user.getMoneyMultiplier();
 
-        String sql = "INSERT INTO user(name, fav_pokemon, money, money_multiplier) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO user(name, money, money_multiplier) VALUES(?,?,?)";
         try (Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
-            pstmt.setDouble(3, money);
-            pstmt.setDouble(4, moneyMultiplier);
+            pstmt.setDouble(2, money);
+            pstmt.setDouble(3, moneyMultiplier);
             pstmt.executeUpdate();
             System.out.println("User inserted successfully!");
         } catch (SQLException e) {

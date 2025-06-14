@@ -29,7 +29,7 @@ public class AbilityManager {
         if (filter.isPresent()) {
             return AbilityDB.getAllAbilities(filter);
         }
-        return AbilityDB.getAllAbilities(null);
+        return AbilityDB.getAllAbilities(Optional.empty());
     }
 
     public static Ability getAbilityByName(String name) {

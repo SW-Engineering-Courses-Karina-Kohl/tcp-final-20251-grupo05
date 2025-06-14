@@ -7,15 +7,19 @@ import pokeclicker.model.common.Purchasable;
 
 public abstract class Pokemon implements Activatable, Purchasable {
     private String name;
-    private Level level;
-    private List<Ability> habilities;
-    private double xp = 0.0;
+    private LevelType level;
+    private List<Ability> abilities;
+    private double xp;
     private int health;
     private int totalHealth;
     private boolean captured = false;
     private double price;
     private String imagePath;
-    public Pokemon(String name, List<Ability> habilities, int totalHealth, double price, String imagePath) {
+    private static final double INTERMEDIATE_MIN_XP = 100;
+    private static final double ADVANCED_MIN_XP = 300;
+
+    public Pokemon(String name, LevelType level, double xp, int health, int totalHealth,
+            boolean captured, double price, String imagePath) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -27,24 +31,25 @@ public abstract class Pokemon implements Activatable, Purchasable {
         }
 
         this.name = name;
-        this.habilities = habilities;
         this.totalHealth = health;
         this.health = totalHealth;
-        this.level = new Level();
+        this.level = level;
         this.price = price;
         this.imagePath = imagePath;
+        this.xp = xp;
+        this.captured = captured;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getLevel() {
-        return level.getCurrentLevel();
+    public LevelType getLevel() {
+        return level;
     }
 
-    public List<Ability> getHabilities() {
-        return habilities;
+    public List<Ability> getAbilities() {
+        return abilities;
     }
 
     public double getXp() {
@@ -53,6 +58,10 @@ public abstract class Pokemon implements Activatable, Purchasable {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getTotalHealth() {
+        return totalHealth;
     }
 
     public boolean isCaptured() {
@@ -64,14 +73,15 @@ public abstract class Pokemon implements Activatable, Purchasable {
     }
 
     public String getImagePath() {
-    return imagePath;
-}
+        return imagePath;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public void addHabilities(Ability hability) {
-        this.habilities.add(hability);
+    public void setAbilities(List<Ability> abilities) {
+        this.abilities = abilities;
     }
 
     public void gainXp(double xp) {
@@ -79,7 +89,15 @@ public abstract class Pokemon implements Activatable, Purchasable {
             throw new IllegalArgumentException("XP cannot be negative");
         }
         this.xp += xp;
-        this.level.gainXp(xp);
+        updateLevel();
+    }
+
+    private void updateLevel() {
+        if (xp >= ADVANCED_MIN_XP) {
+            level = LevelType.ADVANCED;
+        } else if (xp >= INTERMEDIATE_MIN_XP) {
+            level = LevelType.INTERMEDIATE;
+        }
     }
 
     public void gainHealth(int health) {
@@ -110,4 +128,5 @@ public abstract class Pokemon implements Activatable, Purchasable {
         return health > 0;
     }
 
+    public abstract String getType();
 }

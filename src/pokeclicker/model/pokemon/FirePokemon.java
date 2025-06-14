@@ -1,10 +1,13 @@
 package pokeclicker.model.pokemon;
 
-import java.util.List;
-import pokeclicker.model.Ability;
-
 public class FirePokemon extends Pokemon {
-    public FirePokemon(String name, List<Ability> habilities, int totalHealth, double price, String imagePath) {
-        super(name, habilities, totalHealth, price, imagePath);
+    public FirePokemon(String name, LevelType level, double xp, int health, int totalHealth,
+            boolean captured, double price, String imagePath) {
+        super(name, level, xp, health, totalHealth, captured, price, imagePath);
+    }
+
+    @Override
+    public String getType() {
+        return "FIRE";
     }
 }

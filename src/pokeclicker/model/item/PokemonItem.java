@@ -30,7 +30,7 @@ public class PokemonItem extends Item {
             throw new IllegalArgumentException("This item can only be used on Users");
         }
 
-        for (Ability habilidade : ((Pokemon) activatable).getHabilities()) {
+        for (Ability habilidade : ((Pokemon) activatable).getAbilities()) {
             // Aumentar o dano da habilidade
         }
 

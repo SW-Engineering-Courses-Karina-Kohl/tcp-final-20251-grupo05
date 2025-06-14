@@ -62,8 +62,8 @@ public class AbilityDB {
 
     public static List<Ability> getAllAbilities(Optional<AbilityFilter> filter) {
         String sql = "SELECT * FROM ability";
-        if (filter != null && filter.isPresent()) {
-            String conditions = buildAbilityFilter(filter.get());
+        if (filter.isPresent()) {
+            String conditions = buildAbilityConditions(filter.get());
             if (!conditions.equals("1")) {
                 sql += " WHERE " + conditions;
             }
@@ -114,7 +114,7 @@ public class AbilityDB {
         }
     }
 
-    private static String buildAbilityFilter(AbilityFilter filter) {
+    private static String buildAbilityConditions(AbilityFilter filter) {
         List<String> conditions = new ArrayList<>();
         if (filter.getType() != null) {
             conditions.add("type = '" + filter.getType().toString() + "'");
@@ -133,7 +133,7 @@ public class AbilityDB {
         }
 
         if (conditions.isEmpty()) {
-            return "1"; // No filter, return all
+            return "1";
         }
         return String.join(" AND ", conditions);
     }

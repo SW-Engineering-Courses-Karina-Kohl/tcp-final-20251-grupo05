@@ -9,11 +9,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pokeclicker.database.UserDB;
 import pokeclicker.database.AbilityDB;
-import pokeclicker.manager.AbilityManager;
+import pokeclicker.manager.ability.AbilityManager;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.Ability;
 import pokeclicker.model.User;
 import pokeclicker.model.common.PokeType;
+import pokeclicker.database.PokemonDB;
+import pokeclicker.database.PokemonAbilityDB;
 
 public class Main extends Application {
     @Override
@@ -44,6 +46,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         UserDB.createUserTable();
         AbilityDB.createAbilityTable();
+        PokemonDB.createPokemonTable();
+        PokemonAbilityDB.createPokemonAbilityTable();
 
         launch(args);
     }
