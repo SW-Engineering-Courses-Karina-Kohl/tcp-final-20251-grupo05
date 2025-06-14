@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import pokeclicker.model.Ability;
+import pokeclicker.model.common.PokeType;
+
 
 public class AbilityManager {
 
@@ -18,7 +20,7 @@ public class AbilityManager {
     private AbilityManager() {
     }
 
-    public static Ability createAbility(String name, String description, String type, double damage, double cure)
+    public static Ability createAbility(String name, String description, PokeType type, double damage, double cure)
             throws IllegalArgumentException {
         if (abilityNameExists(name)) {
             throw new IllegalArgumentException("The ability already exists!");
@@ -44,13 +46,14 @@ public class AbilityManager {
                     try {
                         String name = parts[0];
                         String description = parts[1];
-                        String type = parts[2];
+                        String typeStr = parts[2];
                         double damage = Double.parseDouble(parts[3]);
                         double cure = Double.parseDouble(parts[4]);
 
+                        PokeType type = PokeType.fromString(typeStr);
                         abilities.add(new Ability(name, description, type, damage, cure));
-                    } catch (NumberFormatException e) {
-                        System.err.println("Error parsing number on line: " + line);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Error parsing line: " + line);
                     }
                 }
             }
@@ -64,16 +67,16 @@ public class AbilityManager {
             String line = String.format(Locale.US, "%s;%s;%s;%.2f;%.2f%n",
                     ability.getName(),
                     ability.getDescription(),
-                    ability.getType(),
+                    ability.getType().toString(),
                     ability.getDamage(),
                     ability.getCure());
 
-            writer.write(line);
+                writer.write(line);
 
-        } catch (IOException e) {
-            System.err.println("Error saving ability to file: " + e.getMessage());
+            } catch (IOException e) {
+                System.err.println("Error saving ability to file: " + e.getMessage());
+            }
         }
-    }
 
     private static boolean abilityNameExists(String name) {
         return abilities.stream()

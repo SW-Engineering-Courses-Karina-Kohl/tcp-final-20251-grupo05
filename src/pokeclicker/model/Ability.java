@@ -1,13 +1,22 @@
 package pokeclicker.model;
 
+<<<<<<< HEAD
+=======
+import pokeclicker.model.common.PokeType;
+
+>>>>>>> 82245cf (ajuste do ability com o poketype)
 public class Ability {
     private String name;
     private String description;
-    private String type;
+    private PokeType type;
     private double damage;
     private double cure;
 
+<<<<<<< HEAD
     public Ability(String name, String description, String type, double damage, double cure) {
+=======
+    public Ability(String name, String description, PokeType type, double damage, double cure) {
+>>>>>>> 82245cf (ajuste do ability com o poketype)
         this.name = name;
         this.description = description;
         this.type = type;
@@ -23,7 +32,7 @@ public class Ability {
         return description;
     }
 
-    public String getType() {
+    public PokeType getType() {
         return type;
     }
 
@@ -34,5 +43,9 @@ public class Ability {
     public double getDamage() {
         return damage;
     }
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> 82245cf (ajuste do ability com o poketype)

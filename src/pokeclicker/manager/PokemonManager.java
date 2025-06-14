@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import pokeclicker.model.Ability;
+import pokeclicker.model.common.PokeType;
 import pokeclicker.model.pokemon.FirePokemon;
 import pokeclicker.model.pokemon.GrassPokemon;
-import pokeclicker.model.pokemon.PokeType;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.model.pokemon.WaterPokemon;
 
@@ -20,7 +20,7 @@ public class PokemonManager {
     }
 
     public static Pokemon createPokemon(String name, int totalHealth, List<Ability> habilities, double price,
-            PokeType type)
+            PokeType type, String imagePath)
             throws IllegalArgumentException {
         if (pokemonNameExists(name)) {
             throw new IllegalArgumentException("The Pokemon name already exists!");
@@ -33,13 +33,13 @@ public class PokemonManager {
         } else
             switch (type) {
                 case FIRE:
-                    newPokemon = new FirePokemon(name, habilities, totalHealth, price);
+                    newPokemon = new FirePokemon(name, habilities, totalHealth, price, imagePath);
                     break;
                 case WATER:
-                    newPokemon = new WaterPokemon(name, habilities, totalHealth, price);
+                    newPokemon = new WaterPokemon(name, habilities, totalHealth, price, imagePath);
                     break;
                 case GRASS:
-                    newPokemon = new GrassPokemon(name, habilities, totalHealth, price);
+                    newPokemon = new GrassPokemon(name, habilities, totalHealth, price, imagePath);
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid Pokemon type!");
@@ -47,6 +47,7 @@ public class PokemonManager {
 
         pokemons.add(newPokemon);
         currentPokemon = newPokemon;
+        ShopManager.saveNewToShop(newPokemon);
         ShopManager.saveNewToShop(newPokemon);
         saveToFile();
         return newPokemon;
@@ -65,7 +66,7 @@ public class PokemonManager {
                     currentPokemon.getHealth(),
                     currentPokemon.getXp(),
                     currentPokemon.isCaptured());
-
+                    currentPokemon.getImagePath();
             writer.write(line);
         } catch (IOException e) {
             System.err.println("Error on saving pokemons to file: " + e.getMessage());

@@ -1,17 +1,20 @@
 package pokeclicker.model;
 
+import pokeclicker.game.PC;
 import pokeclicker.model.common.Activatable;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class User
-        implements Activatable {
+    implements Activatable {
     private String name;
     private Pokemon favPokemon = null;
     private double money = 0.0;
     private double moneyMultiplier = 1.0;
+    private PC pc;
 
     public User(String name) {
         this.name = name;
+        this.pc = new PC();
     }
 
     public String getName() {
@@ -28,6 +31,10 @@ public class User
 
     public double getMoneyMultiplier() {
         return moneyMultiplier;
+    }
+
+    public PC getPC() {
+        return pc;
     }
 
     public void setName(String name) {

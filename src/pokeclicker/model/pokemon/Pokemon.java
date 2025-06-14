@@ -14,8 +14,8 @@ public abstract class Pokemon implements Activatable, Purchasable {
     private int totalHealth;
     private boolean captured = false;
     private double price;
-
-    public Pokemon(String name, List<Ability> habilities, int totalHealth, double price) {
+    private String imagePath;
+    public Pokemon(String name, List<Ability> habilities, int totalHealth, double price, String imagePath) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -32,6 +32,7 @@ public abstract class Pokemon implements Activatable, Purchasable {
         this.health = totalHealth;
         this.level = new Level();
         this.price = price;
+        this.imagePath = imagePath;
     }
 
     public String getName() {
@@ -62,6 +63,9 @@ public abstract class Pokemon implements Activatable, Purchasable {
         return price;
     }
 
+    public String getImagePath() {
+    return imagePath;
+}
     public void setName(String name) {
         this.name = name;
     }
