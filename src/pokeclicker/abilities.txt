@@ -1,3 +1,4 @@
-Tackle;A basic physical attack.;Normal;40.00;0.00
-Flamethrower;A powerful fire attack that may burn the target.;Fire;90.00;0.00
-Recover;Restores the user's HP.;Normal;0.00;100.00
+Vine Whip;Whips the foe with slender vines.;Grass;45.00;0.00
+Water Gun;Squirts water to attack the foe.;Water;40.00;0.00
+Ember;A weak fire attack that may burn the foe.;Fire;40.00;0.00
+Mega Drain;Absorbs half the damage inflicted as HP.;Grass;40.00;20.00
