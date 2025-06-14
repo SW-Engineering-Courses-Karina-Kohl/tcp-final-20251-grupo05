@@ -61,7 +61,7 @@ public class PC {
     public int getItemCount(Item item) {
         return this.itemQuantities.getOrDefault(item, 0);
     }
-    
+
     public void toggleFavorite(Pokemon pokemon) {
         if (!pokemons.contains(pokemon)) {
             return;

@@ -1,10 +1,7 @@
 package pokeclicker.model;
 
-<<<<<<< HEAD
 import pokeclicker.model.common.PokeType;
 
-=======
->>>>>>> 71b2d92 (Finalização logica loja)
 public class Ability {
     private String name;
     private String description;
@@ -12,11 +9,7 @@ public class Ability {
     private double damage;
     private double cure;
 
-<<<<<<< HEAD
     public Ability(String name, String description, PokeType type, double damage, double cure) {
-=======
-    public Ability(String name, String description, String type, double damage, double cure) {
->>>>>>> 71b2d92 (Finalização logica loja)
         this.name = name;
         this.description = description;
         this.type = type;
@@ -43,8 +36,4 @@ public class Ability {
     public double getDamage() {
         return damage;
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 71b2d92 (Finalização logica loja)
 }

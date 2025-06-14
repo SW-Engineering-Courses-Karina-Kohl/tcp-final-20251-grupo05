@@ -2,12 +2,10 @@ package pokeclicker.model;
 
 import pokeclicker.game.PC;
 import pokeclicker.model.common.Activatable;
-import pokeclicker.model.pokemon.Pokemon;
 
 public class User
-    implements Activatable {
+        implements Activatable {
     private String name;
-    private Pokemon favPokemon = null;
     private double money = 0.0;
     private double moneyMultiplier = 1.0;
     private PC pc;
@@ -19,10 +17,6 @@ public class User
 
     public String getName() {
         return name;
-    }
-
-    public Pokemon getFavPokemon() {
-        return favPokemon;
     }
 
     public double getMoney() {
@@ -46,10 +40,6 @@ public class User
             throw new IllegalArgumentException("Money cannot be negative");
         }
         this.money = money;
-    }
-
-    public void setFavPokemon(Pokemon favPokemon) {
-        this.favPokemon = favPokemon;
     }
 
     public void updateMultiplier(double multiplier) {

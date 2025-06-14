@@ -1,2 +1,0 @@
-jorge,Beginner,20,0,00,false
-ramon,Beginner,60,0,00,false
