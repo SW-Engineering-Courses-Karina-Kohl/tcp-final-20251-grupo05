@@ -48,9 +48,10 @@ public class UserDB {
             pstmt.setString(1, name);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                User user = new User(rs.getString("name"));
-                user.setMoney(rs.getDouble("money"));
-                user.updateMultiplier(rs.getDouble("money_multiplier") - 1.0);
+                User user = new User(
+                        rs.getString("name"),
+                        rs.getDouble("money_multiplier"),
+                        rs.getDouble("money"));
                 return user;
             }
         } catch (SQLException e) {

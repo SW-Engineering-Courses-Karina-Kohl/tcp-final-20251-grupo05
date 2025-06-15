@@ -1,77 +1,51 @@
 package pokeclicker.manager;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import pokeclicker.game.Shop;
+import pokeclicker.manager.item.ItemFilter;
+import pokeclicker.manager.item.ItemManager;
+import pokeclicker.manager.pokemon.*;
 import pokeclicker.model.User;
 import pokeclicker.model.common.Purchasable;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class ShopManager {
-    private static List<Shop> shops = new ArrayList<>();
-    private static final String PATH = "src/pokeclicker/shops.txt";
-    private static Shop currentShop;
-
     private ShopManager() {
     }
 
-    public static Shop createShopForUser(User user) {
-        Shop shop = new Shop(user);
-        shops.add(shop);
-        currentShop = shop;
-        saveToFile();
+    public static Shop getShop(User user) {
+        ItemFilter itemFilter = new ItemFilter();
+        PokemonFilter pokeFilter = new PokemonFilter();
+
+        itemFilter.setAvailable(true);
+        pokeFilter.setAvailable(true);
+
+        List<Purchasable> purchasables = new ArrayList<>();
+
+        purchasables.addAll(PokemonManager.getAllPokemons(Optional.of(pokeFilter)));
+        purchasables.addAll(ItemManager.getAllItems(Optional.of(itemFilter)));
+
+        Shop shop = new Shop(user, purchasables);
 
         return shop;
     }
 
-    public static Purchasable saveNewToShop(Purchasable pokemonOrItem) {
-        if (currentShop == null) {
-            throw new IllegalStateException("No current shop available.");
-        }
-        switch (pokemonOrItem) {
-            case null -> throw new IllegalArgumentException("Cannot save a null item or pokemon.");
-            case Item item -> currentShop.addItem(item);
-            case Pokemon pokemon -> currentShop.addPokemon(pokemon);
-            default -> throw new IllegalArgumentException("Unsupported type: " + pokemonOrItem.getClass());
-        }
-        saveToFile();
+    public static void buyPokemonOrItem(User user, Shop shop, Purchasable pokemonOrItem) {
+        try {
+            Purchasable newPurchasable = shop.buyPokemonOrItem(pokemonOrItem);
+            user.spendMoney(newPurchasable.getPrice());
+            UserManager.updateUser(user);
 
-        return pokemonOrItem;
-    }
-
-    public static void buyPokemonOrItem(Purchasable pokemonOrItem) {
-        if (currentShop == null) {
-            throw new IllegalStateException("No current shop available.");
-        }
-        currentShop.buyPokemonOrItem(pokemonOrItem);
-        saveToFile();
-    }
-
-    private static void saveToFile() {
-        for (Shop shop : shops) {
-            try (FileWriter writer = new FileWriter(PATH, true)) {
-                String line = String.format("%s,",
-                        shop.getUser().getName());
-
-                if (!shop.getPokemons().isEmpty()) {
-                    for (Pokemon pokemon : shop.getPokemons()) {
-                        line += String.format("Pokemon: %s Price: %.2f ", pokemon.getName(), pokemon.getPrice());
-                    }
-                    line += ",";
+            switch (newPurchasable) {
+                case Pokemon pokemon -> PokemonManager.updatPokemon(pokemon);
+                case Item item -> ItemManager.updateItem(item);
+                default -> {
                 }
-                if (!shop.getItems().isEmpty()) {
-                    for (Item item : shop.getItems()) {
-                        line += String.format("Item: %s, Price: %.2f ", item.getName(), item.getPrice());
-                    }
-                }
-                line += "\n";
-                writer.write(line);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
         }
     }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import pokeclicker.manager.pokemon.PokemonFilter;
+import pokeclicker.model.Ability;
 import pokeclicker.model.pokemon.FirePokemon;
 import pokeclicker.model.pokemon.GrassPokemon;
 import pokeclicker.model.pokemon.LevelType;
@@ -22,7 +23,7 @@ public class PokemonDB {
                 "xp REAL," +
                 "health INTEGER," +
                 "total_health INTEGER," +
-                "captured BOOLEAN," +
+                "available BOOLEAN," +
                 "price REAL" +
                 ");";
         try (Connection conn = SQLiteConnection.connect();
@@ -35,7 +36,7 @@ public class PokemonDB {
     }
 
     public static void insertPokemon(Pokemon pokemon) {
-        String sql = "INSERT INTO pokemon(name, type, level, health, total_health, captured, price, xp) " +
+        String sql = "INSERT INTO pokemon(name, type, level, health, total_health, available, price, xp) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (
                 Connection conn = SQLiteConnection.connect();
@@ -45,7 +46,7 @@ public class PokemonDB {
             pstmt.setInt(3, pokemon.getLevel().toInt());
             pstmt.setInt(4, pokemon.getHealth());
             pstmt.setInt(5, pokemon.getTotalHealth());
-            pstmt.setBoolean(6, pokemon.isCaptured());
+            pstmt.setBoolean(6, pokemon.isAvailable());
             pstmt.setDouble(7, pokemon.getPrice());
             pstmt.setDouble(8, pokemon.getXp());
             pstmt.executeUpdate();
@@ -56,13 +57,13 @@ public class PokemonDB {
     }
 
     public static void updatePokemon(Pokemon pokemon) {
-        String sql = "UPDATE pokemon SET level = ?, xp = ?, health = ?, captured = ? WHERE name = ?";
+        String sql = "UPDATE pokemon SET level = ?, xp = ?, health = ?, available = ? WHERE name = ?";
         try (Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, pokemon.getLevel().toInt());
             pstmt.setDouble(2, pokemon.getXp());
             pstmt.setInt(3, pokemon.getHealth());
-            pstmt.setBoolean(4, pokemon.isCaptured());
+            pstmt.setBoolean(4, pokemon.isAvailable());
             pstmt.setString(5, pokemon.getName());
             pstmt.executeUpdate();
             System.out.println("Pokemon updated successfully!");
@@ -85,7 +86,7 @@ public class PokemonDB {
 
     public static Pokemon getPokemon(String name) {
         String sql = "SELECT * FROM pokemon WHERE name = ?";
-        Pokemon pokemon;
+        Pokemon pokemon = null;
         try (Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
@@ -96,24 +97,27 @@ public class PokemonDB {
                 double xp = rs.getDouble("xp");
                 int health = rs.getInt("health");
                 int totalHealth = rs.getInt("total_health");
-                boolean captured = rs.getBoolean("captured");
+                boolean available = rs.getBoolean("available");
                 double price = rs.getDouble("price");
 
                 switch (type) {
-                    case "FIRE" -> pokemon = new FirePokemon(name, level, xp, health, totalHealth, captured, price);
-                    case "WATER" -> pokemon = new WaterPokemon(name, level, xp, health, totalHealth, captured, price);
-                    case "GRASS" -> pokemon = new GrassPokemon(name, level, xp, health, totalHealth, captured, price);
+                    case "FIRE" -> pokemon = new FirePokemon(name, level, xp, health, totalHealth, available, price);
+                    case "WATER" -> pokemon = new WaterPokemon(name, level, xp, health, totalHealth, available, price);
+                    case "GRASS" -> pokemon = new GrassPokemon(name, level, xp, health, totalHealth, available, price);
                     default -> {
                         System.err.println("Unknown Pokemon type: " + type);
                         return null;
                     }
                 }
-                return pokemon;
+                List<Ability> abilities = PokemonAbilityDB.getPokemonAbilities(name);
+                if (pokemon != null) {
+                    pokemon.setAbilities(abilities);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error fetching pokemon: " + e.getMessage());
         }
-        return null;
+        return pokemon;
     }
 
     public static List<Pokemon> getAllPokemons(Optional<PokemonFilter> filter) {
@@ -136,21 +140,24 @@ public class PokemonDB {
                 double xp = rs.getDouble("xp");
                 int health = rs.getInt("health");
                 int totalHealth = rs.getInt("total_health");
-                boolean captured = rs.getBoolean("captured");
+                boolean available = rs.getBoolean("available");
                 double price = rs.getDouble("price");
 
                 Pokemon pokemon = switch (type) {
-                    case "FIRE" -> new FirePokemon(name, level, xp, health, totalHealth, captured, price);
-                    case "WATER" -> new WaterPokemon(name, level, xp, health, totalHealth, captured, price);
-                    case "GRASS" -> new GrassPokemon(name, level, xp, health, totalHealth, captured, price);
+                    case "FIRE" -> new FirePokemon(name, level, xp, health, totalHealth, available, price);
+                    case "WATER" -> new WaterPokemon(name, level, xp, health, totalHealth, available, price);
+                    case "GRASS" -> new GrassPokemon(name, level, xp, health, totalHealth, available, price);
                     default -> {
                         System.err.println("Unknown Pokemon type: " + type);
                         yield null;
                     }
                 };
 
-                pokemons.add(pokemon);
-
+                if (pokemon != null) {
+                    List<Ability> abilities = PokemonAbilityDB.getPokemonAbilities(name);
+                    pokemon.setAbilities(abilities);
+                    pokemons.add(pokemon);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error fetching all pokemons: " + e.getMessage());
@@ -173,8 +180,8 @@ public class PokemonDB {
         if (filter.getMinHealth() != null) {
             conditions.append(" AND health >= ").append(filter.getMinHealth());
         }
-        if (filter.getCaptured() != null) {
-            conditions.append(" AND captured = ").append(filter.getCaptured());
+        if (filter.getAvailable() != null) {
+            conditions.append(" AND available = ").append(filter.getAvailable());
         }
         if (filter.getMaxPrice() != null) {
             conditions.append(" AND price <= ").append(filter.getMaxPrice());

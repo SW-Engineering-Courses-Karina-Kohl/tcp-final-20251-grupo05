@@ -13,9 +13,8 @@ public class UserManager {
             System.out.println("User already exists!");
             return false;
         }
-        User user = new User(name);
+        User user = new User(name, 1.0, 0);
         UserDB.insertUser(user);
-        ShopManager.createShopForUser(user);
         return true;
     }
 

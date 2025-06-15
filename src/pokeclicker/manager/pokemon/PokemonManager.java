@@ -5,7 +5,6 @@ import java.util.Optional;
 import pokeclicker.database.AbilityDB;
 import pokeclicker.database.PokemonAbilityDB;
 import pokeclicker.database.PokemonDB;
-import pokeclicker.manager.ShopManager;
 import pokeclicker.model.Ability;
 import pokeclicker.model.common.PokeType;
 import pokeclicker.model.pokemon.FirePokemon;
@@ -30,17 +29,15 @@ public class PokemonManager {
 
         switch (type) {
             case FIRE ->
-                newPokemon = new FirePokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, false, price);
+                newPokemon = new FirePokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price);
             case WATER ->
-                newPokemon = new WaterPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, false, price);
+                newPokemon = new WaterPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price);
             case GRASS ->
-                newPokemon = new GrassPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, false, price);
+                newPokemon = new GrassPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price);
             default -> throw new IllegalArgumentException("Invalid Pokemon type!");
         }
 
         PokemonDB.insertPokemon(newPokemon);
-        ShopManager.saveNewToShop(newPokemon);
-        ShopManager.saveNewToShop(newPokemon);
         return newPokemon;
     }
 
@@ -49,7 +46,6 @@ public class PokemonManager {
         if (pokemon == null) {
             throw new IllegalArgumentException("Pokemon does not exist");
         }
-        pokemon.setAbilities(PokemonAbilityDB.getPokemonAbilities(name));
 
         return pokemon;
     }

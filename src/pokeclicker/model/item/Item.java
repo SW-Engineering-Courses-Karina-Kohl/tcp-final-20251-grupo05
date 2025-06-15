@@ -19,14 +19,17 @@ public abstract class Item implements Purchasable {
         return name;
     }
 
+    @Override
     public double getPrice() {
         return price;
     }
 
+    @Override
     public boolean isAvailable() {
         return available;
     }
 
+    @Override
     public void setAvailable(boolean available) {
         this.available = available;
     }

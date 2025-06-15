@@ -10,8 +10,10 @@ public class User
     private double moneyMultiplier = 1.0;
     private PC pc;
 
-    public User(String name) {
+    public User(String name, double moneyMultiplier, double money) {
         this.name = name;
+        this.money = money;
+        this.moneyMultiplier = moneyMultiplier;
         this.pc = new PC();
     }
 

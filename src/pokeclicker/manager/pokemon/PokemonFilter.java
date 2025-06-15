@@ -9,7 +9,7 @@ public class PokemonFilter {
     private PokeType type;
     private LevelType minLevel;
     private Integer minHealth;
-    private Boolean captured;
+    private Boolean available;
     private Double maxPrice;
     private Ability ability;
 
@@ -32,8 +32,8 @@ public class PokemonFilter {
         return minHealth;
     }
 
-    public Boolean getCaptured() {
-        return captured;
+    public Boolean getAvailable() {
+        return available;
     }
 
     public Double getMaxPrice() {
@@ -60,8 +60,8 @@ public class PokemonFilter {
         this.minHealth = minHealth;
     }
 
-    public void setCaptured(Boolean captured) {
-        this.captured = captured;
+    public void setAvailable(Boolean captured) {
+        this.available = captured;
     }
 
     public void setMaxPrice(Double maxPrice) {
