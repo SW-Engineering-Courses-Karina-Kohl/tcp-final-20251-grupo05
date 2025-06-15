@@ -60,8 +60,8 @@ public class PokemonFilter {
         this.minHealth = minHealth;
     }
 
-    public void setAvailable(Boolean captured) {
-        this.available = captured;
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 
     public void setMaxPrice(Double maxPrice) {

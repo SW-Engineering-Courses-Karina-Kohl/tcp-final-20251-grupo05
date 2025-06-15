@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import pokeclicker.model.User;
+import pokeclicker.model.pokemon.Pokemon;
 
 public class UserDB {
     public static void createUserTable() {
@@ -13,6 +14,7 @@ public class UserDB {
                 "name TEXT PRIMARY KEY," +
                 "money REAL," +
                 "money_multiplier REAL" +
+                "favorite_pokemon_name TEXT" +
                 ");";
         try (Connection conn = SQLiteConnection.connect();
                 Statement stmt = conn.createStatement()) {
@@ -28,12 +30,13 @@ public class UserDB {
         double money = user.getMoney();
         double moneyMultiplier = user.getMoneyMultiplier();
 
-        String sql = "INSERT INTO user(name, money, money_multiplier) VALUES(?,?,?)";
+        String sql = "INSERT INTO user(name, money, money_multiplier, favorite_pokemon_name) VALUES(?,?,?,?)";
         try (Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setDouble(2, money);
             pstmt.setDouble(3, moneyMultiplier);
+            pstmt.setString(4, user.getFavoritePokemon() != null ? user.getFavoritePokemon().getName() : null);
             pstmt.executeUpdate();
             System.out.println("User inserted successfully!");
         } catch (SQLException e) {
@@ -48,10 +51,15 @@ public class UserDB {
             pstmt.setString(1, name);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
+                Pokemon favoritePokemon = null;
+                if (rs.getString("favorite_pokemon_name") != null) {
+                    favoritePokemon = PokemonDB.getPokemon(rs.getString("favorite_pokemon_name"));
+                }
                 User user = new User(
                         rs.getString("name"),
                         rs.getDouble("money_multiplier"),
-                        rs.getDouble("money"));
+                        rs.getDouble("money"),
+                        favoritePokemon);
                 return user;
             }
         } catch (SQLException e) {
@@ -67,6 +75,7 @@ public class UserDB {
             pstmt.setDouble(1, user.getMoney());
             pstmt.setDouble(2, user.getMoneyMultiplier());
             pstmt.setString(3, user.getName());
+            pstmt.setString(4, user.getFavoritePokemon() != null ? user.getFavoritePokemon().getName() : null);
             pstmt.executeUpdate();
             System.out.println("User updated successfully!");
             return user;
