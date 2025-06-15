@@ -6,7 +6,7 @@ public class Clicker {
     // constante para debug: public static final double MULTIPLIER = 1.2;
     private int totalMoney = 0;
     private int moneyPerClick = 1;
-    private User user;
+    private final User user;
     private int totalClicks = 0;
     private static int totalGlobalClicks = 0;
 
@@ -38,12 +38,13 @@ public class Clicker {
         return totalMoney;
     }
 
-    public void registerClick() {
+    public User registerClick() {
         totalClicks++;
         totalGlobalClicks++;
         double earned = moneyPerClick * user.getMoneyMultiplier();
         totalMoney += earned;
         user.earnMoney(earned);
+        return user;
     }
 
     public void resetClicks() {

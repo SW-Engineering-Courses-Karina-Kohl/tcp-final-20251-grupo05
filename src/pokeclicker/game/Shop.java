@@ -6,7 +6,7 @@ import pokeclicker.model.User;
 import pokeclicker.model.common.Purchasable;
 
 public class Shop {
-    private User user;
+    private final User user;
     private List<Purchasable> purchasables = new ArrayList<>();
 
     public Shop(User user, List<Purchasable> purchasables) {
