@@ -12,7 +12,8 @@ public class MoneyMultiplierItem extends Item {
         this.multiplier = multiplier;
     }
 
-    public double getMultiplier() {
+    @Override
+    public double getMultiplierOrDamage() {
         return multiplier;
     }
 
@@ -36,6 +37,11 @@ public class MoneyMultiplierItem extends Item {
 
         user.updateMultiplier(multiplier);
         return user;
+    }
+
+    @Override
+    public ItemType getType() {
+        return ItemType.MONEY_MULTIPLIER;
     }
 
 }

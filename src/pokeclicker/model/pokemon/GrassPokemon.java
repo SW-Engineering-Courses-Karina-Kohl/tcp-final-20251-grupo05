@@ -1,11 +1,14 @@
 package pokeclicker.model.pokemon;
 
-import java.util.List;
-import pokeclicker.model.Ability;
-
 public class GrassPokemon extends Pokemon {
 
-    public GrassPokemon(String name, List<Ability> habilities, int totalHealth, double price, String imagePath) {
-        super(name, habilities, totalHealth, price, imagePath);
+    public GrassPokemon(String name, LevelType level, double xp, int health, int totalHealth,
+            boolean available, double price, String imagePath) {
+        super(name, level, xp, health, totalHealth, available, price, imagePath);
+    }
+
+    @Override
+    public String getType() {
+        return "GRASS";
     }
 }

@@ -13,7 +13,8 @@ public class PokemonItem extends Item {
         this.damage = damage;
     }
 
-    public double getDamage() {
+    @Override
+    public double getMultiplierOrDamage() {
         return damage;
     }
 
@@ -30,11 +31,16 @@ public class PokemonItem extends Item {
             throw new IllegalArgumentException("This item can only be used on Users");
         }
 
-        for (Ability habilidade : ((Pokemon) activatable).getHabilities()) {
+        for (Ability habilidade : ((Pokemon) activatable).getAbilities()) {
             // Aumentar o dano da habilidade
         }
 
         return activatable;
+    }
+
+    @Override
+    public ItemType getType() {
+        return ItemType.POKEMON;
     }
 
 }

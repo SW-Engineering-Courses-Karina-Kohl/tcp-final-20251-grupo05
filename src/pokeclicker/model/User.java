@@ -1,28 +1,24 @@
 package pokeclicker.model;
 
-import pokeclicker.game.PC;
 import pokeclicker.model.common.Activatable;
 import pokeclicker.model.pokemon.Pokemon;
 
 public class User
-    implements Activatable {
+        implements Activatable {
     private String name;
-    private Pokemon favPokemon = null;
     private double money = 0.0;
     private double moneyMultiplier = 1.0;
-    private PC pc;
+    private Pokemon favoritePokemon;
 
-    public User(String name) {
+    public User(String name, double moneyMultiplier, double money, Pokemon favoritePokemon) {
         this.name = name;
-        this.pc = new PC();
+        this.money = money;
+        this.moneyMultiplier = moneyMultiplier;
+        this.favoritePokemon = favoritePokemon;
     }
 
     public String getName() {
         return name;
-    }
-
-    public Pokemon getFavPokemon() {
-        return favPokemon;
     }
 
     public double getMoney() {
@@ -33,16 +29,26 @@ public class User
         return moneyMultiplier;
     }
 
-    public PC getPC() {
-        return pc;
+    public Pokemon getFavoritePokemon() {
+        return favoritePokemon;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setFavPokemon(Pokemon favPokemon) {
-        this.favPokemon = favPokemon;
+    public void setMoney(double money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("Money cannot be negative");
+        }
+        this.money = money;
+    }
+
+    public void setFavoritePokemon(Pokemon favoritePokemon) {
+        if (favoritePokemon == null) {
+            throw new IllegalArgumentException("Favorite Pokemon cannot be null");
+        }
+        this.favoritePokemon = favoritePokemon;
     }
 
     public void updateMultiplier(double multiplier) {

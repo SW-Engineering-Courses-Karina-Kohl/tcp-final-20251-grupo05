@@ -19,14 +19,17 @@ public abstract class Item implements Purchasable {
         return name;
     }
 
+    @Override
     public double getPrice() {
         return price;
     }
 
+    @Override
     public boolean isAvailable() {
         return available;
     }
 
+    @Override
     public void setAvailable(boolean available) {
         this.available = available;
     }
@@ -34,6 +37,14 @@ public abstract class Item implements Purchasable {
     public String getDescription() {
         return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public abstract ItemType getType();
+
+    public abstract double getMultiplierOrDamage();
 
     public abstract Activatable activate(Activatable activatable);
 }
