@@ -35,5 +35,13 @@ public abstract class Item implements Purchasable {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public abstract ItemType getType();
+
+    public abstract double getMultiplierOrDamage();
+
     public abstract Activatable activate(Activatable activatable);
 }

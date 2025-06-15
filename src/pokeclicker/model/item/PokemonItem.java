@@ -13,7 +13,8 @@ public class PokemonItem extends Item {
         this.damage = damage;
     }
 
-    public double getDamage() {
+    @Override
+    public double getMultiplierOrDamage() {
         return damage;
     }
 
@@ -35,6 +36,11 @@ public class PokemonItem extends Item {
         }
 
         return activatable;
+    }
+
+    @Override
+    public ItemType getType() {
+        return ItemType.POKEMON;
     }
 
 }

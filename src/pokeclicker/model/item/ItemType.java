@@ -2,7 +2,7 @@ package pokeclicker.model.item;
 
 public enum ItemType {
     MONEY_MULTIPLIER("Money Multiplier"),
-    POKEMON("Pokemon Item");
+    POKEMON("Pokemon");
 
     private final String type;
 
