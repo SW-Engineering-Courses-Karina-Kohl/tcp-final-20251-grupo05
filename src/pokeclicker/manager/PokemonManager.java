@@ -67,7 +67,7 @@ public class PokemonManager {
                     currentPokemon.getHealth(),
                     currentPokemon.getXp(),
                     currentPokemon.isCaptured());
-                    currentPokemon.getImagePath();
+            currentPokemon.getImagePath();
             writer.write(line);
         } catch (IOException e) {
             System.err.println("Error on saving pokemons to file: " + e.getMessage());
