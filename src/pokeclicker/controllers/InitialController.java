@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import pokeclicker.controllers.ProfileController;
 import pokeclicker.manager.UserManager;
+import pokeclicker.model.User;
 
 public class InitialController implements Initializable{
     private Stage stage;
@@ -28,7 +29,7 @@ public class InitialController implements Initializable{
     @FXML
     Label exceptionLabel;
     @FXML
-    TextField inputField;
+    private TextField inputField;
 
 
     @Override
@@ -47,22 +48,29 @@ public class InitialController implements Initializable{
             throw new UnexpectedException("Empty username!");
         }
 
-        UserManager.createUser(username);
         profileController.displayName(username);       
-    }
+       /*  User user = UserManager.createUser(username);
+         profileController.setCurrentUser(user);
+     */
+       }
+    
 
     public void switchToProfile(ActionEvent event) throws IOException
     {
+        String username = inputField.getText().trim();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/profileScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pokeclicker/views/profileScene.fxml"));
         Parent root = loader.load();
         ProfileController profileController = loader.getController();
-
+        
+         
         getUsername(profileController);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         scene = new Scene(root);
+        String cssPath = this.getClass().getResource("/css/profileScene.css").toExternalForm();
+        scene.getStylesheets().add(cssPath);
         stage.setScene(scene);
         stage.show();
     }

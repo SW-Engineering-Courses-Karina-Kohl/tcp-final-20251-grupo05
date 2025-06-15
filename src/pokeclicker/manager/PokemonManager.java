@@ -20,7 +20,7 @@ public class PokemonManager {
     }
 
     public static Pokemon createPokemon(String name, int totalHealth, List<Ability> habilities, double price,
-            PokeType type)
+            PokeType type, String imagePath)
             throws IllegalArgumentException {
         if (pokemonNameExists(name)) {
             throw new IllegalArgumentException("The Pokemon name already exists!");
@@ -33,13 +33,14 @@ public class PokemonManager {
         } else
             switch (type) {
                 case FIRE:
-                    newPokemon = new FirePokemon(name, habilities, totalHealth, price, price);
+                    newPokemon = new FirePokemon(name, habilities, totalHealth, price, imagePath);
                     break;
                 case WATER:
-                    newPokemon = new WaterPokemon(name, habilities, totalHealth, price, price);
+                    newPokemon = new WaterPokemon(name, habilities, totalHealth, price, imagePath);
                     break;
                 case GRASS:
-                    newPokemon = new GrassPokemon(name, habilities, totalHealth, price, price);
+                    newPokemon = new GrassPokemon(name, habilities, totalHealth, price, imagePath);
+
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid Pokemon type!");
@@ -66,7 +67,7 @@ public class PokemonManager {
                     currentPokemon.getHealth(),
                     currentPokemon.getXp(),
                     currentPokemon.isCaptured());
-
+                    currentPokemon.getImagePath();
             writer.write(line);
         } catch (IOException e) {
             System.err.println("Error on saving pokemons to file: " + e.getMessage());
