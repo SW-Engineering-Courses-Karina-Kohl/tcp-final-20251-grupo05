@@ -13,7 +13,7 @@ import pokeclicker.model.pokemon.WaterPokemon;
 
 public class PokemonManager {
     private static List<Pokemon> pokemons = new ArrayList<>();
-    private static Pokemon currentPokemon;
+    private static Pokemon currentPokemon1;
     private static final String PATH = "src/pokeclicker/pokemons.txt";
 
     private PokemonManager() {
@@ -47,7 +47,7 @@ public class PokemonManager {
             }
 
         pokemons.add(newPokemon);
-        currentPokemon = newPokemon;
+        currentPokemon1 = newPokemon;
         ShopManager.saveNewToShop(newPokemon);
         ShopManager.saveNewToShop(newPokemon);
         saveToFile();
@@ -62,12 +62,12 @@ public class PokemonManager {
     private static void saveToFile() {
         try (FileWriter writer = new FileWriter(PATH, true)) {
             String line = String.format("%s,%s,%d,%.2f,%b%n",
-                    currentPokemon.getName(),
-                    currentPokemon.getLevel(),
-                    currentPokemon.getHealth(),
-                    currentPokemon.getXp(),
-                    currentPokemon.isCaptured());
-            currentPokemon.getImagePath();
+                    currentPokemon1.getName(),
+                    currentPokemon1.getLevel(),
+                    currentPokemon1.getHealth(),
+                    currentPokemon1.getXp(),
+                    currentPokemon1.isCaptured());
+            currentPokemon1.getImagePath();
             writer.write(line);
         } catch (IOException e) {
             System.err.println("Error on saving pokemons to file: " + e.getMessage());
