@@ -19,7 +19,7 @@ public class PokemonManager {
     }
 
     public static Pokemon createPokemon(String name, int totalHealth, List<Ability> habilities, double price,
-            PokeType type)
+            PokeType type, String imagePath)
             throws IllegalArgumentException {
         if (PokemonDB.getPokemon(name) != null) {
             throw new IllegalArgumentException("The Pokemon name already exists!");
@@ -29,11 +29,14 @@ public class PokemonManager {
 
         switch (type) {
             case FIRE ->
-                newPokemon = new FirePokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price);
+                newPokemon = new FirePokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price,
+                        imagePath);
             case WATER ->
-                newPokemon = new WaterPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price);
+                newPokemon = new WaterPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price,
+                        imagePath);
             case GRASS ->
-                newPokemon = new GrassPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price);
+                newPokemon = new GrassPokemon(name, LevelType.BEGINNER, 0.0, totalHealth, totalHealth, true, price,
+                        imagePath);
             default -> throw new IllegalArgumentException("Invalid Pokemon type!");
         }
 

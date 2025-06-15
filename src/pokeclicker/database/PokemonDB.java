@@ -25,6 +25,7 @@ public class PokemonDB {
                 "total_health INTEGER," +
                 "available BOOLEAN," +
                 "price REAL" +
+                "image_path TEXT" +
                 ");";
         try (Connection conn = SQLiteConnection.connect();
                 Statement stmt = conn.createStatement()) {
@@ -36,8 +37,8 @@ public class PokemonDB {
     }
 
     public static void insertPokemon(Pokemon pokemon) {
-        String sql = "INSERT INTO pokemon(name, type, level, health, total_health, available, price, xp) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pokemon(name, type, level, health, total_health, available, price, xp, image_path) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (
                 Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -49,6 +50,7 @@ public class PokemonDB {
             pstmt.setBoolean(6, pokemon.isAvailable());
             pstmt.setDouble(7, pokemon.getPrice());
             pstmt.setDouble(8, pokemon.getXp());
+            pstmt.setString(9, pokemon.getImagePath());
             pstmt.executeUpdate();
             System.out.println("Pokemon inserted successfully!");
         } catch (SQLException e) {
@@ -99,11 +101,15 @@ public class PokemonDB {
                 int totalHealth = rs.getInt("total_health");
                 boolean available = rs.getBoolean("available");
                 double price = rs.getDouble("price");
+                String imagePath = rs.getString("image_path");
 
                 switch (type) {
-                    case "FIRE" -> pokemon = new FirePokemon(name, level, xp, health, totalHealth, available, price);
-                    case "WATER" -> pokemon = new WaterPokemon(name, level, xp, health, totalHealth, available, price);
-                    case "GRASS" -> pokemon = new GrassPokemon(name, level, xp, health, totalHealth, available, price);
+                    case "FIRE" ->
+                        pokemon = new FirePokemon(name, level, xp, health, totalHealth, available, price, imagePath);
+                    case "WATER" ->
+                        pokemon = new WaterPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
+                    case "GRASS" ->
+                        pokemon = new GrassPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
                     default -> {
                         System.err.println("Unknown Pokemon type: " + type);
                         return null;
@@ -142,11 +148,12 @@ public class PokemonDB {
                 int totalHealth = rs.getInt("total_health");
                 boolean available = rs.getBoolean("available");
                 double price = rs.getDouble("price");
+                String imagePath = rs.getString("image_path");
 
                 Pokemon pokemon = switch (type) {
-                    case "FIRE" -> new FirePokemon(name, level, xp, health, totalHealth, available, price);
-                    case "WATER" -> new WaterPokemon(name, level, xp, health, totalHealth, available, price);
-                    case "GRASS" -> new GrassPokemon(name, level, xp, health, totalHealth, available, price);
+                    case "FIRE" -> new FirePokemon(name, level, xp, health, totalHealth, available, price, imagePath);
+                    case "WATER" -> new WaterPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
+                    case "GRASS" -> new GrassPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
                     default -> {
                         System.err.println("Unknown Pokemon type: " + type);
                         yield null;
