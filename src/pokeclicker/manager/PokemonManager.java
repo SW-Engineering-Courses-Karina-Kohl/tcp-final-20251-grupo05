@@ -40,6 +40,7 @@ public class PokemonManager {
                     break;
                 case GRASS:
                     newPokemon = new GrassPokemon(name, habilities, totalHealth, price, imagePath);
+
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid Pokemon type!");
