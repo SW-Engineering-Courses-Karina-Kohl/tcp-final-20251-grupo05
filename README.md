@@ -3,13 +3,18 @@
 
 # PokeClicker
 
-## Configurações Inciais VsCode
-1. Baixar a biblioteca JavaFX versão xxx.xx
-2. Extrair os arquivos baixados
-3. Configurar o arquivo launch.json conforme o local onde o arquivo foi extraído. Para isso é necessário ir no arquivo de launch, localizado em:
+## Initial Configurations in VsCode
+1. Downlaod JavaFX version xxx.xx.
+2. Extract the downloaded files and copy path to the "lib" folder.
+3. Configure the "launch.json" file. To do this, you need to go to the launch file, lcoated at:
    .vscode > launch.json
-   Depois, nas configurações, mudar o "projectName" de acordo com a sua IDE ou apenas apagar a linha.
-   Em "vmArgs", colar o caminho da pasta lib da biblioteca JavaFX recém extraída. Nos lugares que tiverem "\", deve-se adicionar uma segunda barra igual.
+   In configurations, erase the "projectName" line.
+   In "vmArgs", paste the path copied before. At Windows, add another "\" rgiht after the ones already existing in the path.
 
+## How to test with JUnit
+0. Update sources.txt: dir /s /b *.java > sources.txt
+1. Compile in cmd: javac -cp lib\junit-platform-console-standalone-1.11.0.jar -d out @sources.txt
+2. Run: java -jar lib\junit-platform-console-standalone-1.11.0.jar --class-path out --scan-class-path
+P.S.: It only works on Windows and it must be compiled with CMD, PowerShell won't work.
 
 ## Modo de Uso
