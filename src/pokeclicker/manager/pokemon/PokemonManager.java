@@ -57,7 +57,7 @@ public class PokemonManager {
         return PokemonDB.getAllPokemons(filter);
     }
 
-    public static void updatPokemon(Pokemon pokemon) {
+    public static void updatePokemon(Pokemon pokemon) {
         if (pokemon == null) {
             throw new IllegalArgumentException("Pokemon cannot be null");
         }

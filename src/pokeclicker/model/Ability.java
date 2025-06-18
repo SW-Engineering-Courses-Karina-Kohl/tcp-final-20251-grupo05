@@ -36,4 +36,11 @@ public class Ability {
     public double getDamage() {
         return damage;
     }
+
+    public void updateDamage(double damage) {
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage cannot be negative");
+        }
+        this.damage = damage;
+    }
 }

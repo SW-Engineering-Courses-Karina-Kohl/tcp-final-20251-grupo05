@@ -40,7 +40,7 @@ public class ShopManager {
             UserManager.updateUser(user);
 
             switch (newPurchasable) {
-                case Pokemon pokemon -> PokemonManager.updatPokemon(pokemon);
+                case Pokemon pokemon -> PokemonManager.updatePokemon(pokemon);
                 case Item item -> ItemManager.updateItem(item);
                 default -> {
                 }

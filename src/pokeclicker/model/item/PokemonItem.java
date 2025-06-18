@@ -28,11 +28,11 @@ public class PokemonItem extends Item {
             throw new IllegalArgumentException("Activatable cannot be null");
         }
         if (!(activatable instanceof Pokemon)) {
-            throw new IllegalArgumentException("This item can only be used on Users");
+            throw new IllegalArgumentException("This item can only be used on Pokemons");
         }
 
-        for (Ability habilidade : ((Pokemon) activatable).getAbilities()) {
-            // Aumentar o dano da habilidade
+        for (Ability ability : ((Pokemon) activatable).getAbilities()) {
+            ability.updateDamage(damage);
         }
 
         return activatable;

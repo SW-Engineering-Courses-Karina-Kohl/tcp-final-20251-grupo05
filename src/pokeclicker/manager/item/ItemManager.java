@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import pokeclicker.database.ItemDB;
+import pokeclicker.manager.UserManager;
+import pokeclicker.manager.pokemon.PokemonManager;
+import pokeclicker.model.User;
+import pokeclicker.model.common.Activatable;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.item.ItemType;
 import pokeclicker.model.item.MoneyMultiplierItem;
 import pokeclicker.model.item.PokemonItem;
+import pokeclicker.model.pokemon.Pokemon;
 
 public class ItemManager {
 
@@ -80,5 +85,33 @@ public class ItemManager {
             throw new IllegalArgumentException("Item not found: " + name);
         }
         ItemDB.deleteItem(name);
+    }
+
+    public static Activatable activateItem(String name, Activatable activatable) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Item name cannot be null or empty");
+        }
+        if (activatable == null) {
+            throw new IllegalArgumentException("Activatable cannot be null");
+        }
+
+        Item item = ItemDB.getItem(name);
+        if (item == null) {
+            throw new IllegalArgumentException("Item not found: " + name);
+        }
+
+        Activatable updateActivatable = item.activate(activatable);
+
+        item.setAvailable(true);
+        updateItem(item);
+
+        switch (updateActivatable) {
+            case Pokemon pokemon -> PokemonManager.updatePokemon(pokemon);
+            case User user -> UserManager.updateUser(user);
+            default ->
+                throw new IllegalArgumentException("Unsupported activatable type: " + updateActivatable.getClass());
+        }
+
+        return updateActivatable;
     }
 }
