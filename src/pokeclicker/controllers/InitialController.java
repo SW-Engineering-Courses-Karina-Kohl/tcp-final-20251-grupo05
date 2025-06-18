@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import pokeclicker.controllers.ProfileController;
 import pokeclicker.manager.UserManager;
@@ -23,7 +25,8 @@ public class InitialController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
+    @FXML
+    private ImageView logo;
     @FXML
     Label titleLabel;
     @FXML
@@ -35,6 +38,13 @@ public class InitialController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         titleLabel.setText("Welcome, trainer!\n\nTo begin your journey, enter your name and press \"Start\"");
         exceptionLabel.setText("");
+        Image logo1 = new Image(getClass().getResource("/img/logo.png").toExternalForm());
+        logo.setImage(logo1);
+
+        logo.setFitHeight(350);
+        logo.setFitWidth(350);
+        logo.setLayoutX(130);
+        logo.setLayoutY(-100);
     }
 
     public void getUsername(ProfileController profileController) throws UnexpectedException {
