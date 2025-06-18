@@ -24,7 +24,7 @@ public class PokemonDB {
                 "health INTEGER," +
                 "total_health INTEGER," +
                 "available BOOLEAN," +
-                "price REAL" +
+                "price REAL," +
                 "image_path TEXT" +
                 ");";
         try (Connection conn = SQLiteConnection.connect();

@@ -24,10 +24,10 @@ public class SceneSwitcher {
             // Pass the username to ProfileController
             if (username != null) {
                 profileController.setUsername(username);
-                
+
             }
-            profileController.setCurrentUser(UserManager.getUserByName(username));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            profileController.setCurrentUser(UserManager.getUser(username));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             String cssPath = SceneSwitcher.class.getResource("/css/profileScene.css").toExternalForm();
             scene.getStylesheets().add(cssPath);
@@ -49,45 +49,44 @@ public class SceneSwitcher {
                 homeController.setUsername(username);
             }
 
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             String cssPath = SceneSwitcher.class.getResource("/css/homeScene.css").toExternalForm();
             scene.getStylesheets().add(cssPath);
             stage.setScene(scene);
-            
-        stage.show();
+
+            stage.show();
             stage.centerOnScreen();
-    } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-        public static void switchToPokemonRegistration(ActionEvent event) {
+
+    public static void switchToPokemonRegistration(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(SceneSwitcher.class.getResource("/pokeclicker/views/pokemonregistration.fxml"));
+            Parent root = FXMLLoader
+                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/pokemonregistration.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-           String cssPath = SceneSwitcher.class.getResource("/css/pokemonregistration.css").toExternalForm();
-            
+            String cssPath = SceneSwitcher.class.getResource("/css/pokemonregistration.css").toExternalForm();
+
             scene.getStylesheets().add(cssPath);
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
-            
-        
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-    }
-          
 
-public static FXMLLoader switchToSceneWithController(Stage stage, String fxmlPath) throws IOException {
+    }
+
+    public static FXMLLoader switchToSceneWithController(Stage stage, String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource(fxmlPath));
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
         return loader;
     }
-
 
 }
