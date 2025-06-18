@@ -8,12 +8,26 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.RegistrationController">
    <children>
-      <Label fx:id="imageErrorlabel" layoutX="40.0" layoutY="302.0" prefHeight="18.0" prefWidth="291.0" text="Please input other attributes before selecting an image">
+      <Line fx:id="nameline" endX="36.19999694824219" endY="-7.62939453125E-6" layoutX="57.0" layoutY="123.0" startX="-0.5999870300292969" startY="-7.62939453125E-6" stroke="RED" strokeWidth="2.0" />
+      <Line fx:id="priceline" endX="39.199974060058594" layoutX="55.0" layoutY="188.0" startX="0.8000106811523438" stroke="RED" strokeWidth="2.0" />
+      <Line fx:id="healthline" endX="40.599998474121094" endY="7.0" layoutX="55.0" layoutY="150.0" startX="-0.9999771118164062" startY="7.0" stroke="RED" strokeWidth="2.0" />
+      <Label fx:id="nameErrorlabel" layoutX="108.0" layoutY="311.0" text="Name cannot be blank!" textFill="RED">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="priceErrorlabel" layoutX="108.0" layoutY="311.0" text="Price cannot be zero! " textFill="RED">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="imageErrorlabel" layoutX="38.0" layoutY="283.0" prefHeight="18.0" prefWidth="291.0" text="Please input other attributes before selecting an image">
          <font>
             <Font name="Segoe UI Black" size="10.0" />
          </font>

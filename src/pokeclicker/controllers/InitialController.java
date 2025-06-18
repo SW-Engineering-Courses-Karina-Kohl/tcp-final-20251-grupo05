@@ -19,11 +19,11 @@ import pokeclicker.controllers.ProfileController;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
 
-public class InitialController implements Initializable{
+public class InitialController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    
+
     @FXML
     Label titleLabel;
     @FXML
@@ -31,49 +31,39 @@ public class InitialController implements Initializable{
     @FXML
     private TextField inputField;
 
-
     @Override
-    public void initialize(URL location, ResourceBundle resources) 
-    {
+    public void initialize(URL location, ResourceBundle resources) {
         titleLabel.setText("Welcome, trainer!\n\nTo begin your journey, enter your name and press \"Start\"");
         exceptionLabel.setText("");
     }
 
-    public void getUsername(ProfileController profileController) throws UnexpectedException
-    {
+    public void getUsername(ProfileController profileController) throws UnexpectedException {
         String username = inputField.getText().trim();
-        if (username == "")
-        {
+        if (username == "") {
             exceptionLabel.setText("Empty username!");
             throw new UnexpectedException("Empty username!");
         }
-try {
-        User user = UserManager.createUser(username); // Create and set current user
-        profileController.displayName(username);      // Optionally update UI
-        profileController.setCurrentUser(user);
-    } catch (IllegalArgumentException e) {
-        exceptionLabel.setText(e.getMessage());
-        throw new UnexpectedException(e.getMessage());
-    }
-           
-       
-         
-     
-       }
-    
+        try {
+            User user = UserManager.createUser(username); // Create and set current user
+            profileController.displayName(username); // Optionally update UI
+            profileController.setCurrentUser(user);
+        } catch (IllegalArgumentException e) {
+            exceptionLabel.setText(e.getMessage());
+            throw new UnexpectedException(e.getMessage());
+        }
 
-    public void switchToProfile(ActionEvent event) throws IOException
-    {
+    }
+
+    public void switchToProfile(ActionEvent event) throws IOException {
         String username = inputField.getText().trim();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pokeclicker/views/profileScene.fxml"));
         Parent root = loader.load();
         ProfileController profileController = loader.getController();
-        
-    
+
         getUsername(profileController);
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         scene = new Scene(root);
         String cssPath = this.getClass().getResource("/css/profileScene.css").toExternalForm();

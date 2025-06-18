@@ -40,11 +40,13 @@ public class RegistrationController implements Initializable {
     @FXML
     private TextField inputField;
     @FXML
-    private Label namelabel, healthlabel, pricelabel, startmessage, healtherrorlabel, imageErrorlabel;
+    private Label namelabel, healthlabel, pricelabel, startmessage, healtherrorlabel, imageErrorlabel, nameErrorlabel;
     @FXML
     private Button imageselectbutton;
     @FXML
-    private Label fixedname, fixedhealth, fixedprice, inputErrorlabel, createpokemonlabel;
+    private Label fixedname, fixedhealth, fixedprice, inputErrorlabel, createpokemonlabel, priceErrorlabel;
+    @FXML
+    private Line nameline, priceline, healthline;
     @FXML
     private MenuButton typebutton;
     private Label[] fields;
@@ -56,6 +58,7 @@ public class RegistrationController implements Initializable {
     private PokeType type;
     private String stringtype;
     private String username;
+    private boolean labelcontrol = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -67,8 +70,8 @@ public class RegistrationController implements Initializable {
         fixedhealth.setText("Health:");
         fixedprice.setText("Price:");
 
-        fields = new Label[] { namelabel, healthlabel, pricelabel, createpokemonlabel };
-
+        fields = new Label[] { namelabel, healthlabel, pricelabel };
+        nameline.toFront();
     }
 
     @FXML
@@ -82,13 +85,21 @@ public class RegistrationController implements Initializable {
     private void okbutton(ActionEvent event) {
         String input = inputField.getText();
         switch (currentIndex) {
-            case 0:
 
-                namelabel.setText(input);
-                pokemonname = input;
-                System.out.println(currentIndex);
+            case 0:
+                if (input != null && !input.isEmpty()) {
+                    namelabel.setText(input);
+                    pokemonname = input;
+                    System.out.println(currentIndex);
+                    nameErrorlabel.toBack();
+                    nameline.toBack();
+                    healthline.toFront();
+                } else {
+                    nameErrorlabel.toFront();
+                }
                 break;
             case 1:
+
                 if (input != null && !input.isEmpty() && Integer.valueOf(input) != 0) {
                     inputField.clear();
                     healthlabel.setText(input);
@@ -96,16 +107,22 @@ public class RegistrationController implements Initializable {
                     System.out.println(currentIndex);
                     System.out.println("Total Health: " + totalHealth);
                     healtherrorlabel.toBack();
+                    priceline.toFront();
+                    healthline.toBack();
                 } else {
                     healtherrorlabel.toFront();
+                    currentIndex--;
                 }
                 break;
             case 2:
 
                 inputField.clear();
-                if (input != null && !input.isEmpty()) {
+                if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
                     pricelabel.setText(input);
                     price = Double.parseDouble(input);
+                } else {
+                    priceErrorlabel.toFront();
+
                 }
                 System.out.println(currentIndex);
                 break;

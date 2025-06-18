@@ -28,50 +28,50 @@ import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import javafx.scene.Node;
 import pokeclicker.controllers.RegistrationController;
+
 public class ImageSelectController implements Initializable {
-@FXML private ImageView pokedexbg, image1,image2;
-@FXML private TextField  inputField;
-@FXML private Label namelabel,healthlabel,pricelabel,startmessage;
-@FXML private Button imageselectbutton;
-@FXML private Label fixedname, fixedhealth, fixedprice;
-@FXML private MenuButton typebutton;
-private Label[] fields;
-private int currentIndex = 0;
-private javafx.beans.value.ChangeListener<String> listener;
-private String pokemonname, imagepath;
-private int totalHealth;
-private double price;
-private PokeType type;
-private String SelectedImagePath;
-private String imagePath1 = "",imagePath2 = "";
-private String pokemonName;
+    @FXML
+    private ImageView pokedexbg, image1, image2;
+    @FXML
+    private TextField inputField;
+    @FXML
+    private Label namelabel, healthlabel, pricelabel, startmessage;
+    @FXML
+    private Button imageselectbutton;
+    @FXML
+    private Label fixedname, fixedhealth, fixedprice;
+    @FXML
+    private MenuButton typebutton;
+    private Label[] fields;
+    private int currentIndex = 0;
+    private javafx.beans.value.ChangeListener<String> listener;
+    private String pokemonname, imagepath;
+    private int totalHealth;
+    private double price;
+    private PokeType type;
+    private String SelectedImagePath;
+    private String imagePath1 = "", imagePath2 = "";
+    private String pokemonName;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Image pokedexbgImage = new Image(getClass().getResource("/img/pokedexbg.png").toExternalForm());
 
+        pokedexbg.setImage(pokedexbgImage);
+        pokedexbg.setPreserveRatio(true);
 
-@Override
-public void initialize(URL location, ResourceBundle resources) {
-    Image pokedexbgImage = new Image(getClass().getResource("/img/pokedexbg.png").toExternalForm());
- 
+    }
 
-    pokedexbg.setImage(pokedexbgImage);
-    pokedexbg.setPreserveRatio(true);
-    
+    public void initData(String name, int health, double price, PokeType type) {
+        this.pokemonName = name;
+        this.totalHealth = health;
+        this.price = price;
+        this.type = type;
+        displayImageForType(type);
+    }
 
-}
+    private void displayImageForType(PokeType type) {
 
-public void initData(String name, int health, double price, PokeType type) {
-    this.pokemonName = name;
-    this.totalHealth = health;
-    this.price = price;
-    this.type = type;
-    displayImageForType(type);
-}
-
-
-
-
-private void displayImageForType(PokeType type) {
-    
         switch (type) {
             case FIRE:
                 imagePath1 = "/img/charmander.png";
@@ -94,38 +94,35 @@ private void displayImageForType(PokeType type) {
         image2.setPreserveRatio(true);
         image2.setFitWidth(150);
 
-    
- 
     }
-@FXML
-private void leftbutton(ActionEvent event){
-SelectedImagePath = imagePath1;
-passImageBackAndReturn(event);
 
-}
-@FXML 
-private void rightbutton(ActionEvent event){ 
-SelectedImagePath = imagePath2;
-passImageBackAndReturn(event);
+    @FXML
+    private void leftbutton(ActionEvent event) {
+        SelectedImagePath = imagePath1;
+        passImageBackAndReturn(event);
 
-}
-
-
-
-private void passImageBackAndReturn(ActionEvent event) {
-    try {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader loader = SceneSwitcher.switchToSceneWithController(stage, "/pokeclicker/views/pokemonregistration.fxml");
-            
-        RegistrationController controller = loader.getController();
-        controller.setPokemonData(pokemonName, totalHealth, price, type, SelectedImagePath);
-        controller.setCurrentIndex(3);
-        
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-}
 
+    @FXML
+    private void rightbutton(ActionEvent event) {
+        SelectedImagePath = imagePath2;
+        passImageBackAndReturn(event);
 
+    }
+
+    private void passImageBackAndReturn(ActionEvent event) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = SceneSwitcher.switchToSceneWithController(stage,
+                    "/pokeclicker/views/pokemonregistration.fxml");
+
+            RegistrationController controller = loader.getController();
+            controller.setPokemonData(pokemonName, totalHealth, price, type, SelectedImagePath);
+            controller.setCurrentIndex(3);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
