@@ -96,6 +96,7 @@ public class RegistrationController implements Initializable {
                     healthline.toFront();
                 } else {
                     nameErrorlabel.toFront();
+                    currentIndex--;
                 }
                 break;
             case 1:
@@ -125,6 +126,7 @@ public class RegistrationController implements Initializable {
 
                 }
                 System.out.println(currentIndex);
+                currentIndex--;
                 break;
 
             case 3:

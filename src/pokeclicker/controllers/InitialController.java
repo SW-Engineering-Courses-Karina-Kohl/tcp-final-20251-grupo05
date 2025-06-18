@@ -67,14 +67,32 @@ public class InitialController implements Initializable {
     public void switchToProfile(ActionEvent event) throws IOException {
         String username = inputField.getText().trim();
 
+        if (username.isEmpty()) {
+            exceptionLabel.setText("Empty username!");
+            return; // Não troca de tela, deixa tentar de novo
+        }
+
+        User user;
+        try {
+            user = UserManager.createUser(username); // Tenta criar novo usuário
+        } catch (IllegalArgumentException e) {
+            // Se já existe, faz login normalmente
+            if ("Username already exists".equals(e.getMessage())) {
+                user = UserManager.getUser(username);
+            } else {
+                exceptionLabel.setText(e.getMessage());
+                return; // Não troca de tela, deixa tentar de novo
+            }
+        }
+
+        // Troca de tela normalmente, passando o usuário (novo ou existente)
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pokeclicker/views/profileScene.fxml"));
         Parent root = loader.load();
         ProfileController profileController = loader.getController();
-
-        getUsername(profileController);
+        profileController.displayName(username);
+        profileController.setCurrentUser(user);
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         scene = new Scene(root);
         String cssPath = this.getClass().getResource("/css/profileScene.css").toExternalForm();
         scene.getStylesheets().add(cssPath);

@@ -13,7 +13,7 @@ public class UserDB {
         String sql = "CREATE TABLE IF NOT EXISTS user (" +
                 "name TEXT PRIMARY KEY," +
                 "money REAL," +
-                "money_multiplier REAL" +
+                "money_multiplier REAL," +
                 "favorite_pokemon_name TEXT" +
                 ");";
         try (Connection conn = SQLiteConnection.connect();

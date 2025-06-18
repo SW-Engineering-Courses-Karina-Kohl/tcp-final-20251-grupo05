@@ -9,8 +9,11 @@ public class UserManager {
     }
 
     public static User createUser(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
         if (UserDB.getUser(name) != null) {
-            throw new IllegalArgumentException("Username cannot be null");
+            throw new IllegalArgumentException("Username already exists");
         }
         User user = new User(name, 1.0, 0, null);
         UserDB.insertUser(user);
