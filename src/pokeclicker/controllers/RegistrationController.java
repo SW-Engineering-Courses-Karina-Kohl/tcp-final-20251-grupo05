@@ -104,7 +104,7 @@ public class RegistrationController implements Initializable {
                 break;
             case 1:
 
-                if (input != null && !input.isEmpty() && Integer.valueOf(input) != 0) {
+                if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
                     inputField.clear();
                     healthlabel.setText(input);
                     totalHealth = Integer.parseInt(input);

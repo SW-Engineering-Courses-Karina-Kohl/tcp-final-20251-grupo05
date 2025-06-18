@@ -43,7 +43,7 @@ public class ItemRegistrationController implements Initializable {
     private TextField inputField;
     @FXML
     private Label namelabel, pricelabel, descriptionlabel, startmessage, descriptionErrorLabel, imageErrorlabel,
-            nameErrorlabel, damageormultiplierlabel;
+            nameErrorlabel, damageormultiplierlabel, modifierErrorlabel;
     @FXML
     private Button imageselectbutton;
     @FXML
@@ -101,7 +101,7 @@ public class ItemRegistrationController implements Initializable {
                 break;
             case 1:
 
-                if (input != null && !input.isEmpty() && Double.valueOf(input) != 0) {
+                if (input != null && !input.isEmpty() && Double.valueOf(input) > 0) {
                     inputField.clear();
                     pricelabel.setText(input);
                     price = Double.parseDouble(input);
@@ -134,15 +134,17 @@ public class ItemRegistrationController implements Initializable {
 
                 if (type != null) {
 
-                    if (input != null && Integer.valueOf(input) != 0) {
+                    if (input != null && Integer.valueOf(input) > 0) {
 
                         damageOrMultiplier = Double.valueOf(input);
                         damageormultiplierlabel.setText(input);
                         typeline.toBack();
+                        createitemlabel.toFront();
+                        modifierErrorlabel.toBack();
+                    } else {
+                        currentIndex--;
+                        modifierErrorlabel.toFront();
                     }
-
-                } else {
-                    currentIndex--;
                 }
                 break;
 

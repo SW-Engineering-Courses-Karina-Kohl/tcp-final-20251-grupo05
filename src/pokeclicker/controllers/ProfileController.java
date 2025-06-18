@@ -90,7 +90,7 @@ public class ProfileController implements Initializable {
         System.out.println("ProfileController initialized");
         SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
 
-        Image image5 = new Image(getClass().getResource("/img/piplup.png").toExternalForm());
+        Image image5 = new Image(getClass().getResource("/img/pikachu.png").toExternalForm());
         Image image6 = new Image(getClass().getResource("/img/money.png").toExternalForm());
         favPokemonimg.setImage(image5);
         moneydisplay.setImage(image6);

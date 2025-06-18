@@ -14,6 +14,12 @@
 
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.ItemRegistrationController">
    <children>
+      <Label fx:id="modifierErrorlabel" layoutX="114.0" layoutY="302.0" text="Input cannot be zero! " textFill="RED">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="createitemlabel" layoutX="73.0" layoutY="311.0" text="Press the OK button to create the Item!" textFill="#00ff2a" />
       <Line fx:id="typeline" endX="55.199974060058594" endY="-0.399993896484375" layoutX="63.0" layoutY="272.0" startX="-3.0000228881835938" startY="-0.399993896484375" stroke="RED" strokeWidth="2.0" />
       <Line fx:id="nameline" endX="36.19999694824219" endY="-7.62939453125E-6" layoutX="61.0" layoutY="132.0" startX="-0.5999870300292969" startY="-7.62939453125E-6" stroke="RED" strokeWidth="2.0" />
       <Line fx:id="priceline" endX="34.399986267089844" layoutX="59.0" layoutY="158.0" startX="4.800010681152344" stroke="RED" strokeWidth="2.0" />
