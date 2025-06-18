@@ -123,10 +123,10 @@ public class RegistrationController implements Initializable {
                     price = Double.parseDouble(input);
                 } else {
                     priceErrorlabel.toFront();
-
+                    currentIndex--;
                 }
                 System.out.println(currentIndex);
-                currentIndex--;
+
                 break;
 
             case 3:
