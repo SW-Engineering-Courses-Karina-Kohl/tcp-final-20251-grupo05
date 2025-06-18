@@ -208,4 +208,11 @@ public class HomeController implements Initializable {
 
     }
 
+    @FXML
+    public void clickerButton(ActionEvent event) {
+
+        pokeclicker.util.SceneSwitcher.switchToClicker(event);
+
+    }
+
 }

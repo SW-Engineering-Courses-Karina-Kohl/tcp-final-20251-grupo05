@@ -153,6 +153,24 @@ public class SceneSwitcher {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void switchToClicker(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader
+                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/clickerScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            String cssPath = SceneSwitcher.class.getResource("/css/clickerScene.css").toExternalForm();
+
+            scene.getStylesheets().add(cssPath);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
