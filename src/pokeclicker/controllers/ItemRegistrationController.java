@@ -1,39 +1,20 @@
 package pokeclicker.controllers;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import pokeclicker.manager.UserManager;
 import pokeclicker.manager.item.ItemManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import pokeclicker.manager.UserManager;
-import pokeclicker.model.Ability;
-import pokeclicker.model.User;
-import pokeclicker.model.common.PokeType;
 import pokeclicker.model.item.Item;
-import pokeclicker.model.pokemon.Pokemon;
-import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
-import javafx.scene.Node;
-import pokeclicker.manager.pokemon.PokemonManager;
-import pokeclicker.manager.item.ItemManager;
 import pokeclicker.model.item.ItemType;
 
 public class ItemRegistrationController implements Initializable {
@@ -54,15 +35,12 @@ public class ItemRegistrationController implements Initializable {
     private MenuButton typebutton;
     private Label[] fields;
     private int currentIndex = 0;
-    private javafx.beans.value.ChangeListener<String> listener;
-    private String itemname, imagepath;
+    private String itemname;
     private String description;
     private double price;
     private double damageOrMultiplier;
     private ItemType type;
-    private String stringtype;
     private String username;
-    private boolean labelcontrol = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

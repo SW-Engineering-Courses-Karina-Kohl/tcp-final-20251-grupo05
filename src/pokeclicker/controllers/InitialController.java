@@ -17,14 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import pokeclicker.controllers.ProfileController;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
 
 public class InitialController implements Initializable {
     private Stage stage;
     private Scene scene;
-    private Parent root;
     @FXML
     private ImageView logo;
     @FXML

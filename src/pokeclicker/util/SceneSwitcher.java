@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import pokeclicker.controllers.ProfileController;
 import pokeclicker.controllers.HomeController;
-import pokeclicker.controllers.ImageSelectController;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
 import pokeclicker.model.common.PokeType;

@@ -1,7 +1,6 @@
 package pokeclicker.database;
 
 import pokeclicker.model.item.Item;
-import pokeclicker.model.item.ItemType;
 import pokeclicker.model.item.MoneyMultiplierItem;
 import pokeclicker.model.item.PokemonItem;
 import pokeclicker.manager.item.ItemFilter;
