@@ -24,100 +24,136 @@ import pokeclicker.model.User;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.util.SceneSwitcher;
 
-public class HomeController implements Initializable  {
-private ImageView selectedImage;
+public class HomeController implements Initializable {
+    private ImageView selectedImage;
 
     private double x = 0;
     private double y = 0;
-@FXML private ImageView pokeballimg, homebackground;
-@FXML private ImageView homeimg;
-@FXML private ImageView profileimg;
-@FXML private ImageView shopimg;
-@FXML private ImageView upperdesignimage;
-@FXML private ImageView lowerdesignimage;
-@FXML private Rectangle PCrectangle;
-@FXML private Rectangle shoprectangle;
-@FXML private Rectangle homerectangle;
-@FXML private Rectangle profilerectangle;
-@FXML private Line longline;
-@FXML private Line shortline1;
-@FXML private Line shortline2;
-@FXML private Line shortline3;
-@FXML private Button PC;
-@FXML private Button shop;
-@FXML private Button home;
-@FXML private Button profile;
-@FXML private Label cadastropokemon;
-@FXML private Label clickerscene;
+    @FXML
+    private ImageView pokeballimg, homebackground;
+    @FXML
+    private ImageView homeimg;
+    @FXML
+    private ImageView profileimg;
+    @FXML
+    private ImageView shopimg;
+    @FXML
+    private ImageView upperdesignimage;
+    @FXML
+    private ImageView lowerdesignimage;
+    @FXML
+    private ImageView abilityimage;
+    @FXML
+    private ImageView itemimage;
 
-@Override
-public void initialize(URL location, ResourceBundle resources) {
-    SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
-    Image upperdesignimage1 = new Image(getClass().getResource("/img/upperdesignimage.png").toExternalForm());
-  
+    @FXML
+    private Rectangle PCrectangle;
+    @FXML
+    private Rectangle shoprectangle;
+    @FXML
+    private Rectangle homerectangle;
+    @FXML
+    private Rectangle profilerectangle;
+    @FXML
+    private Line longline;
+    @FXML
+    private Line shortline1;
+    @FXML
+    private Line shortline2;
+    @FXML
+    private Line shortline3;
+    @FXML
+    private Button PC;
+    @FXML
+    private Button shop;
+    @FXML
+    private Button home;
+    @FXML
+    private Button profile;
+    @FXML
+    private Label cadastropokemon;
+    @FXML
+    private Label clickerscene;
+    @FXML
+    private Label itemscene;
+    @FXML
+    private Label abilityscene;
 
-   
-    upperdesignimage.setImage(upperdesignimage1);
-    upperdesignimage.setPreserveRatio(true);
-    upperdesignimage.setFitWidth(420);
-      Image lowerdesignimage1 = new Image(getClass().getResource("/img/lowerdesignimage.png").toExternalForm());
-    lowerdesignimage.setImage(lowerdesignimage1);
-    lowerdesignimage.setPreserveRatio(true);
-    lowerdesignimage.setFitWidth(360); 
-    cadastropokemon.setText("Pokémon Registration");
-    clickerscene.setText("Clicker");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
+        Image upperdesignimage1 = new Image(getClass().getResource("/img/upperdesignimage.png").toExternalForm());
 
-}
-@FXML
-// IMAGE POSITION ADJUSTMENT METHODS
-private void selectImage(ImageView imageView) {
+        upperdesignimage.setImage(upperdesignimage1);
+        upperdesignimage.setPreserveRatio(true);
+        upperdesignimage.setFitWidth(420);
+        Image lowerdesignimage1 = new Image(getClass().getResource("/img/lowerdesignimage.png").toExternalForm());
+        lowerdesignimage.setImage(lowerdesignimage1);
+        lowerdesignimage.setPreserveRatio(true);
+        lowerdesignimage.setFitWidth(360);
+        cadastropokemon.setText("Pokémon Registration");
+        clickerscene.setText("Clicker");
+        Image abilityImage = new Image(getClass().getResource("/img/abilityimage.png").toExternalForm());
+        abilityimage.setImage(abilityImage);
+        abilityimage.setFitWidth(240);
+        abilityimage.setFitHeight(190);
+        Image itemImage = new Image(getClass().getResource("/img/itemimage.png").toExternalForm());
+        itemimage.setImage(itemImage);
+        itemimage.setPreserveRatio(true);
+        itemimage.setFitHeight(420);
+    }
+
+    @FXML
+    // IMAGE POSITION ADJUSTMENT METHODS
+    private void selectImage(ImageView imageView) {
         this.selectedImage = imageView;
         this.x = imageView.getLayoutX();
         this.y = imageView.getLayoutY();
         System.out.println("Selected image. x: " + x + ", y: " + y);
     }
 
-    
     public void up(ActionEvent e) {
- 
-        
-        
-        if (selectedImage == null) return;
+
+        if (selectedImage == null)
+            return;
         y -= 5;
         selectedImage.setLayoutY(y);
         System.out.println("layout y: " + selectedImage.getLayoutY());
     }
-    
-public void down(ActionEvent e) {
-   
-        if (selectedImage == null) return;
+
+    public void down(ActionEvent e) {
+
+        if (selectedImage == null)
+            return;
         y += 5;
         selectedImage.setLayoutY(y);
         System.out.println("layout y: " + selectedImage.getLayoutY());
     }
 
-
     public void left(ActionEvent e) {
-        if (selectedImage == null) return;
+        if (selectedImage == null)
+            return;
         x -= 5;
         selectedImage.setLayoutX(x);
         System.out.println("layout x: " + selectedImage.getLayoutX());
     }
 
     public void right(ActionEvent e) {
-        if (selectedImage == null) return;
+        if (selectedImage == null)
+            return;
         x += 5;
         selectedImage.setLayoutX(x);
         System.out.println("layout x: " + selectedImage.getLayoutX());
     }
-@FXML
+
+    @FXML
     private void PC(ActionEvent event) {
         System.out.println("PC clicked");
         selectImage(pokeballimg);
         PCrectangle.setFill(javafx.scene.paint.Color.RED);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
         homerectangle.setFill(javafx.scene.paint.Color.TEAL);
-        profilerectangle.setFill(javafx.scene.paint.Color.TEAL);    
+        profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
     }
 
     @FXML
@@ -134,41 +170,51 @@ public void down(ActionEvent e) {
     private void home(ActionEvent event) {
         System.out.println("Home clicked");
         selectImage(homeimg);
-        homerectangle.setFill(javafx.scene.paint.Color.BLUE);  
+        homerectangle.setFill(javafx.scene.paint.Color.BLUE);
         PCrectangle.setFill(javafx.scene.paint.Color.TEAL);
         profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
 
-}
+    }
 
-   
-private String username;
+    private String username;
 
-public void setUsername(String username) {
-    this.username = username;
-}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-@FXML
-    
-    
+    @FXML
+
     private void profile(ActionEvent event) {
         System.out.println("Profile clicked");
         selectImage(profileimg);
-        homerectangle.setFill(javafx.scene.paint.Color.TEAL);  
+        homerectangle.setFill(javafx.scene.paint.Color.TEAL);
         PCrectangle.setFill(javafx.scene.paint.Color.TEAL);
         profilerectangle.setFill(javafx.scene.paint.Color.PURPLE);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
-   
+
         SceneSwitcher.switchToProfile(event, username);
-   
-   
+
     }
-@FXML
- private void registrationswitch(ActionEvent event) {
-        
- pokeclicker.util.SceneSwitcher.switchToPokemonRegistration(event);
+
+    @FXML
+    private void registrationswitch(ActionEvent event) {
+
+        pokeclicker.util.SceneSwitcher.switchToPokemonRegistration(event);
+
+    }
+
+    @FXML
+    public void abilitybutton(ActionEvent event) {
+
+        pokeclicker.util.SceneSwitcher.switchToAbilityRegistration(event);
+    }
+
+    @FXML
+    public void itembutton(ActionEvent event) {
+
+        pokeclicker.util.SceneSwitcher.switchToItemRegistration(event);
+
+    }
 
 }
-}
-
-

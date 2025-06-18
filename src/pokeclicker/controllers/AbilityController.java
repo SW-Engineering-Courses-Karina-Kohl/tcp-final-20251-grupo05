@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import pokeclicker.manager.UserManager;
+import pokeclicker.manager.ability.AbilityManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,20 +35,23 @@ import pokeclicker.util.SceneSwitcher;
 import javafx.scene.Node;
 import pokeclicker.manager.pokemon.PokemonManager;
 
-public class RegistrationController implements Initializable {
+public class AbilityController implements Initializable {
 
     @FXML
     private ImageView pokedexbg, selectedimage;
     @FXML
     private TextField inputField;
     @FXML
-    private Label namelabel, healthlabel, pricelabel, startmessage, healtherrorlabel, imageErrorlabel, nameErrorlabel;
+    private Label namelabel, descriptionlabel, damagelabel, startmessage, healtherrorlabel, imageErrorlabel,
+            nameErrorlabel,
+            curelabel, descriptionErrorlabel;
     @FXML
     private Button imageselectbutton;
     @FXML
-    private Label fixedname, fixedhealth, fixedprice, inputErrorlabel, createpokemonlabel, priceErrorlabel;
+    private Label fixedname, fixedhealth, fixedprice, inputErrorlabel, createpokemonlabel, damageErrorlabel,
+            cureErrorlabel;
     @FXML
-    private Line nameline, priceline, healthline;
+    private Line nameline, damageline, descriptionline, cureline;
     @FXML
     private MenuButton typebutton;
     private Label[] fields;
@@ -61,6 +65,11 @@ public class RegistrationController implements Initializable {
     private String username;
     private boolean labelcontrol = true;
     private MenuItem fire, water, grass;
+    private double damage;
+    private double cure;
+    private String description;
+    private String abilityname;
+    private boolean inputset = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,11 +77,6 @@ public class RegistrationController implements Initializable {
         pokedexbg.setImage(pokedexbgImage);
         pokedexbg.setPreserveRatio(true);
 
-        fixedname.setText("Name:");
-        fixedhealth.setText("Health:");
-        fixedprice.setText("Price:");
-
-        fields = new Label[] { namelabel, healthlabel, pricelabel };
         nameline.toFront();
 
     }
@@ -92,11 +96,11 @@ public class RegistrationController implements Initializable {
             case 0:
                 if (input != null && !input.isEmpty()) {
                     namelabel.setText(input);
-                    pokemonname = input;
+                    abilityname = input;
                     System.out.println(currentIndex);
                     nameErrorlabel.toBack();
                     nameline.toBack();
-                    healthline.toFront();
+                    descriptionline.toFront();
                 } else {
                     nameErrorlabel.toFront();
                     currentIndex--;
@@ -104,18 +108,17 @@ public class RegistrationController implements Initializable {
                 break;
             case 1:
 
-                if (input != null && !input.isEmpty() && Integer.valueOf(input) != 0) {
+                if (input != null && !input.isEmpty()) {
                     inputField.clear();
-                    healthlabel.setText(input);
-                    totalHealth = Integer.parseInt(input);
+                    descriptionlabel.setText(input);
+                    description = input;
                     System.out.println(currentIndex);
-                    System.out.println("Total Health: " + totalHealth);
-                    healtherrorlabel.toBack();
-                    priceline.toFront();
-                    healthline.toBack();
+                    System.out.println("Description " + description);
+                    descriptionErrorlabel.toBack();
+                    damageline.toFront();
+                    descriptionline.toBack();
                 } else {
-                    healtherrorlabel.toFront();
-
+                    descriptionErrorlabel.toFront();
                     currentIndex--;
                 }
                 break;
@@ -123,26 +126,39 @@ public class RegistrationController implements Initializable {
 
                 inputField.clear();
                 if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
-                    pricelabel.setText(input);
-                    price = Double.parseDouble(input);
+                    damagelabel.setText(input);
+                    damage = Double.parseDouble(input);
+                    cureline.toFront();
+                    damageline.toBack();
                 } else {
                     currentIndex--;
-                    priceErrorlabel.toFront();
+                    damageErrorlabel.toFront();
+
+                }
+                System.out.println(currentIndex);
+                break;
+            case 3:
+
+                inputField.clear();
+                if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
+                    curelabel.setText(input);
+                    cure = Double.parseDouble(input);
+                } else {
+                    currentIndex--;
+                    cureErrorlabel.toFront();
 
                 }
                 System.out.println(currentIndex);
                 break;
 
-            case 3:
+            case 4:
 
                 System.out.println(currentIndex);
-                if (pokemonname != null && totalHealth > 0 && price > 0 && type != null && imagepath != null) {
-                    List<Ability> abilities = getTestAbilities(); // Create test ability
-                    Pokemon pokemon = PokemonManager.createPokemon(pokemonname, totalHealth, abilities, price, type,
-                            imagepath);
+                if (abilityname != null && damage > 0 && cure > 0 && type != null && description != null) {
+                    Ability ability = AbilityManager.createAbility(abilityname, description, type, damage, cure);
                     inputErrorlabel.toBack();
 
-                    System.out.println("Pokémon created: " + pokemon.getName());
+                    System.out.println("Ability created: " + ability.getName());
                     SceneSwitcher.switchToHome(event, username);
                 } else {
                     inputErrorlabel.toFront();
@@ -197,62 +213,6 @@ public class RegistrationController implements Initializable {
     public String getimageType() {
         stringtype = String.valueOf(type);
         return stringtype;
-    }
-
-    @FXML
-    private void imageselect(ActionEvent event) {
-        if (pokemonname != null && totalHealth > 0 && price > 0 && type != null) {
-            try {
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                FXMLLoader loader = SceneSwitcher.switchToSceneWithController(stage,
-                        "/pokeclicker/views/imageselection.fxml");
-
-                // Now pass the existing values to ImageSelectController
-                ImageSelectController controller = loader.getController();
-                controller.initData(pokemonname, totalHealth, price, type);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            imageErrorlabel.toFront();
-        }
-    }
-
-    public void setImagePath(String path) {
-        this.imagepath = path;
-        Image img = new Image(getClass().getResource(path).toExternalForm());
-
-        Image img2 = new Image(getClass().getResource(path).toExternalForm());
-        selectedimage.setImage(img);
-
-    }
-
-    public void setPokemonData(String name, int health, double price, PokeType type, String imagePath) {
-        this.pokemonname = name;
-        this.totalHealth = health;
-        this.price = price;
-        this.type = type;
-        this.imagepath = imagePath;
-
-        namelabel.setText(name);
-        healthlabel.setText(String.valueOf(health));
-        pricelabel.setText(String.valueOf(price));
-        typebutton.setText(type.toString());
-        stringtype = String.valueOf(type);
-
-        Image iv = new Image(getClass().getResource(imagePath).toExternalForm());
-        selectedimage.setImage(iv);
-        selectedimage.setFitWidth(100);
-        selectedimage.setPreserveRatio(true);
-
-    }
-
-    private List<Ability> getTestAbilities() {
-        List<Ability> abilities = new ArrayList<>();
-        Ability testAbility = new Ability("Tackle", "A basic physical attack", type, 20, 0);
-        abilities.add(testAbility);
-        return abilities;
     }
 
     public void setCurrentIndex(int index) {

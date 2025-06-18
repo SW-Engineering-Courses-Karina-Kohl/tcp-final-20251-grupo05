@@ -89,4 +89,42 @@ public class SceneSwitcher {
         return loader;
     }
 
+    public static void switchToAbilityRegistration(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader
+                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/abilityregistration.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            String cssPath = SceneSwitcher.class.getResource("/css/abilityregistration.css").toExternalForm();
+
+            scene.getStylesheets().add(cssPath);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void switchToItemRegistration(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader
+                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/itemregistration.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            String cssPath = SceneSwitcher.class.getResource("/css/itemregistration.css").toExternalForm();
+
+            scene.getStylesheets().add(cssPath);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

@@ -4,20 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.HomeController">
    <children>
-      <Circle fill="WHITE" layoutX="511.0" layoutY="238.0" radius="56.0" stroke="WHITE" strokeType="INSIDE" />
-      <Button fx:id="DOWN" layoutX="60.0" layoutY="256.0" mnemonicParsing="false" onAction="#down" prefHeight="17.0" prefWidth="28.0" text="Button" />
-      <Button fx:id="LEFT" layoutX="14.0" layoutY="222.0" mnemonicParsing="false" onAction="#left" prefHeight="17.0" prefWidth="28.0" text="Button" />
-      <Button fx:id="RIGHT" layoutX="102.0" layoutY="222.0" mnemonicParsing="false" onAction="#right" prefHeight="17.0" prefWidth="28.0" text="Button" />
-      <Button fx:id="UP" layoutX="60.0" layoutY="189.0" mnemonicParsing="false" onAction="#up" prefHeight="17.0" prefWidth="28.0" text="Button" />
-      <Circle fill="WHITE" layoutX="79.0" layoutY="247.0" radius="74.0" stroke="WHITE" strokeType="INSIDE" />
-      <Circle fill="WHITE" layoutX="250.0" layoutY="238.0" radius="63.0" stroke="#ffffff00" strokeType="INSIDE" />
-      <Button layoutX="-1.0" layoutY="-2.0" mnemonicParsing="false" opacity="0.0" prefHeight="332.0" prefWidth="600.0" text="Button" textFill="TRANSPARENT" />
       <Label fx:id="cadastropokemon" layoutX="10.0" layoutY="170.0" text="Label" />
       <Label fx:id="clickerscene" layoutX="485.0" layoutY="1.0" text="Label" />
       <ImageView fx:id="upperdesignimage" fitHeight="150.0" fitWidth="200.0" layoutX="403.0" pickOnBounds="true" preserveRatio="true" />
@@ -40,5 +32,19 @@
       <Button id="btnpc" fx:id="PC" layoutY="337.0" mnemonicParsing="false" onAction="#PC" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnprofile" fx:id="profile" layoutX="459.0" layoutY="336.0" mnemonicParsing="false" onAction="#profile" opacity="0.0" prefHeight="66.0" prefWidth="142.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnshop" fx:id="shop" layoutX="151.0" layoutY="336.0" mnemonicParsing="false" onAction="#shop" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
+      <ImageView fx:id="itemimage" fitHeight="150.0" fitWidth="200.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="abilityimage" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="24.0" layoutY="2.0" text="Item Registration" textFill="#2c3e50">
+         <font>
+            <Font name="Segoe UI" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="407.0" layoutY="172.0" text="Ability Registration" textFill="#2c3e50">
+         <font>
+            <Font name="Segoe UI Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="abilitybutton" layoutX="418.0" layoutY="195.0" mnemonicParsing="false" onAction="#abilitybutton" opacity="0.0" prefHeight="110.0" prefWidth="148.0" text="Button" />
+      <Button fx:id="itembutton" layoutX="23.0" layoutY="31.0" mnemonicParsing="false" onAction="#itembutton" opacity="0.0" prefHeight="118.0" prefWidth="158.0" text="Button" />
    </children>
 </AnchorPane>

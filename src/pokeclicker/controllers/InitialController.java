@@ -49,14 +49,16 @@ public class InitialController implements Initializable {
 
     public void getUsername(ProfileController profileController) throws UnexpectedException {
         String username = inputField.getText().trim();
-        if (username == "") {
+        if (username.isEmpty()) {
             exceptionLabel.setText("Empty username!");
             throw new UnexpectedException("Empty username!");
+
         }
         try {
             User user = UserManager.createUser(username); // Create and set current user
             profileController.displayName(username); // Optionally update UI
             profileController.setCurrentUser(user);
+
         } catch (IllegalArgumentException e) {
             exceptionLabel.setText(e.getMessage());
             throw new UnexpectedException(e.getMessage());
@@ -80,6 +82,10 @@ public class InitialController implements Initializable {
         scene.getStylesheets().add(cssPath);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setFavoritePokemon() {
+
     }
 
 }
