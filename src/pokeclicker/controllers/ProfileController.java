@@ -103,8 +103,8 @@ public void setCurrentUser(User user) {
 
         
     
-        if (currentUser.getFavPokemon() != null) {
-        Image favpokemonimage = new Image(currentUser.getFavPokemon().getImagePath());
+        if (currentUser.getFavoritePokemon() != null) {
+        Image favpokemonimage = new Image(currentUser.getFavoritePokemon().getImagePath());
         favPokemonimg.setImage(favpokemonimage);
         }
     }
