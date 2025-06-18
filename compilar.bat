@@ -1,0 +1,1 @@
+javac -cp lib\junit-platform-console-standalone-1.11.0.jar -d out @sources.txt
