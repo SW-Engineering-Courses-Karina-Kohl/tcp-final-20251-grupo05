@@ -17,7 +17,7 @@
             "request": "launch",
             "mainClass": "pokeclicker.Main",
             "projectName": "tcp-final-20251-grupo05_3b98125e",
-            "vmArgs": "--module-path=/Users/carolinawajner/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path=C:/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
