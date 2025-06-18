@@ -1,19 +1,18 @@
-.root
-{
-    -fx-background-color: "white";
+.root {
+    -fx-background-color: WHITE;
 }
 
-#titleLabel
-{
-    -fx-font-size: 20;
-    -fx-font-family: "Segoe UI";
-    -fx-text-fill: TEAL;
+#titleLabel {
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI Black";
+    -fx-text-fill: BLACK;
     -fx-text-alignment: center;
     -fx-alignment: center;
+    -bold: true;
+
 }
 
-#exceptionLabel
-{
+<titleLabel>Please click the <span class="highlight">Submit</span>button. </titleLabel>#exceptionLabel {
     -fx-font-size: 20;
     -fx-font-family: "Segoe UI";
     -fx-text-fill: "red";

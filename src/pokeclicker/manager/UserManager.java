@@ -8,14 +8,17 @@ public class UserManager {
     private UserManager() {
     }
 
-    public static boolean createUser(String name) {
+    public static User createUser(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
         if (UserDB.getUser(name) != null) {
-            System.out.println("User already exists!");
-            return false;
+            throw new IllegalArgumentException("Username already exists");
         }
         User user = new User(name, 1.0, 0, null);
         UserDB.insertUser(user);
-        return true;
+
+        return user;
     }
 
     public static User updateUser(User user) {
@@ -52,4 +55,5 @@ public class UserManager {
         }
         UserDB.deleteUser(name);
     }
+
 }

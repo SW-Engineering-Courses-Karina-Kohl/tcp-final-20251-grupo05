@@ -1,0 +1,54 @@
+.root {
+    -fx-background-color: "TEAL";
+}
+
+#titleLabel {
+    -fx-font-size: 20;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #2c3e50;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -bold: true;
+}
+
+#exceptionLabel {
+    -fx-font-size: 20;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: "red";
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+/* Default text color */
+#typebutton {
+    -fx-text-fill: black;
+}
+
+.poketype {
+    -fx-font-weight: bold;
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-padding: 4 8;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+/* Type-specific text colors */
+.red-text {
+    -fx-text-fill: red;
+}
+
+.blue-text {
+    -fx-text-fill: blue;
+}
+
+.green-text {
+    -fx-text-fill: green;
+}
+
+/* Prevent hover/focus from overriding text color */
+#typebutton:hover,
+#typebutton:focused,
+#typebutton:hover:focused {
+    -fx-text-fill: inherit;
+}
