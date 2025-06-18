@@ -62,6 +62,21 @@ public class SceneSwitcher {
         }
     }
 
+    public static void switchToShop(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(SceneSwitcher.class.getResource("/pokeclicker/views/shopScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            String cssPath = SceneSwitcher.class.getResource("/css/shopScene.css").toExternalForm();
+            scene.getStylesheets().add(cssPath);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void switchToPokemonRegistration(ActionEvent event) {
         try {
             Parent root = FXMLLoader

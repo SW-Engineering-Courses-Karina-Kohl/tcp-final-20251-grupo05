@@ -128,9 +128,9 @@ public class RegistrationController implements Initializable {
                 } else {
                     currentIndex--;
                     priceErrorlabel.toFront();
-
                 }
                 System.out.println(currentIndex);
+
                 break;
 
             case 3:
