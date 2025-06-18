@@ -1,24 +1,32 @@
 package pokeclicker.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import pokeclicker.manager.UserManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
 import pokeclicker.model.pokemon.Pokemon;
+import pokeclicker.util.SceneIconUtil;
+import pokeclicker.util.SceneSwitcher;
+import javafx.scene.Node;
 public class ProfileController implements Initializable {
 
     private double x = 0;
     private double y = 0;
-    private User currentUser;
     private ImageView selectedImage; // Currently selected image
     private boolean ispressed = false;
     @FXML private ImageView pokeballimg;
@@ -44,63 +52,69 @@ public class ProfileController implements Initializable {
     @FXML private Rectangle shoprectangle;
     @FXML private Rectangle homerectangle;
     @FXML private Rectangle profilerectangle;
+   
     
+
+public void setUsername(String username) {
+    this.username = username;
+   if (textid != null) {
+        textid.setText("Welcome, " + username);
+        favpokemonlabel.setText("Favorite pokemon:");
+    }
+}
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("ProfileController initialized");
-
-        Image image1 = new Image(getClass().getResource("/img/pokeballicon.png").toExternalForm(), true);
-        pokeballimg.setImage(image1);
-        pokeballimg.setPreserveRatio(true);
-        pokeballimg.setFitWidth(60);
-
-        Image image2 = new Image(getClass().getResource("/img/houseicon.png").toExternalForm());
-        homeimg.setImage(image2);
-        homeimg.setPreserveRatio(true);
-        homeimg.setFitWidth(65);
-        Image image3 = new Image(getClass().getResource("/img/profileicon.png").toExternalForm());
-        profileimg.setImage(image3);
-        profileimg.setPreserveRatio(true);
-        profileimg.setFitWidth(80);
-        Image image4 = new Image(getClass().getResource("/img/shopicon.png").toExternalForm());
-        shopimg.setImage(image4);
-        shopimg.setPreserveRatio(true);
-        shopimg.setFitWidth(95);
+  SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
+     
         Image image5 = new Image(getClass().getResource("/img/pikachu.png").toExternalForm());
+        Image image6 = new Image(getClass().getResource("/img/money.png").toExternalForm());
         favPokemonimg.setImage(image5);
-        moneydisplay.setImage(image4);
+        moneydisplay.setImage(image6);
         moneydisplay.setPreserveRatio(true);
         moneydisplay.setFitWidth(40);
     
        
         // Optionally select default image
         
-        
+        loadUserData();
         selectImage(pokeballimg);
         trainerid.setPrefWidth(300);
         trainerid.setText("Trainer ID: 000001"); // Example trainer ID
-        moneydisplaylabel.setText(": 1000"); // Example money display
+         // Example money display
+    
     }
    
-     /*  public void setCurrentUser(User user) {
+private User currentUser;
+
+
+
+    // Method to set the current user and load their data
+public void setCurrentUser(User user) {
         this.currentUser = user;
-            loadUserData();
-    }
-    
-    
-    
-    
+        loadUserData();
+    }    
     private void loadUserData() {
-    if (currentUser != null && currentUser.getFavPokemon() != null) {
+        if (currentUser != null){
+    moneydisplaylabel.setText(": " + currentUser.getMoney());
+
+        
+    
+        if (currentUser.getFavPokemon() != null) {
         Image favpokemonimage = new Image(currentUser.getFavPokemon().getImagePath());
         favPokemonimg.setImage(favpokemonimage);
+        }
     }
 }
-*/
+
 
     
 
     public void displayName(String username) {
+       this.username = username;
         if (textid != null) {
             textid.setText("Welcome, " + username);
             favpokemonlabel.setText("Favorite pokemon:");
@@ -138,6 +152,11 @@ public class ProfileController implements Initializable {
         profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
     }
 
+    
+    private String username;
+
+
+    
     @FXML
     private void home(ActionEvent event) {
         System.out.println("Home clicked");
@@ -147,7 +166,9 @@ public class ProfileController implements Initializable {
         PCrectangle.setFill(javafx.scene.paint.Color.TEAL);
         profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
-    }
+ SceneSwitcher.switchToHome(event, username);
+}
+    
 
     @FXML
     private void profile(ActionEvent event) {
@@ -158,6 +179,9 @@ public class ProfileController implements Initializable {
         PCrectangle.setFill(javafx.scene.paint.Color.TEAL);
         profilerectangle.setFill(javafx.scene.paint.Color.PURPLE);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
+    
+    
+    
     }
 @FXML 
 private void favpokemon(ActionEvent event) {
@@ -230,6 +254,11 @@ public void down(ActionEvent e) {
     public void lines(ActionEvent e) {
        ispressed = true;
     }
+
+
+
+
+
 }
 
 

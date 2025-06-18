@@ -47,11 +47,18 @@ public class InitialController implements Initializable{
             exceptionLabel.setText("Empty username!");
             throw new UnexpectedException("Empty username!");
         }
-
-        profileController.displayName(username);       
-       /*  User user = UserManager.createUser(username);
-         profileController.setCurrentUser(user);
-     */
+try {
+        User user = UserManager.createUser(username); // Create and set current user
+        profileController.displayName(username);      // Optionally update UI
+        profileController.setCurrentUser(user);
+    } catch (IllegalArgumentException e) {
+        exceptionLabel.setText(e.getMessage());
+        throw new UnexpectedException(e.getMessage());
+    }
+           
+       
+         
+     
        }
     
 
@@ -63,7 +70,7 @@ public class InitialController implements Initializable{
         Parent root = loader.load();
         ProfileController profileController = loader.getController();
         
-         
+    
         getUsername(profileController);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
