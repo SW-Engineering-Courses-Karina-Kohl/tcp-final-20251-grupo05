@@ -3,31 +3,20 @@ package pokeclicker.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import pokeclicker.manager.UserManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import pokeclicker.manager.UserManager;
-import pokeclicker.model.User;
 import pokeclicker.model.common.PokeType;
-import pokeclicker.model.pokemon.Pokemon;
-import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import javafx.scene.Node;
-import pokeclicker.controllers.RegistrationController;
 
 public class ImageSelectController implements Initializable {
     @FXML
@@ -42,10 +31,6 @@ public class ImageSelectController implements Initializable {
     private Label fixedname, fixedhealth, fixedprice;
     @FXML
     private MenuButton typebutton;
-    private Label[] fields;
-    private int currentIndex = 0;
-    private javafx.beans.value.ChangeListener<String> listener;
-    private String pokemonname, imagepath;
     private int totalHealth;
     private double price;
     private PokeType type;

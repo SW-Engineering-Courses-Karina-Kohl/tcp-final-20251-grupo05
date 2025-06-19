@@ -1,6 +1,5 @@
 package pokeclicker.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,21 +7,13 @@ import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import pokeclicker.model.User;
-import pokeclicker.model.pokemon.Pokemon;
-import pokeclicker.util.SceneSwitcher;
 
 public class HomeController implements Initializable {
     private ImageView selectedImage;
@@ -214,6 +205,13 @@ public class HomeController implements Initializable {
     public void itembutton(ActionEvent event) {
 
         pokeclicker.util.SceneSwitcher.switchToItemRegistration(event);
+
+    }
+
+    @FXML
+    public void clickerButton(ActionEvent event) {
+
+        pokeclicker.util.SceneSwitcher.switchToClicker(event);
 
     }
 

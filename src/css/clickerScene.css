@@ -1,0 +1,23 @@
+.root {
+    -fx-background-image: url('../img/backgroundClicker');
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat; 
+    -fx-background-position: center center; 
+}
+
+#moneyLabel
+{
+    -fx-font-family: Arial;
+    -fx-font-weight: bolder;
+    -fx-font-size: 16px;
+    -fx-text-fill: WHITE;
+}
+
+#clickLabel
+{
+    -fx-font-family: Arial;
+    -fx-font-weight: bolder;
+    -fx-font-size: 16px;
+    -fx-text-fill: WHITE;
+}
+

@@ -8,10 +8,8 @@ import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import pokeclicker.controllers.ProfileController;
 import pokeclicker.controllers.HomeController;
-import pokeclicker.controllers.ImageSelectController;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
-import pokeclicker.model.common.PokeType;
 
 import java.io.IOException;
 
@@ -145,6 +143,24 @@ public class SceneSwitcher {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             String cssPath = SceneSwitcher.class.getResource("/css/itemregistration.css").toExternalForm();
+
+            scene.getStylesheets().add(cssPath);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void switchToClicker(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader
+                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/clickerScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            String cssPath = SceneSwitcher.class.getResource("/css/clickerScene.css").toExternalForm();
 
             scene.getStylesheets().add(cssPath);
             stage.setScene(scene);
