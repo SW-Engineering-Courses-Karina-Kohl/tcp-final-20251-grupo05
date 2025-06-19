@@ -142,6 +142,8 @@ public class ProfileController implements Initializable {
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
         homerectangle.setFill(javafx.scene.paint.Color.TEAL);
         profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
+
+        SceneSwitcher.switchToPC(event, SceneSwitcher.getCurrentUsername());
     }
 
     @FXML

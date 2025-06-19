@@ -186,4 +186,25 @@ public class SceneSwitcher {
 
     }
 
+    public static void switchToPC(ActionEvent event, String username) {
+        try {
+            Parent root = FXMLLoader
+                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/pcScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            String cssPath = SceneSwitcher.class.getResource("/css/pcScene.css").toExternalForm();
+
+            // TODO: pass username to keep context
+
+            scene.getStylesheets().add(cssPath);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
