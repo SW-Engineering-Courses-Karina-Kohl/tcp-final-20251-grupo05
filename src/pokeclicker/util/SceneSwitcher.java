@@ -10,7 +10,6 @@ import pokeclicker.controllers.ProfileController;
 import pokeclicker.controllers.HomeController;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
-import pokeclicker.model.common.PokeType;
 
 import java.io.IOException;
 

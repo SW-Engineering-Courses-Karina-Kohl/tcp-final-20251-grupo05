@@ -69,13 +69,13 @@ public class UserDB {
     }
 
     public static User updateUser(User user) {
-        String sql = "UPDATE user SET money = ?, money_multiplier = ? WHERE name = ?";
+        String sql = "UPDATE user SET money = ?, money_multiplier = ?, favorite_pokemon_name = ? WHERE name = ?";
         try (Connection conn = SQLiteConnection.connect();
-                java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setDouble(1, user.getMoney());
             pstmt.setDouble(2, user.getMoneyMultiplier());
-            pstmt.setString(3, user.getName());
-            pstmt.setString(4, user.getFavoritePokemon() != null ? user.getFavoritePokemon().getName() : null);
+            pstmt.setString(3, user.getFavoritePokemon() != null ? user.getFavoritePokemon().getName() : null);
+            pstmt.setString(4, user.getName());
             pstmt.executeUpdate();
             System.out.println("User updated successfully!");
             return user;
