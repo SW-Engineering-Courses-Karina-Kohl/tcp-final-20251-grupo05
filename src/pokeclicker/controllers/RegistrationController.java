@@ -20,10 +20,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import pokeclicker.model.Ability;
+import pokeclicker.model.User;
 import pokeclicker.model.common.PokeType;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.util.SceneSwitcher;
 import javafx.scene.Node;
+import pokeclicker.manager.UserManager;
 import pokeclicker.manager.pokemon.PokemonManager;
 
 public class RegistrationController implements Initializable {
@@ -132,7 +134,8 @@ public class RegistrationController implements Initializable {
                     inputErrorlabel.toBack();
 
                     System.out.println("Pokémon created: " + pokemon.getName());
-                    SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
+                    User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
+                    SceneSwitcher.switchToShop(event, user);
                 } else {
                     inputErrorlabel.toFront();
                     createpokemonlabel.toBack();
