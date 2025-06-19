@@ -65,7 +65,7 @@ public class RegistrationController implements Initializable {
 
         fields = new Label[] { namelabel, healthlabel, pricelabel };
         nameline.toFront();
-
+        username = SceneSwitcher.getCurrentUsername();
     }
 
     @FXML
@@ -135,7 +135,7 @@ public class RegistrationController implements Initializable {
 
                     System.out.println("Pokémon created: " + pokemon.getName());
                     User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
-                    SceneSwitcher.switchToShop(event, user);
+                    SceneSwitcher.switchToShop(event, username);
                 } else {
                     inputErrorlabel.toFront();
                     createpokemonlabel.toBack();

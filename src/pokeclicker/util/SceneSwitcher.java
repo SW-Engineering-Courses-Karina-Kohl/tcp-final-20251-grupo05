@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import pokeclicker.controllers.ProfileController;
+import pokeclicker.controllers.ShopController;
 import pokeclicker.controllers.HomeController;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
@@ -75,14 +76,20 @@ public class SceneSwitcher {
         }
     }
 
-    public static void switchToShop(ActionEvent event, User user) {
+    public static void switchToShop(ActionEvent event, String username) {
+        setCurrentUsername(username);
+
         try {
+
             FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource("/pokeclicker/views/shopScene.fxml"));
             Parent root = loader.load();
-
-            // Inject the user into ShopController
-            pokeclicker.controllers.ShopController shopController = loader.getController();
-            shopController.setUser(user); // You'll use this to show user-specific data
+            ShopController shopController = loader.getController();
+            username = getCurrentUsername();
+            if (username == null) {
+                System.out.println("❗ Username is null in switchToShop");
+            }
+            User user = UserManager.getUser(username);
+            shopController.setUser(user);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

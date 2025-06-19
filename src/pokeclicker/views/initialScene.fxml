@@ -18,7 +18,7 @@
             <Font name="Segoe UI Black" size="12.0" />
          </font></Button>
       <ImageView fx:id="logo" fitHeight="116.0" fitWidth="180.0" layoutX="143.0" layoutY="-71.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="inputField" layoutX="225.0" layoutY="259.0" styleClass="input" />
+      <TextField fx:id="inputField" layoutX="213.0" layoutY="259.0" styleClass="input" />
       <ImageView fx:id="snorlaxViewer" fitHeight="150.0" fitWidth="200.0" layoutX="464.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="cursorViewer" fitHeight="150.0" fitWidth="200.0" layoutX="521.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true" />
    </children>

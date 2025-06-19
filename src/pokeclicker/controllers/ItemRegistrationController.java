@@ -50,6 +50,7 @@ public class ItemRegistrationController implements Initializable {
 
         fields = new Label[] { namelabel, pricelabel, descriptionlabel };
         nameline.toFront();
+        username = SceneSwitcher.getCurrentUsername();
     }
 
     @FXML
@@ -134,7 +135,7 @@ public class ItemRegistrationController implements Initializable {
                         Item item = ItemManager.createItem(itemname, price, description, type, damageOrMultiplier);
                         inputErrorlabel.toBack();
                         System.out.println("Item created: " + item.getName());
-                        SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
+                        SceneSwitcher.switchToShop(event, username);
                     } catch (IllegalArgumentException e) {
                         inputErrorlabel.setText(e.getMessage());
                         inputErrorlabel.toFront();
