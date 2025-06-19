@@ -10,11 +10,24 @@ import pokeclicker.controllers.ProfileController;
 import pokeclicker.controllers.HomeController;
 import pokeclicker.controllers.ImageSelectController;
 import pokeclicker.manager.UserManager;
+import pokeclicker.model.User;
 import pokeclicker.model.common.PokeType;
 
 import java.io.IOException;
 
 public class SceneSwitcher {
+
+    private static String currentUsername;
+
+    public static void setCurrentUsername(String username) {
+        currentUsername = username;
+    }
+
+    public static String getCurrentUsername() {
+        return currentUsername;
+    }
+
+    private User user;
 
     public static void switchToProfile(ActionEvent event, String username) {
         try {
@@ -39,6 +52,8 @@ public class SceneSwitcher {
     }
 
     public static void switchToHome(ActionEvent event, String username) {
+        setCurrentUsername(username);
+
         try {
             FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource("/pokeclicker/views/homeScene.fxml"));
             Parent root = loader.load();

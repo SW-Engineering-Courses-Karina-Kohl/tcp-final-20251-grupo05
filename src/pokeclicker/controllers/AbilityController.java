@@ -159,7 +159,7 @@ public class AbilityController implements Initializable {
                     inputErrorlabel.toBack();
 
                     System.out.println("Ability created: " + ability.getName());
-                    SceneSwitcher.switchToHome(event, username);
+                    SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
                 } else {
                     inputErrorlabel.toFront();
                     createpokemonlabel.toBack();
@@ -183,7 +183,7 @@ public class AbilityController implements Initializable {
 
     @FXML
     private void cancelbutton(ActionEvent event) {
-        SceneSwitcher.switchToHome(event, username);
+        SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
 
     }
 

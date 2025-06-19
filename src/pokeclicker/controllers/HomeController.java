@@ -193,7 +193,7 @@ public class HomeController implements Initializable {
         profilerectangle.setFill(javafx.scene.paint.Color.PURPLE);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
 
-        SceneSwitcher.switchToProfile(event, username);
+        SceneSwitcher.switchToProfile(event, SceneSwitcher.getCurrentUsername());
 
     }
 
