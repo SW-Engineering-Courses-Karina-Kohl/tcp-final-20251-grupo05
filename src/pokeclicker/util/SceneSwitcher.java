@@ -75,9 +75,15 @@ public class SceneSwitcher {
         }
     }
 
-    public static void switchToShop(ActionEvent event) {
+    public static void switchToShop(ActionEvent event, User user) {
         try {
-            Parent root = FXMLLoader.load(SceneSwitcher.class.getResource("/pokeclicker/views/shopScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource("/pokeclicker/views/shopScene.fxml"));
+            Parent root = loader.load();
+
+            // Inject the user into ShopController
+            pokeclicker.controllers.ShopController shopController = loader.getController();
+            shopController.setUser(user); // You'll use this to show user-specific data
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             String cssPath = SceneSwitcher.class.getResource("/css/shopScene.css").toExternalForm();
