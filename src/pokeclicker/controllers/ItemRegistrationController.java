@@ -156,7 +156,7 @@ public class ItemRegistrationController implements Initializable {
                         Item item = ItemManager.createItem(itemname, price, description, type, damageOrMultiplier);
                         inputErrorlabel.toBack();
                         System.out.println("Item created: " + item.getName());
-                        SceneSwitcher.switchToHome(event, username);
+                        SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
                     } catch (IllegalArgumentException e) {
                         inputErrorlabel.setText(e.getMessage());
                         inputErrorlabel.toFront();
@@ -187,7 +187,7 @@ public class ItemRegistrationController implements Initializable {
 
     @FXML
     private void cancelbutton(ActionEvent event) {
-        SceneSwitcher.switchToHome(event, username);
+        SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
 
     }
 
