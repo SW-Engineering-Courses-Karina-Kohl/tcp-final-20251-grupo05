@@ -1,6 +1,7 @@
 package pokeclicker.controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.rmi.UnexpectedException;
 import java.util.ResourceBundle;
@@ -9,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
@@ -26,6 +29,10 @@ public class InitialController implements Initializable {
     @FXML
     private ImageView logo;
     @FXML
+    private ImageView snorlaxViewer;
+    @FXML
+    private ImageView cursorViewer;
+    @FXML
     Label titleLabel;
     @FXML
     Label exceptionLabel;
@@ -34,15 +41,41 @@ public class InitialController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        titleLabel.setText("Welcome, trainer!\n\nTo begin your journey, enter your name and press \"Start\"");
-        exceptionLabel.setText("");
-        Image logo1 = new Image(getClass().getResource("/img/logo.png").toExternalForm());
-        logo.setImage(logo1);
+        Font minecraftFont = null;
+        try {
+            URL fontUrl = getClass().getResource("/fonts/Minecraft.ttf");
+            InputStream fontStream = fontUrl.openStream();
+            minecraftFont = Font.loadFont(fontStream, 40); 
+            fontStream.close(); 
+        } 
+        catch (Exception e) { // Catch more general Exception for IO issues
+            e.printStackTrace();
+        }
 
+        inputField.setPromptText("Insert your name here");
+
+        titleLabel.setText("Welcome, trainer!\nTo begin your journey, enter your name and press \"Start\"");
+        exceptionLabel.setText("");
+        Image logo1 = new Image(getClass().getResource("/img/logo.png").toExternalForm());        
+        logo.setImage(logo1);
         logo.setFitHeight(350);
         logo.setFitWidth(350);
         logo.setLayoutX(130);
         logo.setLayoutY(-100);
+
+        Image snorlaxImage = new Image(getClass().getResource("/img/snorlax.gif").toExternalForm());
+        snorlaxViewer.setImage(snorlaxImage);
+        snorlaxViewer.setFitHeight(125);
+        snorlaxViewer.setFitWidth(125);
+        snorlaxViewer.setRotate(15);
+
+        Image cursorImage = new Image(getClass().getResource("/img/linkcursor.gif").toExternalForm());
+        cursorViewer.setImage(cursorImage);
+        cursorViewer.setFitHeight(30);
+        cursorViewer.setFitWidth(30);
+
+        inputField.setAlignment(Pos.CENTER);
+        
     }
 
     public void getUsername(ProfileController profileController) throws UnexpectedException {
