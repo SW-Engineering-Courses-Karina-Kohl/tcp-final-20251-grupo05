@@ -112,7 +112,6 @@ public class ShopController implements Initializable {
 
         Label nameLabel = new Label("Name: " + pokemon.getName());
 
-        // Colored type display
         TextFlow typeLabelFlow = new TextFlow();
         Text typePrefix = new Text("Type: ");
         typePrefix.setFill(Color.web("#2c3e50"));

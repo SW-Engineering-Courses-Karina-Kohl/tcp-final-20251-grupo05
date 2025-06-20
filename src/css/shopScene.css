@@ -1,6 +1,6 @@
 /* Apply background color and font settings to the whole scene */
 .root {
-    -fx-background-color: WHITE;
+    -fx-background-color: rgb(5, 65, 65);
     -fx-font-family: "C&C Red Alert [INET]";
     -fx-padding: 20;
 }
@@ -20,6 +20,7 @@ TextFlow {
 
 }
 
+
 #moneydisplaylabel {
     -fx-font-size: 22px;
     -fx-text-fill: BLACK;
@@ -29,7 +30,7 @@ TextFlow {
 #moneyLabel {
 
     -fx-font-size: 26px;
-    -fx-text-fill: BLACK;
+    -fx-text-fill: WHITE;
     -fx-font-weight: bold;
 }
 
