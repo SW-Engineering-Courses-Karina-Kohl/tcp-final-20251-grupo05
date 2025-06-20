@@ -130,7 +130,7 @@ public class RegistrationController implements Initializable {
                 if (pokemonname != null && totalHealth > 0 && price > 0 && type != null && imagepath != null) {
                     List<Ability> abilities = getTestAbilities(); // Create test ability
                     Pokemon pokemon = PokemonManager.createPokemon(pokemonname, totalHealth, abilities, price, type,
-                            imagepath);
+                            imagepath, username);
                     inputErrorlabel.toBack();
 
                     System.out.println("Pokémon created: " + pokemon.getName());

@@ -19,7 +19,7 @@ public class PokemonManager {
     }
 
     public static Pokemon createPokemon(String name, int totalHealth, List<Ability> habilities, double price,
-            PokeType type, String imagePath)
+            PokeType type, String imagePath, String userName)
             throws IllegalArgumentException {
         if (PokemonDB.getPokemon(name) != null) {
             throw new IllegalArgumentException("The Pokemon name already exists!");
@@ -40,7 +40,7 @@ public class PokemonManager {
             default -> throw new IllegalArgumentException("Invalid Pokemon type!");
         }
 
-        PokemonDB.insertPokemon(newPokemon);
+        PokemonDB.insertPokemon(newPokemon, userName);
         return newPokemon;
     }
 

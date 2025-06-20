@@ -24,7 +24,9 @@ public class PCManager {
         PokemonFilter pokeFilter = new PokemonFilter();
 
         itemFilter.setAvailable(false);
+        itemFilter.setUser(user.getName());
         pokeFilter.setAvailable(false);
+        pokeFilter.setUser(user.getName());
 
         List<Pokemon> pokemons = PokemonManager.getAllPokemons(Optional.of(pokeFilter));
         List<Item> items = (ItemManager.getAllItems(Optional.of(itemFilter)));

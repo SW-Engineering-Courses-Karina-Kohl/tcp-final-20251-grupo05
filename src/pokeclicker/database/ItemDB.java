@@ -1,12 +1,12 @@
 package pokeclicker.database;
 
-import pokeclicker.model.item.Item;
-import pokeclicker.model.item.MoneyMultiplierItem;
-import pokeclicker.model.item.PokemonItem;
-import pokeclicker.manager.item.ItemFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import pokeclicker.manager.item.ItemFilter;
+import pokeclicker.model.item.Item;
+import pokeclicker.model.item.MoneyMultiplierItem;
+import pokeclicker.model.item.PokemonItem;
 
 public class ItemDB {
     public static void createItemTable() {
@@ -16,7 +16,9 @@ public class ItemDB {
                 "type TEXT," +
                 "available BOOLEAN," +
                 "description TEXT," +
-                "multiplierOrDamage REAL" +
+                "multiplierOrDamage REAL," +
+                "user TEXT," +
+                "FOREIGN KEY (user) REFERENCES user(name)" +
                 ");";
         try (java.sql.Connection conn = SQLiteConnection.connect();
                 java.sql.Statement stmt = conn.createStatement()) {
@@ -27,8 +29,9 @@ public class ItemDB {
         }
     }
 
-    public static void insertItem(Item item) {
-        String sql = "INSERT INTO item (name, price, type, available, description, multiplierOrDamage) VALUES (?, ?, ?, ?, ?, ?)";
+    public static void insertItem(Item item, String userName) {
+        String sql = "INSERT INTO item (name, price, type, available, description, multiplierOrDamage, user)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (java.sql.Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, item.getName());
@@ -37,6 +40,7 @@ public class ItemDB {
             pstmt.setBoolean(4, item.isAvailable());
             pstmt.setString(5, item.getDescription());
             pstmt.setDouble(6, item.getMultiplierOrDamage());
+            pstmt.setString(7, userName);
             pstmt.executeUpdate();
             System.out.println("Item inserted successfully.");
         } catch (java.sql.SQLException e) {
@@ -159,6 +163,9 @@ public class ItemDB {
         }
         if (filter.getDescriptionContains() != null) {
             conditions.add("description LIKE '%" + filter.getDescriptionContains() + "%'");
+        }
+        if (filter.getUser() != null) {
+            conditions.add("user = '" + filter.getUser() + "'");
         }
 
         if (conditions.isEmpty()) {
