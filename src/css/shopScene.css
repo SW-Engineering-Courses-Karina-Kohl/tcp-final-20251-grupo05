@@ -1,6 +1,6 @@
 /* Apply background color and font settings to the whole scene */
 .root {
-    -fx-background-color: rgb(5, 65, 65);
+    -fx-background-color: rgb(7, 88, 88);
     -fx-font-family: "C&C Red Alert [INET]";
     -fx-padding: 20;
 }
