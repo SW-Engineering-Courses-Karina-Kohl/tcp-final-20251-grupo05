@@ -12,6 +12,14 @@
     -fx-font-weight: bold;
 }
 
+TextFlow {
+    -fx-font-size: 24px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+
+
+}
+
 #moneydisplaylabel {
     -fx-font-size: 22px;
     -fx-text-fill: BLACK;

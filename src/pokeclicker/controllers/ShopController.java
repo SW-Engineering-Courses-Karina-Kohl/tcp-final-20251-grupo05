@@ -11,6 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.scene.paint.Color;
 
 import pokeclicker.manager.ShopManager;
 import pokeclicker.manager.UserManager;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 public class ShopController implements Initializable {
     @FXML
     private Label moneyLabel;
+
     @FXML
     private ScrollPane scrollPane;
 
@@ -39,7 +43,7 @@ public class ShopController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String username = pokeclicker.util.SceneSwitcher.getCurrentUsername();
+        String username = SceneSwitcher.getCurrentUsername();
         currentUser = UserManager.getUser(username);
         currentShop = ShopManager.getShop(currentUser);
 
@@ -74,7 +78,6 @@ public class ShopController implements Initializable {
         }
     }
 
-    // creates hbox to store pokemon image in card
     private HBox createPokemonCard(Pokemon pokemon) {
         HBox card = new HBox();
         card.setSpacing(15);
@@ -94,23 +97,39 @@ public class ShopController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // creates vbox to display pokemon info
+
         VBox info = new VBox();
         info.setSpacing(5);
+
         Label nameLabel = new Label("Name: " + pokemon.getName());
-        Label typeLabel = new Label("Type: " + pokemon.getType());
+
+        // Colored type display
+        TextFlow typeLabelFlow = new TextFlow();
+        Text typePrefix = new Text("Type: ");
+        typePrefix.setFill(Color.web("#2c3e50"));
+        Text typeValue = new Text(pokemon.getType());
+
+        switch (pokemon.getType().toUpperCase()) {
+            case "FIRE" -> typeValue.setFill(Color.RED);
+            case "WATER" -> typeValue.setFill(Color.BLUE);
+            case "GRASS" -> typeValue.setFill(Color.GREEN);
+            default -> typeValue.setFill(Color.BLACK);
+        }
+
+        typeValue.setStyle("-fx-font-weight: bold;");
+        typeLabelFlow.getChildren().addAll(typePrefix, typeValue);
+
         Label healthLabel = new Label("Health: " + pokemon.getTotalHealth());
         Label priceLabel = new Label(String.format("Price: $%.2f", pokemon.getPrice()));
 
-        info.getChildren().addAll(nameLabel, typeLabel, healthLabel, priceLabel);
+        info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, priceLabel);
 
-        // Buy Button
         Button buyButton = new Button("Buy");
         buyButton.setOnAction(event -> {
-            if (currentUser.getMoney() >= pokemon.getPrice()) { // checks if user has enough money to buy
+            if (currentUser.getMoney() >= pokemon.getPrice()) {
                 try {
-                    ShopManager.buyPokemonOrItem(currentUser, currentShop, pokemon); // uses back method to buy pokemon
-                    shopDisplayBox.getChildren().remove(card); // removes the pokemon from the shop
+                    ShopManager.buyPokemonOrItem(currentUser, currentShop, pokemon);
+                    shopDisplayBox.getChildren().remove(card);
                     updateMoneyLabel();
                     System.out.println("Bought: " + pokemon.getName());
                 } catch (Exception e) {
@@ -133,5 +152,4 @@ public class ShopController implements Initializable {
     private void handleBackToHome(ActionEvent event) {
         SceneSwitcher.switchToHome(event, currentUser.getName());
     }
-
 }
