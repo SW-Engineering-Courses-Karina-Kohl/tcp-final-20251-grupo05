@@ -3,19 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10.0" alignment="CENTER"
-      xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="pokeclicker.controllers.ShopController">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pokeclicker.controllers.ShopController">
 
-    <Label fx:id="moneyLabel" text="Money: $" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <VBox spacing="0.0"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          prefHeight="400.0" prefWidth="600.0">
 
-    <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="400.0" prefWidth="600.0">
-        <content>
-            <VBox fx:id="shopDisplayBox" alignment="CENTER" spacing="10.0"/>
-        </content>
-    </ScrollPane>
+        <!-- Top section  -->
+        <VBox prefHeight="30.0" minHeight="30.0" maxHeight="30.0" alignment="CENTER">
+            <Label fx:id="moneyLabel" text="Money: $" style="-fx-font-size: 26px; -fx-font-weight: bold;" />
+        </VBox>
 
-    <Button text="Back to Home" onAction="#handleBackToHome" />
+        <!-- Middle section -->
+        <ScrollPane fx:id="scrollPane"
+                    fitToWidth="true"
+                    prefHeight="304.0" minHeight="304.0" maxHeight="304.0"
+                    prefWidth="580.0">
+            <content>
+                <VBox fx:id="shopDisplayBox" alignment="CENTER" spacing="10.0" />
+            </content>
+        </ScrollPane>
 
-</VBox>
+        <!--  Bottom section  -->
+        <VBox prefHeight="66.0" minHeight="66.0" maxHeight="66.0" alignment="CENTER">
+            <Button text="Back to Home" onAction="#handleBackToHome" />
+        </VBox>
+
+    </VBox>
+</AnchorPane>
