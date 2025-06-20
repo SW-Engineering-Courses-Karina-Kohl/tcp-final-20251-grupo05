@@ -21,6 +21,7 @@ import pokeclicker.model.User;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.util.SceneSwitcher;
 import pokeclicker.model.common.Purchasable;
+import pokeclicker.model.item.Item;
 import pokeclicker.game.Shop;
 
 import java.net.URL;
@@ -40,6 +41,10 @@ public class ShopController implements Initializable {
 
     private User currentUser;
     private Shop currentShop;
+
+    // Use uma imagem fixa para itens
+    String itemImg;
+    String variableLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,9 +75,13 @@ public class ShopController implements Initializable {
                 .filter(Purchasable::isAvailable)
                 .collect(Collectors.toList());
 
-        for (Purchasable item : purchasables) {
-            if (item instanceof Pokemon pokemon) {
+        for (Purchasable purchasable : purchasables) {
+            if (purchasable instanceof Pokemon pokemon) {
                 Node card = createPokemonCard(pokemon);
+                shopDisplayBox.getChildren().add(card);
+            }
+            if (purchasable instanceof Item item) {
+                Node card = createItemCard(item);
                 shopDisplayBox.getChildren().add(card);
             }
         }
@@ -137,6 +146,64 @@ public class ShopController implements Initializable {
                 }
             } else {
                 System.out.println("Not enough money to buy " + pokemon.getName());
+            }
+        });
+
+        card.getChildren().addAll(imageView, info, buyButton);
+        return card;
+    }
+
+    private HBox createItemCard(Item item) {
+        HBox card = new HBox();
+        card.setSpacing(15);
+        card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8;");
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(80);
+        imageView.setPreserveRatio(true);
+
+        if (item.getType().toString().equals("Money Multiplier")) {
+            itemImg = "/img/moneymultiplier.png";
+            variableLabel = "Multiplier: ";
+        }
+        if (item.getType().toString().equals("Pokemon")) {
+            itemImg = "/img/potion.png";
+            variableLabel = "Damage: ";
+        }
+        try {
+            URL imageUrl = getClass().getResource(itemImg); // coloque sua imagem em resources/img/
+            if (imageUrl != null) {
+                imageView.setImage(new Image(imageUrl.toExternalForm()));
+            } else {
+                System.err.println("Default item image not found!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        VBox info = new VBox();
+        info.setSpacing(5);
+        Label nameLabel = new Label("Name: " + item.getName());
+        Label typeLabel = new Label("Type: " + item.getType());
+        Label damageOrMultiplierLabel = new Label(variableLabel + item.getMultiplierOrDamage());
+        Label descriptionLabel = new Label("Description: " + item.getDescription());
+        Label priceLabel = new Label(String.format("Price: $%.2f", item.getPrice()));
+
+        info.getChildren().addAll(nameLabel, typeLabel, damageOrMultiplierLabel, descriptionLabel, priceLabel);
+
+        Button buyButton = new Button("Buy");
+        buyButton.setOnAction(event -> {
+            if (currentUser.getMoney() >= item.getPrice()) {
+                try {
+                    ShopManager.buyPokemonOrItem(currentUser, currentShop, item);
+                    shopDisplayBox.getChildren().remove(card);
+                    updateMoneyLabel();
+                    System.out.println("Bought: " + item.getName());
+                } catch (Exception e) {
+                    System.err.println("Error buying Item: " + e.getMessage());
+                }
+            } else {
+                System.out.println("Not enough money to buy " + item.getName());
             }
         });
 
