@@ -100,7 +100,11 @@ public class ItemRegistrationController implements Initializable {
                 if (input != null && !input.isEmpty()) {
                     descriptionlabel.setText(input);
                     description = input;
+
                     descriptionline.toBack();
+                    if (type != null) {
+                        typeline.toFront();
+                    }
                 } else {
                     descriptionErrorLabel.toFront();
                     currentIndex--;
@@ -175,8 +179,11 @@ public class ItemRegistrationController implements Initializable {
         type = ItemType.MONEY_MULTIPLIER;
         typebutton.setText("Money Multiplier");
         typelabel.setText("Multiplier:");
-        descriptionline.toBack();
-        typeline.toFront();
+
+        if (description != null) {
+            descriptionline.toBack();
+            typeline.toFront();
+        }
     }
 
     @FXML
@@ -184,8 +191,10 @@ public class ItemRegistrationController implements Initializable {
         type = ItemType.POKEMON;
         typebutton.setText("Pokemon");
         typelabel.setText("Damage:");
-        descriptionline.toBack();
-        typeline.toFront();
+        if (description != null) {
+            descriptionline.toBack();
+            typeline.toFront();
+        }
     }
 
     public void setCurrentIndex(int index) {
