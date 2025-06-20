@@ -48,12 +48,13 @@ public class ShopController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String username = SceneSwitcher.getCurrentUsername();
-        currentUser = UserManager.getUser(username);
-        currentShop = ShopManager.getShop(currentUser);
+        String username = SceneSwitcher.getCurrentUsername(); // seta o username pro shop controller
+        currentUser = UserManager.getUser(username); // carrega o user baseado no username
+        currentShop = ShopManager.getShop(currentUser); // carrega a shop pro user
 
-        populateShop();
-        updateMoneyLabel();
+        populateShop(); // serve para inserir pokemons/itens na loja no carregamento (utiliza o método
+                        // que cria os cards)
+        updateMoneyLabel(); // atualiza a label do dinheiro do usuario
     }
 
     public void setUser(User user) {
@@ -69,13 +70,13 @@ public class ShopController implements Initializable {
     }
 
     private void populateShop() {
-        shopDisplayBox.getChildren().clear();
+        shopDisplayBox.getChildren().clear(); // limpa a loja
 
         List<Purchasable> purchasables = currentShop.getPurchasables().stream()
-                .filter(Purchasable::isAvailable)
+                .filter(Purchasable::isAvailable) // filtra pokemons disponiveis
                 .collect(Collectors.toList());
 
-        for (Purchasable purchasable : purchasables) {
+        for (Purchasable purchasable : purchasables) { // se for compravel, insere na loja
             if (purchasable instanceof Pokemon pokemon) {
                 Node card = createPokemonCard(pokemon);
                 shopDisplayBox.getChildren().add(card);
@@ -88,16 +89,16 @@ public class ShopController implements Initializable {
     }
 
     private HBox createPokemonCard(Pokemon pokemon) {
-        HBox card = new HBox();
+        HBox card = new HBox(); // hbox é um container que separa itens horizontalmente
         card.setSpacing(15);
         card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8;");
 
-        ImageView imageView = new ImageView();
+        ImageView imageView = new ImageView(); // cria um novo image view direto do controller
         imageView.setFitWidth(80);
         imageView.setPreserveRatio(true);
 
         try {
-            URL imageUrl = getClass().getResource(pokemon.getImagePath());
+            URL imageUrl = getClass().getResource(pokemon.getImagePath()); // pega a imagem de cada pokemon
             if (imageUrl != null) {
                 imageView.setImage(new Image(imageUrl.toExternalForm()));
             } else {
@@ -112,13 +113,14 @@ public class ShopController implements Initializable {
 
         Label nameLabel = new Label("Name: " + pokemon.getName());
 
-        // Colored type display
-        TextFlow typeLabelFlow = new TextFlow();
+        TextFlow typeLabelFlow = new TextFlow(); // textflow serve pra definir cores diferentes em partes diferentes da
+                                                 // mesma label
+
         Text typePrefix = new Text("Type: ");
         typePrefix.setFill(Color.web("#2c3e50"));
         Text typeValue = new Text(pokemon.getType());
 
-        switch (pokemon.getType().toUpperCase()) {
+        switch (pokemon.getType().toUpperCase()) { // estiliza o tipo na loja
             case "FIRE" -> typeValue.setFill(Color.RED);
             case "WATER" -> typeValue.setFill(Color.BLUE);
             case "GRASS" -> typeValue.setFill(Color.GREEN);
@@ -126,33 +128,42 @@ public class ShopController implements Initializable {
         }
 
         typeValue.setStyle("-fx-font-weight: bold;");
-        typeLabelFlow.getChildren().addAll(typePrefix, typeValue);
+        typeLabelFlow.getChildren().addAll(typePrefix, typeValue); // adiciona os casos diferentes no textflow
 
-        Label healthLabel = new Label("Health: " + pokemon.getTotalHealth());
+        Label healthLabel = new Label("Health: " + pokemon.getTotalHealth()); // cria as labels dinamicamente
         Label priceLabel = new Label(String.format("Price: $%.2f", pokemon.getPrice()));
 
         info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, priceLabel);
 
-        Button buyButton = new Button("Buy");
+        Button buyButton = new Button("Buy"); // cria o botão
         buyButton.setOnAction(event -> {
-            if (currentUser.getMoney() >= pokemon.getPrice()) {
+            if (currentUser.getMoney() >= pokemon.getPrice()) { /*
+                                                                 * verifica se o usuario tem dinheiro para comprar o
+                                                                 * pokémon
+                                                                 */
+
                 try {
-                    ShopManager.buyPokemonOrItem(currentUser, currentShop, pokemon);
-                    shopDisplayBox.getChildren().remove(card);
-                    updateMoneyLabel();
+                    ShopManager.buyPokemonOrItem(currentUser, currentShop, pokemon);// se ele tem dinheiro, compra
+                    shopDisplayBox.getChildren().remove(card); // remove o pokemon da shop
+                    updateMoneyLabel(); // atualiza a label do dinheiro
                     System.out.println("Bought: " + pokemon.getName());
                 } catch (Exception e) {
                     System.err.println("Error buying Pokemon: " + e.getMessage());
                 }
             } else {
                 System.out.println("Not enough money to buy " + pokemon.getName());
+                updateCantAffordLabel();
             }
         });
 
-        card.getChildren().addAll(imageView, info, buyButton);
-        return card;
+        card.getChildren().addAll(imageView, info, buyButton); // adiciona imagem, informação e o botão ao card criado
+        return card; // retorna o cartão pra ser inserido na scene no initialize
     }
 
+    /*
+     * o item é adicionado de forma similar ao pokemon, apenas diferencia na imagem,
+     * que é definida pelo tipo.
+     */
     private HBox createItemCard(Item item) {
         HBox card = new HBox();
         card.setSpacing(15);
@@ -162,7 +173,10 @@ public class ShopController implements Initializable {
         imageView.setFitWidth(80);
         imageView.setPreserveRatio(true);
 
-        if (item.getType().toString().equals("Money Multiplier")) {
+        if (item.getType().toString().equals("Money Multiplier")) { /*
+                                                                     * verifica se o item tem tipo multiplier, ou
+                                                                     * pokemon
+                                                                     */
             itemImg = "/img/moneymultiplier.png";
             variableLabel = "Multiplier: ";
         }
@@ -171,7 +185,7 @@ public class ShopController implements Initializable {
             variableLabel = "Damage: ";
         }
         try {
-            URL imageUrl = getClass().getResource(itemImg); // coloque sua imagem em resources/img/
+            URL imageUrl = getClass().getResource(itemImg);
             if (imageUrl != null) {
                 imageView.setImage(new Image(imageUrl.toExternalForm()));
             } else {
@@ -204,6 +218,7 @@ public class ShopController implements Initializable {
                 }
             } else {
                 System.out.println("Not enough money to buy " + item.getName());
+                updateCantAffordLabel();
             }
         });
 
@@ -215,8 +230,12 @@ public class ShopController implements Initializable {
         moneyLabel.setText(String.format("Money: $%.2f", currentUser.getMoney()));
     }
 
+    private void updateCantAffordLabel() {
+        moneyLabel.setText(String.format("Money: $%.2f - Can't afford!", currentUser.getMoney()));
+    }
+
     @FXML
-    private void handleBackToHome(ActionEvent event) {
+    private void handleBackToHome(ActionEvent event) { // botão de retorno a home
         SceneSwitcher.switchToHome(event, currentUser.getName());
     }
 }

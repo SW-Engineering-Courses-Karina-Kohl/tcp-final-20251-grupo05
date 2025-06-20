@@ -9,7 +9,7 @@
 
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.ProfileController">
    <children>
-      <Rectangle fx:id="profilerectangle" arcHeight="5.0" arcWidth="5.0" fill="PURPLE" height="73.0" layoutX="461.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="142.0" />
+      <Rectangle fx:id="profilerectangle" arcHeight="5.0" arcWidth="5.0" fill="#7d5a94" height="73.0" layoutX="461.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="142.0" />
       <Rectangle fx:id="homerectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutX="300.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="158.0" />
       <Rectangle fx:id="shoprectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutX="150.0" layoutY="335.0" stroke="TRANSPARENT" strokeType="INSIDE" width="148.0" />
       <Rectangle fx:id="PCrectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutY="333.0" stroke="TRANSPARENT" strokeType="INSIDE" width="148.0" />
