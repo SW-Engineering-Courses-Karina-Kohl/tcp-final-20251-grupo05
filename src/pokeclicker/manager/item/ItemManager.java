@@ -20,7 +20,7 @@ public class ItemManager {
     }
 
     public static Item createItem(String name, double price, String description, ItemType type,
-            double damageOrMultiplier)
+            double damageOrMultiplier, String userName)
             throws IllegalArgumentException {
         if (ItemDB.getItem(name) != null) {
             throw new IllegalArgumentException("This item name already exists");
@@ -47,7 +47,7 @@ public class ItemManager {
             default -> throw new IllegalArgumentException("Invalid Item type: " + type);
         }
 
-        ItemDB.insertItem(newItem);
+        ItemDB.insertItem(newItem, userName);
         return newItem;
     }
 

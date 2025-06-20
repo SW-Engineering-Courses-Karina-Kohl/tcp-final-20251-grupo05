@@ -9,6 +9,7 @@ public class ItemFilter {
     private String nameContains;
     private Boolean available;
     private String descriptionContains;
+    private String user;
 
     public ItemFilter() {
     }
@@ -35,6 +36,14 @@ public class ItemFilter {
 
     public String getDescriptionContains() {
         return descriptionContains;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public void setType(ItemType type) {

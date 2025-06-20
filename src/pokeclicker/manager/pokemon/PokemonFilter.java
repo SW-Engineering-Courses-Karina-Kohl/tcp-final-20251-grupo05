@@ -12,6 +12,7 @@ public class PokemonFilter {
     private Boolean available;
     private Double maxPrice;
     private Ability ability;
+    private String userName;
 
     public PokemonFilter() {
     }
@@ -42,6 +43,14 @@ public class PokemonFilter {
 
     public Ability getAbility() {
         return ability;
+    }
+
+    public String getUser() {
+        return userName;
+    }
+
+    public void setUser(String userName) {
+        this.userName = userName;
     }
 
     public void setName(String name) {
