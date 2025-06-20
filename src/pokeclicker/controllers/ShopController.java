@@ -145,6 +145,7 @@ public class ShopController implements Initializable {
                 }
             } else {
                 System.out.println("Not enough money to buy " + pokemon.getName());
+                updateCantAffordLabel();
             }
         });
 
@@ -203,6 +204,7 @@ public class ShopController implements Initializable {
                 }
             } else {
                 System.out.println("Not enough money to buy " + item.getName());
+                updateCantAffordLabel();
             }
         });
 
@@ -212,6 +214,10 @@ public class ShopController implements Initializable {
 
     private void updateMoneyLabel() {
         moneyLabel.setText(String.format("Money: $%.2f", currentUser.getMoney()));
+    }
+
+    private void updateCantAffordLabel() {
+        moneyLabel.setText(String.format("Money: $%.2f - Can't afford!", currentUser.getMoney()));
     }
 
     @FXML
