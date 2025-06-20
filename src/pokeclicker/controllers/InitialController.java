@@ -43,12 +43,12 @@ public class InitialController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Font minecraftFont = null;
         try {
-            URL fontUrl = getClass().getResource("/fonts/Minecraft.ttf");
+            URL fontUrl = getClass().getResource("/fonts/C&C Red Alert [INET].ttf"); // nova fonte de exemplo, podemos
+                                                                                     // trocar
             InputStream fontStream = fontUrl.openStream();
-            minecraftFont = Font.loadFont(fontStream, 40); 
-            fontStream.close(); 
-        } 
-        catch (Exception e) { // Catch more general Exception for IO issues
+            minecraftFont = Font.loadFont(fontStream, 40);
+            fontStream.close();
+        } catch (Exception e) { // Catch more general Exception for IO issues
             e.printStackTrace();
         }
 
@@ -56,7 +56,7 @@ public class InitialController implements Initializable {
 
         titleLabel.setText("Welcome, trainer!\nTo begin your journey, enter your name and press \"Start\"");
         exceptionLabel.setText("");
-        Image logo1 = new Image(getClass().getResource("/img/logo.png").toExternalForm());        
+        Image logo1 = new Image(getClass().getResource("/img/logo.png").toExternalForm());
         logo.setImage(logo1);
         logo.setFitHeight(350);
         logo.setFitWidth(350);
@@ -75,7 +75,7 @@ public class InitialController implements Initializable {
         cursorViewer.setFitWidth(30);
 
         inputField.setAlignment(Pos.CENTER);
-        
+
     }
 
     public void getUsername(ProfileController profileController) throws UnexpectedException {

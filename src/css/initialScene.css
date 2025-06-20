@@ -1,10 +1,10 @@
 .root {
-    -fx-background-color: rgb(0, 60, 60);
+    -fx-background-color: WHITE;
 }
 
 #titleLabel {
-    -fx-font-size: 18;
-    -fx-font-family: "Minecraft";
+    -fx-font-size: 22;
+    -fx-font-family: "C&C Red Alert [INET]";
     -fx-text-fill: BLACK;
     -fx-text-alignment: center;
     -fx-alignment: center;
@@ -14,60 +14,64 @@
 
 #exceptionLabel {
     -fx-font-size: 20;
-    -fx-font-family: "Minecraft";
+    -fx-font-family: "C&C Red Alert [INET]";
     -fx-text-fill: "red";
     -fx-text-alignment: center;
     -fx-alignment: center;
 }
 
 .text-field {
-    -fx-background-color: #2A5058; 
+    -fx-background-color: #2A5058;
     -fx-background-radius: 5;
-    -fx-border-color: BLACK; 
+    -fx-border-color: BLACK;
     -fx-border-radius: 5;
     -fx-border-width: 1px;
-    -fx-font-size: 14px;
-    -fx-text-fill: SNOW; 
-    -fx-prompt-text-fill: SNOW; 
-    -fx-font-family: "Minecraft";  
-    -fx-padding: 10px 20px 10px 20px; 
+    -fx-font-size: 15px;
+    -fx-text-fill: SNOW;
+    -fx-pref-width: 177px;
+    /* Preferred width */
+    -fx-pref-height: 15px;
+    /* Preferred height */
+    -fx-prompt-text-fill: SNOW;
+    -fx-font-family: "C&C Red Alert [INET]";
+    -fx-padding: 10px 20px 10px 20px;
 
 
 }
 
 .text-field:hover {
-    -fx-background-color: #61a2b1; 
+    -fx-background-color: #61a2b1;
     -fx-border-color: SNOW;
     -fx-text-fill: SNOW;
 }
 
 .text-field:focused {
-    -fx-border-color: SNOW; 
-    -fx-border-width: 2px; 
+    -fx-border-color: SNOW;
+    -fx-border-width: 2px;
 }
 
 .button {
-    -fx-background-color: #2A5058; 
+    -fx-background-color: #2A5058;
     -fx-background-radius: 5;
     -fx-border-color: #2A5058;
     -fx-border-radius: 2;
     -fx-border-width: 1px;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: white; 
-    -fx-padding: 10px 20px 10px 20px; 
-    -fx-cursor: hand; 
-    -fx-font-family: "Minecraft";   
+    -fx-text-fill: GREEN;
+    -fx-padding: 10px 20px 10px 20px;
+    -fx-cursor: hand;
+    -fx-font-family: "C&C Red Alert [INET]";
 
 }
 
 .button:hover {
-    -fx-background-color: #61a2b1; 
+    -fx-background-color: #61a2b1;
     -fx-border-color: SNOW;
     -fx-text-fill: SNOW;
 }
 
 .button:pressed {
-    -fx-background-color: linear-gradient(#2A5058, #61a2b1); 
-    -fx-translate-y: 1px; 
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+    -fx-translate-y: 1px;
 }

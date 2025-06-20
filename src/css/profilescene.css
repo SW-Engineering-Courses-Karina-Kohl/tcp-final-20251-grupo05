@@ -1,13 +1,13 @@
 /* Apply background color and font settings to the whole scene */
 .root {
     -fx-background-color: WHITE;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-family: "C&C Red Alert [INET]";
     -fx-padding: 20;
 }
 
 /* Style for all labels */
 .label {
-    -fx-font-size: 20px;
+    -fx-font-size: 22px;
     -fx-text-fill: #2c3e50;
     -fx-font-weight: bold;
 }
@@ -17,6 +17,7 @@
     -fx-text-fill: BLACK;
     -fx-font-weight: bold;
 }
+
 /* Style for a label with fx:id="usernameLabel" (optional specific targeting) */
 #usernameLabel {
     -fx-font-size: 20px;
@@ -31,7 +32,7 @@
     -fx-padding: 8 16;
     -fx-background-radius: 8;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 2, 2);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
 }
 
 .button:hover {
@@ -39,7 +40,8 @@
 }
 
 /* Style for TextField or TextArea if used */
-.text-field, .text-area {
+.text-field,
+.text-area {
     -fx-border-color: #bdc3c7;
     -fx-border-radius: 5;
     -fx-background-radius: 5;

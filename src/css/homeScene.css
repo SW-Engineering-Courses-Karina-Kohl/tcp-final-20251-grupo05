@@ -1,14 +1,14 @@
 /* Apply background color and font settings to the whole scene */
 .root {
     -fx-background-color: WHITE;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-family: "C&C Red Alert [INET]";
     -fx-padding: 20;
 }
 
 /* Style for all labels */
 .label {
-    -fx-font-size: 20px;
-    -fx-text-fill: #2c3e50;
+    -fx-font-size: 26px;
+    -fx-text-fill: teal;
     -fx-font-weight: bold;
 }
 
