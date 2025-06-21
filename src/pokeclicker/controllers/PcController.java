@@ -216,9 +216,8 @@ public class PcController implements Initializable{
                 if (itemIndex < numItems) {
                 Map.Entry<Item, Integer> entry = itemEntries.get(itemIndex);
                 Item item = entry.getKey();
-                int quantity = entry.getValue();
 
-                VBox itemContainer = createItemCard(item, quantity);
+                VBox itemContainer = createItemCard(item);
                 gridPane.add(itemContainer, col, row);
 
                 itemIndex++; 
@@ -232,7 +231,7 @@ public class PcController implements Initializable{
         return gridPane;
     }
 
-    private VBox createItemCard(Item item, int quantity) {
+    private VBox createItemCard(Item item) {
         HBox cardContent = new HBox();
         cardContent.setSpacing(15);
         cardContent.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
@@ -266,31 +265,30 @@ public class PcController implements Initializable{
         TextFlow typeLabelFlow = new TextFlow();
         Text typePrefix = new Text("Type: ");
         typePrefix.setFill(Color.web("#2c3e50"));
-        Text descriptionValue = new Text();
+        Text typeValue = new Text();
 
         switch (itemType) {
             case "Money Multiplier":
-                descriptionValue = new Text("MONEY");
-                descriptionValue.setFill(Color.GOLDENROD);
+                typeValue = new Text("MONEY");
+                typeValue.setFill(Color.GOLDENROD);
                 break;
             case "Pokemon":
-                descriptionValue = new Text("PKMN");
-                descriptionValue.setFill(Color.MAGENTA);
+                typeValue = new Text("PKMN");
+                typeValue.setFill(Color.MAGENTA);
                 break;
             default: 
-                descriptionValue.setFill(Color.BLACK);
+                typeValue.setFill(Color.BLACK);
                 break;
         }
 
 
-        descriptionValue.setStyle("-fx-font-weight: bold;");
-        typeLabelFlow.getChildren().addAll(typePrefix, descriptionValue);
+        typeValue.setStyle("-fx-font-weight: bold;");
+        typeLabelFlow.getChildren().addAll(typePrefix, typeValue);
 
-        Label quantityLabel = new Label("Qty: " + quantity);
-        info.getChildren().add(quantityLabel);
+        Label descriptionLabel = new Label("Desc: " + item.getDescription());
 
         HBox.setHgrow(info, Priority.ALWAYS);
-        info.getChildren().addAll(nameLabel, typeLabelFlow);
+        info.getChildren().addAll(nameLabel, typeLabelFlow, descriptionLabel);
 
         cardContent.getChildren().addAll(imageView, info);
         
