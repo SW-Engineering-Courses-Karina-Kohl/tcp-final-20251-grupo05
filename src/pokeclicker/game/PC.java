@@ -9,12 +9,6 @@ import pokeclicker.model.User;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
-/*
-Na MAIN é preciso que isso ocorra para que o PC e o User funcione de maneira correta.
-    User novoUsuario = new User("NomeDoJogador");
-    PC pcDoNovoUsuario = new PC();
-*/
-
 public class PC {
     private final List<Pokemon> pokemons;
     private final Map<Item, Integer> itemQuantities;

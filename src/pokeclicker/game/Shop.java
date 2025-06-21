@@ -27,6 +27,7 @@ public class Shop {
             throw new IllegalArgumentException("Item not found in the shop.");
         }
         if (user.getMoney() >= purchasable.getPrice()) {
+            user.setMoney(user.getMoney() - purchasable.getPrice());
             purchasable.setAvailable(false);
             return purchasable;
         } else {
