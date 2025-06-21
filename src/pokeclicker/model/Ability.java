@@ -25,8 +25,8 @@ public class Ability {
         return description;
     }
 
-    public PokeType getType() {
-        return type;
+    public String getType() {
+        return type.toString();
     }
 
     public double getCure() {

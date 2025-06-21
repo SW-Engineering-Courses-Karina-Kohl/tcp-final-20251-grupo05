@@ -86,20 +86,23 @@ public abstract class Pokemon implements Activatable, Purchasable {
         this.abilities = abilities;
     }
 
-    public void gainXp(double xp) {
+    public boolean gainXp(double xp) {
         if (xp < 0) {
             throw new IllegalArgumentException("XP cannot be negative");
         }
         this.xp += xp;
-        updateLevel();
+        return updateLevel();
     }
 
-    private void updateLevel() {
+    private boolean updateLevel() {
         if (xp >= ADVANCED_MIN_XP) {
             level = LevelType.ADVANCED;
+            return true;
         } else if (xp >= INTERMEDIATE_MIN_XP) {
             level = LevelType.INTERMEDIATE;
+            return true;
         }
+        return false;
     }
 
     public void gainHealth(int health) {
