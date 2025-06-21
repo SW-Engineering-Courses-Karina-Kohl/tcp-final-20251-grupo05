@@ -127,7 +127,7 @@ public class InitialController implements Initializable {
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        String cssPath = this.getClass().getResource("/css/profileScene.css").toExternalForm();
+        String cssPath = this.getClass().getResource("/css/profilescene.css").toExternalForm();
         scene.getStylesheets().add(cssPath);
         stage.setScene(scene);
         stage.show();

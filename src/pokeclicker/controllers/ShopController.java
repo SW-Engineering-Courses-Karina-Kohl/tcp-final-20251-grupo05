@@ -232,6 +232,7 @@ public class ShopController implements Initializable {
 
     private void updateCantAffordLabel() {
         moneyLabel.setText(String.format("Money: $%.2f - Can't afford!", currentUser.getMoney()));
+
     }
 
     @FXML

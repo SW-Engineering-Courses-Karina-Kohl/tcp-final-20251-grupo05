@@ -162,7 +162,7 @@ public class HomeController implements Initializable {
     private void home(ActionEvent event) {
         System.out.println("Home clicked");
         selectImage(homeimg);
-        homerectangle.setFill(javafx.scene.paint.Color.BLUE);
+        homerectangle.setFill(javafx.scene.paint.Color.web("#39d1d1"));
         PCrectangle.setFill(javafx.scene.paint.Color.TEAL);
         profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);

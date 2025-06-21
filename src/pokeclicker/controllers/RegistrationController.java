@@ -111,6 +111,8 @@ public class RegistrationController implements Initializable {
                 }
                 break;
             case 2:
+                if (imagepath != null)
+                    createpokemonlabel.toFront();
 
                 inputField.clear();
                 if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
@@ -243,6 +245,10 @@ public class RegistrationController implements Initializable {
         Ability testAbility = new Ability("Tackle", "A basic physical attack", type, 20, 0);
         abilities.add(testAbility);
         return abilities;
+    }
+
+    public void setCreatePokemonlabel() {
+        createpokemonlabel.toFront();
     }
 
     public void setCurrentIndex(int index) {

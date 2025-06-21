@@ -1,5 +1,12 @@
 .root {
     -fx-background-color: "TEAL";
+    -fx-font-family: "C&C Red Alert [INET]";
+    -fx-font-size: 16
+}
+
+.label_ {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
 }
 
 #titleLabel {
@@ -21,6 +28,18 @@
 
 /* Default text color */
 #typebutton {
+    -fx-font-family: "C&C Red Alert [INET]";
+    -fx-font-size: 18
+}
+
+#imageselectbutton {
+    -fx-font-family: "C&C Red Alert [INET]";
+    -fx-font-size: 18;
+}
+
+.textField {
+    -fx-font-family: "C&C Red Alert [INET]";
+    -fx-font-size: 16;
     -fx-text-fill: black;
 }
 
@@ -47,8 +66,8 @@
 }
 
 /* Prevent hover/focus from overriding text color */
-#typebutton:hover,
-#typebutton:focused,
-#typebutton:hover:focused {
+.MenuButton:hover,
+.MenuButton:focused,
+.MenuButton:hover:focused {
     -fx-text-fill: inherit;
 }
