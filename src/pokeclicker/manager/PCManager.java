@@ -16,21 +16,21 @@ public class PCManager {
     private PCManager() {
     }
 
-    public static PC getPC(User user) {
+    public static PC getPC(User user, Optional<ItemFilter> itemFilterOpt, Optional<PokemonFilter> pokeFilterOpt) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
 
-        ItemFilter itemFilter = new ItemFilter();
-        PokemonFilter pokeFilter = new PokemonFilter();
-
+        ItemFilter itemFilter = itemFilterOpt.orElseGet(ItemFilter::new);
         itemFilter.setAvailable(false);
         itemFilter.setUser(user.getName());
+
+        PokemonFilter pokeFilter = pokeFilterOpt.orElseGet(PokemonFilter::new);
         pokeFilter.setAvailable(false);
         pokeFilter.setUser(user.getName());
 
         List<Pokemon> pokemons = PokemonManager.getAllPokemons(Optional.of(pokeFilter));
-        List<Item> items = (ItemManager.getAllItems(Optional.of(itemFilter)));
+        List<Item> items = ItemManager.getAllItems(Optional.of(itemFilter));
 
         PC pc = new PC(pokemons, items);
 

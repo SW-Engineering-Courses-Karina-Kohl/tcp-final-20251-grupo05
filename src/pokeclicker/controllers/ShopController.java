@@ -26,6 +26,7 @@ import pokeclicker.game.Shop;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,7 @@ public class ShopController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         String username = SceneSwitcher.getCurrentUsername(); // seta o username pro shop controller
         currentUser = UserManager.getUser(username); // carrega o user baseado no username
-        currentShop = ShopManager.getShop(currentUser); // carrega a shop pro user
+        currentShop = ShopManager.getShop(currentUser, Optional.empty(), Optional.empty()); // carrega a shop pro user
 
         populateShop(); // serve para inserir pokemons/itens na loja no carregamento (utiliza o método
                         // que cria os cards)
@@ -59,7 +60,7 @@ public class ShopController implements Initializable {
 
     public void setUser(User user) {
         this.currentUser = user;
-        this.currentShop = ShopManager.getShop(user);
+        this.currentShop = ShopManager.getShop(user, Optional.empty(), Optional.empty());
         populateShop();
     }
 
