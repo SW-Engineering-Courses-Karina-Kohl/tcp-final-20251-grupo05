@@ -177,7 +177,7 @@ public class ShopController implements Initializable {
                                                                      * verifica se o item tem tipo multiplier, ou
                                                                      * pokemon
                                                                      */
-            itemImg = "/img/moneymultiplier.png";
+            itemImg = "/img/amuletcoin.png";
             variableLabel = "Multiplier: ";
         }
         if (item.getType().toString().equals("Pokemon")) {
