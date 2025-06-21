@@ -79,12 +79,18 @@ public class PokemonManager {
     }
 
     public static void addAbilityToPokemon(String pokemonName, String abilityName) {
-        if (pokemonName == null || PokemonDB.getPokemon(pokemonName) == null) {
+        Pokemon pokemon = getPokemon(pokemonName);
+        Ability ability = AbilityDB.getAbility(abilityName);
+        if (pokemonName == null || pokemon == null) {
             throw new IllegalArgumentException("Pokemon does not exist or name is null");
         }
-        if (abilityName == null || AbilityDB.getAbility(abilityName) == null) {
+        if (abilityName == null || ability == null) {
             throw new IllegalArgumentException("Ability does not exist or name is null");
         }
+        if (!pokemon.getType().toLowerCase().equals(ability.getType().toLowerCase())) {
+            throw new IllegalArgumentException("Ability type does not match Pokemon type");
+        }
+
         PokemonAbilityDB.addAbilityToPokemon(pokemonName, abilityName);
     }
 

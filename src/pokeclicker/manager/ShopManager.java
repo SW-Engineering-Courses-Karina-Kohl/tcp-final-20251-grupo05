@@ -21,7 +21,9 @@ public class ShopManager {
         PokemonFilter pokeFilter = new PokemonFilter();
 
         itemFilter.setAvailable(true);
+        itemFilter.setUser(user.getName());
         pokeFilter.setAvailable(true);
+        pokeFilter.setUser(user.getName());
 
         List<Purchasable> purchasables = new ArrayList<>();
 
