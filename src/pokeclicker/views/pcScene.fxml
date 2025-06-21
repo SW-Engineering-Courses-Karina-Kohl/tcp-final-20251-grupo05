@@ -31,13 +31,13 @@
         <tabs>
           <Tab text="Pokemons">
                <content>
-                  <ScrollPane fx:id="pcScrollPane" prefHeight="304.0" prefWidth="604.0" />
+                  <ScrollPane fx:id="pcPokemonSP" prefHeight="304.0" prefWidth="604.0" />
                </content>
           </Tab>
           <Tab text="Items">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
+               <content>
+                  <ScrollPane fx:id="pcItemSP" prefHeight="304.0" prefWidth="604.0" />
+               </content>
           </Tab>
         </tabs>
       </TabPane>

@@ -1,6 +1,10 @@
 package pokeclicker.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -8,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -28,6 +34,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.Node;
 import pokeclicker.manager.PCManager;
 import pokeclicker.manager.UserManager;
+import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
@@ -64,7 +71,10 @@ public class PcController implements Initializable{
     private Line shortline3;
 
     @FXML
-    private ScrollPane pcScrollPane;
+    private ScrollPane pcPokemonSP;
+
+    @FXML
+    private ScrollPane pcItemSP;
     @FXML
     private Button PC;
     @FXML
@@ -84,7 +94,8 @@ public class PcController implements Initializable{
 
         pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()));
 
-    pcScrollPane.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
+        pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
+        pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
     }
 
     private HBox createPokemonCard(Pokemon pokemon) {
@@ -136,8 +147,10 @@ public class PcController implements Initializable{
 
         Label abilityLabel = new Label("Ability: " + pokemon.getAbilities());
 
+        Label xpLabel = new Label("XP: " + pokemon.getXp());
+
         HBox.setHgrow(info, Priority.ALWAYS);
-        info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, abilityLabel);
+        info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, abilityLabel, xpLabel);
 
         card.getChildren().addAll(imageView, info);
         return card;
@@ -176,6 +189,124 @@ public class PcController implements Initializable{
 
         return gridPane;
     }
+
+    private GridPane createItemGrid(Map<Item, Integer> itemsQuantities) {
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
+
+    for (int i = 0; i < 3; i++) {
+        ColumnConstraints column = new ColumnConstraints();
+        column.setPercentWidth(100.0 / 3);
+        column.setHalignment(HPos.CENTER); 
+        gridPane.getColumnConstraints().add(column);
+    }
+        List<Map.Entry<Item, Integer>> itemEntries = new ArrayList<>(itemsQuantities.entrySet());
+        
+        int numItems = itemEntries.size();
+        int numRows =  Math.ceilDiv(numItems, 3); 
+
+        int itemIndex = 0; 
+
+        for(int row = 0; row < numRows; row++)
+        {
+            for(int col=0; col < 3; col++)
+            {   
+                if (itemIndex < numItems) {
+                Map.Entry<Item, Integer> entry = itemEntries.get(itemIndex);
+                Item item = entry.getKey();
+                int quantity = entry.getValue();
+
+                VBox itemContainer = createItemCard(item, quantity);
+                gridPane.add(itemContainer, col, row);
+
+                itemIndex++; 
+                } else 
+                {
+                    break;
+                }
+                
+            }
+        }
+        return gridPane;
+    }
+
+    private VBox createItemCard(Item item, int quantity) {
+        HBox cardContent = new HBox();
+        cardContent.setSpacing(15);
+        cardContent.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
+        cardContent.setPrefSize(176, 120);
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(50);
+        imageView.setPreserveRatio(true);
+
+        String itemType = item.getType().toString();
+
+        
+        try {
+            URL imageUrl = itemType.equals("Pokemon") ? getClass().getResource("../../img/potion.png") : getClass().getResource("../../img/amuletcoin.png") ;
+            if (imageUrl != null) {
+                imageView.setImage(new Image(imageUrl.toExternalForm()));
+            } else {
+                System.err.println("Image not found!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        VBox info = new VBox();
+        info.setSpacing(5);
+        
+
+        Label nameLabel = new Label("Name: " + item.getName());
+        nameLabel.setWrapText(true);
+
+        TextFlow typeLabelFlow = new TextFlow();
+        Text typePrefix = new Text("Type: ");
+        typePrefix.setFill(Color.web("#2c3e50"));
+        Text descriptionValue = new Text();
+
+        switch (itemType) {
+            case "Money Multiplier":
+                descriptionValue = new Text("MONEY");
+                descriptionValue.setFill(Color.GOLDENROD);
+                break;
+            case "Pokemon":
+                descriptionValue = new Text("PKMN");
+                descriptionValue.setFill(Color.MAGENTA);
+                break;
+            default: 
+                descriptionValue.setFill(Color.BLACK);
+                break;
+        }
+
+
+        descriptionValue.setStyle("-fx-font-weight: bold;");
+        typeLabelFlow.getChildren().addAll(typePrefix, descriptionValue);
+
+        Label quantityLabel = new Label("Qty: " + quantity);
+        info.getChildren().add(quantityLabel);
+
+        HBox.setHgrow(info, Priority.ALWAYS);
+        info.getChildren().addAll(nameLabel, typeLabelFlow);
+
+        cardContent.getChildren().addAll(imageView, info);
+        
+        Button useButton = new Button();
+        useButton.setText("USE");
+        useButton.setMaxWidth(88); 
+        useButton.setId("itemType");
+
+        VBox itemContainer = new VBox();
+        itemContainer.setSpacing(10); 
+        itemContainer.getChildren().addAll(cardContent, useButton);
+        itemContainer.setPrefWidth(176); 
+        itemContainer.setAlignment(Pos.CENTER); 
+
+        return itemContainer; 
+    } 
 
     @FXML
     private void PC(ActionEvent event) {
