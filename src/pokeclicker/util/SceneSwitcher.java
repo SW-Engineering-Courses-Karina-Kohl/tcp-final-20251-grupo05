@@ -169,8 +169,7 @@ public class SceneSwitcher {
 
     public static void switchToClicker(ActionEvent event) {
         try {
-            Parent root = FXMLLoader
-                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/clickerScene.fxml"));
+            Parent root = FXMLLoader.load(SceneSwitcher.class.getResource("/pokeclicker/views/clickerScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             String cssPath = SceneSwitcher.class.getResource("/css/clickerScene.css").toExternalForm();
@@ -187,21 +186,21 @@ public class SceneSwitcher {
     }
 
     public static void switchToPC(ActionEvent event, String username) {
+        setCurrentUsername(username);
+
         try {
-            Parent root = FXMLLoader
-                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/pcScene.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource("/pokeclicker/views/pcScene.fxml"));
+            Parent root = loader.load();
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             String cssPath = SceneSwitcher.class.getResource("/css/pcScene.css").toExternalForm();
-
-            // TODO: pass username to keep context
-
             scene.getStylesheets().add(cssPath);
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
