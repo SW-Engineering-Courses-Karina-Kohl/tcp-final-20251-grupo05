@@ -74,5 +74,11 @@
       <Label fx:id="damagelabel" layoutX="119.0" layoutY="169.0" />
       <Label fx:id="curelabel" layoutX="99.0" layoutY="198.0" />
       <Label fx:id="descriptionlabel" layoutX="138.0" layoutY="124.0" prefHeight="45.0" prefWidth="162.0" />
+      <MenuButton fx:id="pokemonMenuButton" layoutX="60.0" layoutY="261.0" mnemonicParsing="false" text="Pokemon">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
    </children>
 </AnchorPane>

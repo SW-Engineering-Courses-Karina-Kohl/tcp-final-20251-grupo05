@@ -202,7 +202,7 @@ public class HomeController implements Initializable {
     @FXML
     public void abilitybutton(ActionEvent event) {
 
-        pokeclicker.util.SceneSwitcher.switchToAbilityRegistration(event);
+        pokeclicker.util.SceneSwitcher.switchToAbilityRegistration(event, SceneSwitcher.getCurrentUsername());
     }
 
     @FXML
