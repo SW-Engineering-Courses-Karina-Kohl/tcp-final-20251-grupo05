@@ -5,11 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLiteConnection {
-    private static final String URL = "jdbc:sqlite:game.db";
+    private static String url = "jdbc:sqlite:game.db";
+
+    // For testing only
+    public static void setUrl(String newUrl) {
+        url = newUrl;
+    }
+
+    // For testing only
+    public static String getUrl() {
+        return url;
+    }
 
     public static Connection connect() {
         try {
-            Connection conn = DriverManager.getConnection(URL);
+            Connection conn = DriverManager.getConnection(url);
             System.out.println("SQLite connection established!");
             return conn;
         } catch (SQLException e) {

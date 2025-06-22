@@ -1,1 +1,1 @@
-javac -cp lib\junit-platform-console-standalone-1.11.0.jar -d out @sources.txt
+javac -cp "lib\sqlite-jdbc-3.50.1.0.jar;lib/junit-platform-console-standalone-1.11.0.jar" -d out @sources.txt
