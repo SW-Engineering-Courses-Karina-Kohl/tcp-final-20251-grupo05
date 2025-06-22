@@ -16,19 +16,29 @@
 
       <AnchorPane fx:id="overlayPane" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.7);" pickOnBounds="true" prefWidth="600.0" prefHeight="404.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <VBox fx:id="popupContent" alignment="CENTER" spacing="10" layoutX="100" layoutY="50"
-                  style="-fx-background-color: white; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;"
-                  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Rectangle fill="TEAL" width="200" height="404"
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0" />
+            <Rectangle fill="TEAL" width="200" height="404"
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" /> 
+            <VBox fx:id="popupContent" alignment="CENTER" spacing="10" layoutX="200" layoutY="-12"
+                  maxWidth="200" prefWidth="200" style="-fx-background-color: white; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;"
+                  >
                <ImageView fx:id="popupImage" fitWidth="150" preserveRatio="true" />
                <Label fx:id="popupName" />
                <Label fx:id="popupType" />
                <Label fx:id="popupHealth" />
-               <Label fx:id="popupXP" />
                <Label fx:id="popupAbility" />
-               <Label fx:id="popupXpPrice" /> 
+               <Label fx:id="popupXP" /> 
                <Button fx:id="buyXpButton" text="Buy XP" onAction="#buyXp" /> 
                <Button text="Close" onAction="#closePopup" />
             </VBox>
+            <Button text="Close" onAction="#closePopup"
+               layoutX="20" layoutY="20"
+               style="-fx-background-color: white; -fx-text-fill: teal; -fx-font-weight: bold;"/>
+            <Label fx:id="popupXpPrice" layoutX="460" layoutY="20" style= "-fx-text-fill: white" />
+            <Label fx:id="moneyerrorxp" layoutX="410" layoutY="40" style= "-fx-text-fill: red"  />
          </children>
       </AnchorPane>
 

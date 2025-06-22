@@ -31,6 +31,33 @@
 
 }
 
+#popupHealth {
+    -fx-font-size: 20px;
+}
+
+#popupAbility {
+    -fx-font-size: 20px;
+}
+
+#popupType {
+    -fx-font-size: 20px;
+}
+
+#popupXP {
+    -fx-font-size: 20px;
+}
+
+#popupXpPrice {
+
+    -fx-font-size: 20px;
+}
+
+#moneyerrorxp {
+    -fx-font-size: 16px;
+    -fx-text-fill: red;
+
+}
+
 .tab:hover {
     -fx-background-color: #61a2b1;
     -fx-cursor: hand;

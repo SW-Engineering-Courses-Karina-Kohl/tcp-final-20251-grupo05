@@ -82,7 +82,7 @@ public class HomeController implements Initializable {
         lowerdesignimage.setImage(lowerdesignimage1);
         lowerdesignimage.setPreserveRatio(true);
         lowerdesignimage.setFitWidth(360);
-        cadastropokemon.setText("Pokémon Registration");
+        cadastropokemon.setText("Pokemon Registration");
         clickerscene.setText("Clicker");
         Image abilityImage = new Image(getClass().getResource("/img/abilityimage.png").toExternalForm());
         abilityimage.setImage(abilityImage);
