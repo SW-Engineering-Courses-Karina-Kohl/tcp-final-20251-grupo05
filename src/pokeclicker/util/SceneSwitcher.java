@@ -125,6 +125,7 @@ public class SceneSwitcher {
     public static FXMLLoader switchToSceneWithController(Stage stage, String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource(fxmlPath));
         Parent root = loader.load();
+
         stage.setScene(new Scene(root));
         stage.show();
         return loader;

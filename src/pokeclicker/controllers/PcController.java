@@ -97,6 +97,9 @@ public class PcController implements Initializable {
     @FXML
     private ImageView popupImage;
     @FXML
+    private Label moneyerrorxp;
+
+    @FXML
     private Label popupName;
     @FXML
     private Label popupType;
@@ -132,7 +135,7 @@ public class PcController implements Initializable {
         card.setSpacing(15);
         card.setStyle(
                 "-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
-        card.setPrefSize(270, 120);
+        card.setPrefSize(282, 120);
 
         ImageView imageView = new ImageView();
         imageView.setFitWidth(50);
@@ -155,7 +158,6 @@ public class PcController implements Initializable {
         Label nameLabel = new Label("Name: " + pokemon.getName());
         nameLabel.setWrapText(true);
 
-        // Colored type display
         TextFlow typeLabelFlow = new TextFlow();
         Text typePrefix = new Text("Type: ");
         typePrefix.setFill(Color.web("#2c3e50"));
@@ -178,7 +180,6 @@ public class PcController implements Initializable {
 
         Label xpLabel = new Label("XP: " + pokemon.getXp());
 
-        // Add Details button
         Button detailsButton = new Button("Details");
         detailsButton.setOnAction(e -> {
             System.out.println("Details clicked for: " + pokemon.getName());
@@ -385,6 +386,8 @@ public class PcController implements Initializable {
             }
         } catch (Exception e) {
             System.out.println("Could not buy XP: " + e.getMessage());
+            moneyerrorxp.setText("Not enough money to buy XP");
+
         }
     }
 
@@ -392,6 +395,7 @@ public class PcController implements Initializable {
     private void closePopup(ActionEvent event) {
         overlayPane.setVisible(false);
         overlayPane.toBack();
+        moneyerrorxp.setText("");
     }
 
     @FXML
