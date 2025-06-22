@@ -186,8 +186,17 @@ public class PcController implements Initializable {
             PokemonPopup(pokemon);
         });
 
+        Button favoriteButton = new Button("Favorite");
+        favoriteButton.setOnAction(e -> {
+            User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
+            user.setFavoritePokemon(pokemon);
+            UserManager.updateUser(user);
+            System.out.println("Set favorite Pokemon to: " + pokemon.getName());
+        });
+
         HBox.setHgrow(info, Priority.ALWAYS);
-        info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, abilityLabel, xpLabel, detailsButton);
+        info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, abilityLabel, xpLabel, detailsButton,
+                favoriteButton);
 
         card.getChildren().addAll(imageView, info);
         return card;
