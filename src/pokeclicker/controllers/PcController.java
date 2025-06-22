@@ -44,6 +44,7 @@ import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import pokeclicker.game.PC;
 import pokeclicker.manager.item.ItemManager;
+import pokeclicker.manager.pokemon.PokemonManager;
 
 public class PcController implements Initializable {
     @FXML
@@ -354,6 +355,14 @@ public class PcController implements Initializable {
         return itemContainer;
     }
 
+    private void refreshPokemonGrid() {
+        // User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
+        // pc = PCManager.getPC(user, Optional.empty(), Optional.empty());
+        Pokemon[] updatedPokemons = pc.getPokemons().toArray(new Pokemon[0]);
+        GridPane newGrid = createPokemonGrid(updatedPokemons);
+        pcPokemonSP.setContent(newGrid);
+    }
+
     public void PokemonPopup(Pokemon pokemon) {
         if (pokemon == null)
             return;
@@ -394,6 +403,10 @@ public class PcController implements Initializable {
             PokemonPopup(currentPopupPokemon);
             if (evolved) {
                 System.out.println(currentPopupPokemon.getName() + " evolved!");
+                currentPopupPokemon.setImagePath(
+                        currentPopupPokemon.getImagePath().replace("1", "2"));
+                PokemonManager.updatePokemon(currentPopupPokemon);
+                refreshPokemonGrid();
             }
         } catch (Exception e) {
             System.out.println("Could not buy XP: " + e.getMessage());
