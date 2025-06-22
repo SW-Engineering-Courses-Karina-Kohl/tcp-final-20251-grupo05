@@ -99,34 +99,44 @@ public class AbilityController implements Initializable {
                 }
                 break;
             case 2:
-
                 System.out.println(currentIndex);
                 inputField.clear();
-                if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
-                    damagelabel.setText(input);
-                    damage = Double.parseDouble(input);
-                    cureline.toFront();
-                    damageline.toBack();
-                    descriptionErrorlabel.toBack();
-                } else {
+                try {
+                    if (input != null && !input.isEmpty() && Double.parseDouble(input) > 0) {
+                        damagelabel.setText(input);
+                        damage = Double.parseDouble(input);
+                        cureline.toFront();
+                        damageline.toBack();
+                        descriptionErrorlabel.toBack();
+                    } else {
+                        currentIndex--;
+                        descriptionErrorlabel.setText("Damage must be a positive number!");
+                        descriptionErrorlabel.toFront();
+                    }
+                } catch (NumberFormatException e) {
                     currentIndex--;
-                    descriptionErrorlabel.setText("Damage cannot be null!");
+                    descriptionErrorlabel.setText("Invalid value.");
                     descriptionErrorlabel.toFront();
-
                 }
                 System.out.println(currentIndex);
                 break;
             case 3:
                 System.out.println(currentIndex);
                 inputField.clear();
-                if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
-                    curelabel.setText(input);
-                    cure = Double.parseDouble(input);
-                    cureErrorlabel.toBack();
-                } else {
+                try {
+                    if (input != null && !input.isEmpty() && Double.parseDouble(input) > 0) {
+                        curelabel.setText(input);
+                        cure = Double.parseDouble(input);
+                        cureErrorlabel.toBack();
+                    } else {
+                        currentIndex--;
+                        cureErrorlabel.setText("Cure must be a positive number!");
+                        cureErrorlabel.toFront();
+                    }
+                } catch (NumberFormatException e) {
                     currentIndex--;
+                    cureErrorlabel.setText("Invalid value.");
                     cureErrorlabel.toFront();
-
                 }
                 System.out.println(currentIndex);
                 break;
