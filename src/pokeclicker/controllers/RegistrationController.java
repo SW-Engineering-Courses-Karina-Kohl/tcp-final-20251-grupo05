@@ -94,19 +94,23 @@ public class RegistrationController implements Initializable {
                 }
                 break;
             case 1:
-
-                if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
-                    inputField.clear();
-                    healthlabel.setText(input);
-                    totalHealth = Integer.parseInt(input);
-                    System.out.println(currentIndex);
-                    System.out.println("Total Health: " + totalHealth);
-                    healtherrorlabel.toBack();
-                    priceline.toFront();
-                    healthline.toBack();
-                } else {
+                try {
+                    if (input != null && !input.isEmpty() && Integer.parseInt(input) > 0) {
+                        inputField.clear();
+                        healthlabel.setText(input);
+                        totalHealth = Integer.parseInt(input);
+                        System.out.println(currentIndex);
+                        System.out.println("Total Health: " + totalHealth);
+                        healtherrorlabel.toBack();
+                        priceline.toFront();
+                        healthline.toBack();
+                    } else {
+                        healtherrorlabel.toFront();
+                        currentIndex--;
+                    }
+                } catch (NumberFormatException e) {
+                    healtherrorlabel.setText("Invalid value.");
                     healtherrorlabel.toFront();
-
                     currentIndex--;
                 }
                 break;
@@ -115,12 +119,20 @@ public class RegistrationController implements Initializable {
                     createpokemonlabel.toFront();
 
                 inputField.clear();
-                if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
-                    pricelabel.setText(input);
-                    price = Double.parseDouble(input);
-                } else {
-                    currentIndex--;
+                try {
+                    if (input != null && !input.isEmpty() && Double.parseDouble(input) > 0) {
+                        pricelabel.setText(input);
+                        price = Double.parseDouble(input);
+                        priceErrorlabel.toBack();
+                    } else {
+                        priceErrorlabel.setText("Insert a positive value.");
+                        priceErrorlabel.toFront();
+                        currentIndex--;
+                    }
+                } catch (NumberFormatException e) {
+                    priceErrorlabel.setText("Invalid value.");
                     priceErrorlabel.toFront();
+                    currentIndex--;
                 }
                 System.out.println(currentIndex);
 
