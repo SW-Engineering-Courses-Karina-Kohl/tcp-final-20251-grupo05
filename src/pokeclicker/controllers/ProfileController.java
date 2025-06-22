@@ -88,13 +88,8 @@ public class ProfileController implements Initializable {
         moneydisplay.setPreserveRatio(true);
         moneydisplay.setFitWidth(40);
 
-        // Optionally select default image
-
         loadUserData();
         selectImage(pokeballimg);
-        trainerid.setPrefWidth(300);
-        trainerid.setText("Trainer ID: 000001"); // Example trainer ID
-        // Example money display
 
     }
 

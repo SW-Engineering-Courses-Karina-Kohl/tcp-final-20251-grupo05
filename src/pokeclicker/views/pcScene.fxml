@@ -10,10 +10,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.control.Label?>
-
+<?import javafx.scene.control.ProgressBar?>
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.PcController">
    <children>
-
       <AnchorPane fx:id="overlayPane" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.7);" pickOnBounds="true" prefWidth="600.0" prefHeight="404.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Rectangle fill="TEAL" width="200" height="404"
@@ -31,8 +30,8 @@
                <Label fx:id="popupHealth" />
                <Label fx:id="popupAbility" />
                <Label fx:id="popupXP" /> 
+               <ProgressBar fx:id="popupXPBar" prefWidth="140" progress="0.0"/>
                <Button fx:id="buyXpButton" text="Buy XP" onAction="#buyXp" /> 
-               <Button text="Close" onAction="#closePopup" />
             </VBox>
             <Button text="Close" onAction="#closePopup"
                layoutX="20" layoutY="20"

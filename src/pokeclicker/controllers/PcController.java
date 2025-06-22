@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -98,7 +99,8 @@ public class PcController implements Initializable {
     private ImageView popupImage;
     @FXML
     private Label moneyerrorxp;
-
+    @FXML
+    private ProgressBar popupXPBar;
     @FXML
     private Label popupName;
     @FXML
@@ -114,7 +116,6 @@ public class PcController implements Initializable {
     private Button buyXpButton;
     @FXML
     private Label popupAbility;
-
     private PC pc;
 
     @Override
@@ -373,11 +374,12 @@ public class PcController implements Initializable {
         popupHealth.setText("Health: " + pokemon.getTotalHealth());
         popupXP.setText("XP: " + pokemon.getXp());
         popupAbility.setText("Ability: " + pokemon.getAbilities());
-
         popupXpPrice.setText("XP Price: $" + String.format("%.2f", pokemon.getXp() + 1));
-
         overlayPane.setVisible(true);
         overlayPane.toFront();
+        double progress = (double) pokemon.getXp() / 100;
+        popupXPBar.setProgress(progress);
+        popupXPBar.setStyle("-fx-accent: TEAL;");
     }
 
     @FXML
