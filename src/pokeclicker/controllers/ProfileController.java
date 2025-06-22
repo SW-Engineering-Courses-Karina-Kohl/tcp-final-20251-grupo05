@@ -67,6 +67,8 @@ public class ProfileController implements Initializable {
     private Rectangle homerectangle;
     @FXML
     private Rectangle profilerectangle;
+    @FXML
+    private Button logout;
 
     public void setUsername(String username) {
         this.username = username;
@@ -180,6 +182,14 @@ public class ProfileController implements Initializable {
         profilerectangle.setFill(javafx.scene.paint.Color.web("#7d5a94"));
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
 
+    }
+
+    @FXML
+    private void logout(ActionEvent event) {
+        System.out.println("Logout clicked");
+        // Implement logout logic here, e.g., clearing user data, redirecting to login
+        // screen
+        SceneSwitcher.switchToInitial(event);
     }
 
     @FXML

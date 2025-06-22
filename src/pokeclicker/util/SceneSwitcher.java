@@ -207,4 +207,20 @@ public class SceneSwitcher {
 
     }
 
+    public static void switchToInitial(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource("/pokeclicker/views/initialScene.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            String cssPath = SceneSwitcher.class.getResource("/css/initialScene.css").toExternalForm();
+            scene.getStylesheets().add(cssPath);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
