@@ -16,12 +16,12 @@ public class ShopManager {
     private ShopManager() {
     }
 
-    public static Shop getShop(User user) {
-        ItemFilter itemFilter = new ItemFilter();
-        PokemonFilter pokeFilter = new PokemonFilter();
-
+    public static Shop getShop(User user, Optional<ItemFilter> itemFilterOpt, Optional<PokemonFilter> pokeFilterOpt) {
+        ItemFilter itemFilter = itemFilterOpt.orElseGet(ItemFilter::new);
         itemFilter.setAvailable(true);
         itemFilter.setUser(user.getName());
+
+        PokemonFilter pokeFilter = pokeFilterOpt.orElseGet(PokemonFilter::new);
         pokeFilter.setAvailable(true);
         pokeFilter.setUser(user.getName());
 
