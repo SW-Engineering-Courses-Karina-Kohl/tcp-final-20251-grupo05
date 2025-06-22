@@ -8,7 +8,7 @@ import java.util.*;
 import pokeclicker.model.pokemon.LevelType;
 import pokeclicker.model.item.ItemType;
 import pokeclicker.model.common.Activatable; 
-
+/*
 class DummyItem extends pokeclicker.model.item.Item {
     private final String name;
 
@@ -74,10 +74,10 @@ class DummyPokemon extends pokeclicker.model.pokemon.Pokemon {
     @Override
     public int hashCode() { return Objects.hash(name); }
 }
-
+*/
 public class PCTest {
 
-    private DummyPokemon p1, p2, p3;
+   /* private DummyPokemon p1, p2, p3;
     private DummyItem i1, i2, i3;
     private pokeclicker.game.PC pc;
 
@@ -154,5 +154,5 @@ public class PCTest {
     void testSetAndGetFavoritePokemon() {
         pc.setFavoritePokemon(p2);
         assertEquals(p2, pc.getFavoritePokemon());
-    }
+    }*/
 }

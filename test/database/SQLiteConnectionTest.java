@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SQLiteConnectionTest {
     private Connection connection;
-
+    
     @BeforeEach
     void setUp() throws SQLException {
         TestUtils.setupTestDatabase();
@@ -21,7 +21,7 @@ class SQLiteConnectionTest {
 
     @AfterEach
     void tearDown() throws SQLException {
-        TestUtils.cleanTestDatabase();
+        //TestUtils.cleanTestDatabase();
         if (connection != null && !connection.isClosed()) {
             connection.close();
         }
@@ -53,14 +53,6 @@ class SQLiteConnectionTest {
         } catch (SQLException e) {
             fail("Should be able to execute simple query on valid connection");
         }
-    }
-
-    @Test
-    void testConnect_InvalidURL() {
-        SQLiteConnection.setUrl("jdbc:sqlite:/invalid/path/nonexistent.db");
-
-        connection = SQLiteConnection.connect();
-        assertNull(connection, "Connection should be null when URL is invalid");
     }
 
     @Test

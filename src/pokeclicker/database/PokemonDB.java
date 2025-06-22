@@ -131,52 +131,99 @@ public class PokemonDB {
         return pokemon;
     }
 
-    public static List<Pokemon> getAllPokemons(Optional<PokemonFilter> filter) {
-        List<Pokemon> pokemons = new ArrayList<>();
+    // Em PokemonDB.java
 
-        String sql = "SELECT * FROM pokemon";
-        if (filter.isPresent()) {
-            String conditions = getConditions(filter.get());
-            if (!conditions.equals("1")) {
-                sql += " WHERE " + conditions;
-            }
+public static List<Pokemon> getAllPokemons(Optional<PokemonFilter> filterOpt) {
+    List<Pokemon> pokemons = new ArrayList<>();
+    // Query SQL base com placeholders '?'
+    StringBuilder sql = new StringBuilder("SELECT * FROM pokemon");
+    List<Object> params = new ArrayList<>(); // Lista para guardar os parâmetros
+
+    // Constrói a cláusula WHERE e a lista de parâmetros se o filtro existir
+    if (filterOpt.isPresent()) {
+        PokemonFilter filter = filterOpt.get();
+        List<String> conditions = new ArrayList<>();
+
+        if (filter.getName() != null && !filter.getName().isEmpty()) {
+            conditions.add("name LIKE ?");
+            params.add("%" + filter.getName() + "%");
         }
-        try (Connection conn = SQLiteConnection.connect();
-                java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            var rs = pstmt.executeQuery();
-            while (rs.next()) {
-                String name = rs.getString("name");
-                String type = rs.getString("type");
-                LevelType level = LevelType.fromInt(rs.getInt("level"));
-                double xp = rs.getDouble("xp");
-                int health = rs.getInt("health");
-                int totalHealth = rs.getInt("total_health");
-                boolean available = rs.getBoolean("available");
-                double price = rs.getDouble("price");
-                String imagePath = rs.getString("image_path");
-
-                Pokemon pokemon = switch (type) {
-                    case "FIRE" -> new FirePokemon(name, level, xp, health, totalHealth, available, price, imagePath);
-                    case "WATER" -> new WaterPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
-                    case "GRASS" -> new GrassPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
-                    default -> {
-                        System.err.println("Unknown Pokemon type: " + type);
-                        yield null;
-                    }
-                };
-
-                if (pokemon != null) {
-                    List<Ability> abilities = PokemonAbilityDB.getPokemonAbilities(name);
-                    pokemon.setAbilities(abilities);
-                    pokemons.add(pokemon);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error fetching all pokemons: " + e.getMessage());
+        if (filter.getType() != null) {
+            conditions.add("type = ?");
+            params.add(filter.getType().toString());
+        }
+        if (filter.getMinLevel() != null) {
+            conditions.add("level >= ?");
+            params.add(filter.getMinLevel().toInt());
+        }
+        if (filter.getMinHealth() != null) {
+            conditions.add("health >= ?");
+            params.add(filter.getMinHealth());
+        }
+        if (filter.getAvailable() != null) {
+            conditions.add("available = ?");
+            // Converte o boolean para inteiro (1 = true, 0 = false) para o SQLite
+            params.add(filter.getAvailable() ? 1 : 0);
+        }
+        if (filter.getMaxPrice() != null) {
+            conditions.add("price <= ?");
+            params.add(filter.getMaxPrice());
+        }
+        if (filter.getUser() != null) {
+            conditions.add("user = ?");
+            params.add(filter.getUser());
         }
 
-        return pokemons;
+        if (!conditions.isEmpty()) {
+            sql.append(" WHERE ").append(String.join(" AND ", conditions));
+        }
     }
+
+    try (Connection conn = SQLiteConnection.connect();
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+
+        // Aplica os parâmetros na PreparedStatement
+        for (int i = 0; i < params.size(); i++) {
+            pstmt.setObject(i + 1, params.get(i));
+        }
+
+        var rs = pstmt.executeQuery();
+        while (rs.next()) {
+            // A sua lógica para criar os objetos Pokemon a partir do resultado está ótima
+            String name = rs.getString("name");
+            String type = rs.getString("type");
+            LevelType level = LevelType.fromInt(rs.getInt("level"));
+            double xp = rs.getDouble("xp");
+            int health = rs.getInt("health");
+            int totalHealth = rs.getInt("total_health");
+            boolean available = rs.getBoolean("available");
+            double price = rs.getDouble("price");
+            String imagePath = rs.getString("image_path");
+
+            Pokemon pokemon = switch (type) {
+                case "FIRE" -> new FirePokemon(name, level, xp, health, totalHealth, available, price, imagePath);
+                case "WATER" -> new WaterPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
+                case "GRASS" -> new GrassPokemon(name, level, xp, health, totalHealth, available, price, imagePath);
+                default -> {
+                    System.err.println("Unknown Pokemon type: " + type);
+                    yield null;
+                }
+            };
+
+            if (pokemon != null) {
+                List<Ability> abilities = PokemonAbilityDB.getPokemonAbilities(name);
+                pokemon.setAbilities(abilities);
+                pokemons.add(pokemon);
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching all pokemons: " + e.getMessage());
+    }
+
+    return pokemons;
+}
+
+// Você pode apagar o método "private static String getConditions(...)" agora.
 
     private static String getConditions(PokemonFilter filter) {
         StringBuilder conditions = new StringBuilder("1");
