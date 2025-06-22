@@ -100,8 +100,9 @@ public class ItemRegistrationController implements Initializable {
                 if (input != null && !input.isEmpty()) {
                     descriptionlabel.setText(input);
                     description = input;
-
+                    descriptionErrorLabel.toBack();
                     descriptionline.toBack();
+                    System.out.println(type);
                     if (type != null) {
                         typeline.toFront();
                     }
@@ -114,20 +115,40 @@ public class ItemRegistrationController implements Initializable {
                 break;
 
             case 3:
+                System.out.println(currentIndex);
 
                 if (type != null) {
-
-                    if (input != null && Integer.valueOf(input) > 0) {
-
-                        damageOrMultiplier = Double.valueOf(input);
-                        damageormultiplierlabel.setText(input);
-                        typeline.toBack();
-                        createitemlabel.toFront();
-                        modifierErrorlabel.toBack();
+                    if (input != null && !input.trim().isEmpty()) {
+                        try {
+                            double value = Double.parseDouble(input.trim());
+                            if (value > 0) {
+                                damageOrMultiplier = value;
+                                damageormultiplierlabel.setText(input);
+                                typeline.toBack();
+                                createitemlabel.toFront();
+                                descriptionErrorLabel.toBack();
+                                System.out.println(currentIndex);
+                                System.out.println("Damage/Multiplier: " + damageOrMultiplier);
+                            } else {
+                                currentIndex--;
+                                descriptionErrorLabel.setText("Modifier/Damage must be greater than 0");
+                                descriptionErrorLabel.toFront();
+                            }
+                        } catch (NumberFormatException e) {
+                            currentIndex--;
+                            descriptionErrorLabel.setText("Please enter a valid number");
+                            descriptionErrorLabel.toFront();
+                        }
                     } else {
                         currentIndex--;
-                        modifierErrorlabel.toFront();
+                        descriptionErrorLabel.setText("Modifier/Damage field cannot be empty");
+                        descriptionErrorLabel.toFront();
                     }
+                } else {
+                    currentIndex--;
+                    descriptionErrorLabel.setText("Please select a type first");
+                    descriptionErrorLabel.toFront();
+                    typeline.toBack();
                 }
                 break;
 
