@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -40,7 +41,7 @@ import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import pokeclicker.game.PC;
 
-public class PcController implements Initializable{
+public class PcController implements Initializable {
     @FXML
     private ImageView pokeballimg;
     @FXML
@@ -50,7 +51,7 @@ public class PcController implements Initializable{
     @FXML
     private ImageView shopimg;
 
-    @FXML 
+    @FXML
     private Rectangle PCrectangle;
     @FXML
     private Rectangle shoprectangle;
@@ -59,7 +60,8 @@ public class PcController implements Initializable{
     @FXML
     private Rectangle profilerectangle;
 
-    @FXML TabPane pcTabPane;
+    @FXML
+    TabPane pcTabPane;
 
     @FXML
     private Line longline;
@@ -86,13 +88,13 @@ public class PcController implements Initializable{
 
     private PC pc;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
         PCrectangle.setFill(javafx.scene.paint.Color.RED);
 
-        pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()));
+        pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(),
+                Optional.empty());
 
         pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
         pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
@@ -101,7 +103,8 @@ public class PcController implements Initializable{
     private HBox createPokemonCard(Pokemon pokemon) {
         HBox card = new HBox();
         card.setSpacing(15);
-        card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
+        card.setStyle(
+                "-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
         card.setPrefSize(176, 120);
 
         ImageView imageView = new ImageView();
@@ -121,7 +124,6 @@ public class PcController implements Initializable{
 
         VBox info = new VBox();
         info.setSpacing(5);
-        
 
         Label nameLabel = new Label("Name: " + pokemon.getName());
         nameLabel.setWrapText(true);
@@ -154,7 +156,7 @@ public class PcController implements Initializable{
 
         card.getChildren().addAll(imageView, info);
         return card;
-    } 
+    }
 
     private GridPane createPokemonGrid(Pokemon[] pokemonArray) {
         GridPane gridPane = new GridPane();
@@ -162,28 +164,23 @@ public class PcController implements Initializable{
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-    for (int i = 0; i < 3; i++) {
-        ColumnConstraints column = new ColumnConstraints();
-        column.setPercentWidth(100.0 / 3);
-        column.setHalignment(HPos.CENTER); 
-        gridPane.getColumnConstraints().add(column);
-    }
+        for (int i = 0; i < 3; i++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(100.0 / 3);
+            column.setHalignment(HPos.CENTER);
+            gridPane.getColumnConstraints().add(column);
+        }
         int numRows = Math.ceilDiv(pokemonArray.length, 3);
 
-        for(int row = 0; row < numRows; row++)
-        {
-            for(int col=0; col < 3; col++)
-            {   
-                if(pokemonArray.length == (row * 3) + col)
-                {
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (pokemonArray.length == (row * 3) + col) {
                     break;
-                }
-                else
-                {
-                    Node pokemonCard = createPokemonCard(pokemonArray[(row * 3)+col]);
+                } else {
+                    Node pokemonCard = createPokemonCard(pokemonArray[(row * 3) + col]);
                     gridPane.add(pokemonCard, col, row);
                 }
-                
+
             }
         }
 
@@ -196,36 +193,33 @@ public class PcController implements Initializable{
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-    for (int i = 0; i < 3; i++) {
-        ColumnConstraints column = new ColumnConstraints();
-        column.setPercentWidth(100.0 / 3);
-        column.setHalignment(HPos.CENTER); 
-        gridPane.getColumnConstraints().add(column);
-    }
+        for (int i = 0; i < 3; i++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(100.0 / 3);
+            column.setHalignment(HPos.CENTER);
+            gridPane.getColumnConstraints().add(column);
+        }
         List<Map.Entry<Item, Integer>> itemEntries = new ArrayList<>(itemsQuantities.entrySet());
-        
+
         int numItems = itemEntries.size();
-        int numRows =  Math.ceilDiv(numItems, 3); 
+        int numRows = Math.ceilDiv(numItems, 3);
 
-        int itemIndex = 0; 
+        int itemIndex = 0;
 
-        for(int row = 0; row < numRows; row++)
-        {
-            for(int col=0; col < 3; col++)
-            {   
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < 3; col++) {
                 if (itemIndex < numItems) {
-                Map.Entry<Item, Integer> entry = itemEntries.get(itemIndex);
-                Item item = entry.getKey();
+                    Map.Entry<Item, Integer> entry = itemEntries.get(itemIndex);
+                    Item item = entry.getKey();
 
-                VBox itemContainer = createItemCard(item);
-                gridPane.add(itemContainer, col, row);
+                    VBox itemContainer = createItemCard(item);
+                    gridPane.add(itemContainer, col, row);
 
-                itemIndex++; 
-                } else 
-                {
+                    itemIndex++;
+                } else {
                     break;
                 }
-                
+
             }
         }
         return gridPane;
@@ -234,7 +228,8 @@ public class PcController implements Initializable{
     private VBox createItemCard(Item item) {
         HBox cardContent = new HBox();
         cardContent.setSpacing(15);
-        cardContent.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
+        cardContent.setStyle(
+                "-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
         cardContent.setPrefSize(176, 120);
 
         ImageView imageView = new ImageView();
@@ -243,9 +238,9 @@ public class PcController implements Initializable{
 
         String itemType = item.getType().toString();
 
-        
         try {
-            URL imageUrl = itemType.equals("Pokemon") ? getClass().getResource("../../img/potion.png") : getClass().getResource("../../img/amuletcoin.png") ;
+            URL imageUrl = itemType.equals("Pokemon") ? getClass().getResource("../../img/potion.png")
+                    : getClass().getResource("../../img/amuletcoin.png");
             if (imageUrl != null) {
                 imageView.setImage(new Image(imageUrl.toExternalForm()));
             } else {
@@ -257,7 +252,6 @@ public class PcController implements Initializable{
 
         VBox info = new VBox();
         info.setSpacing(5);
-        
 
         Label nameLabel = new Label("Name: " + item.getName());
         nameLabel.setWrapText(true);
@@ -276,11 +270,10 @@ public class PcController implements Initializable{
                 typeValue = new Text("PKMN");
                 typeValue.setFill(Color.MAGENTA);
                 break;
-            default: 
+            default:
                 typeValue.setFill(Color.BLACK);
                 break;
         }
-
 
         typeValue.setStyle("-fx-font-weight: bold;");
         typeLabelFlow.getChildren().addAll(typePrefix, typeValue);
@@ -291,20 +284,20 @@ public class PcController implements Initializable{
         info.getChildren().addAll(nameLabel, typeLabelFlow, descriptionLabel);
 
         cardContent.getChildren().addAll(imageView, info);
-        
+
         Button useButton = new Button();
         useButton.setText("USE");
-        useButton.setMaxWidth(88); 
+        useButton.setMaxWidth(88);
         useButton.setId("itemType");
 
         VBox itemContainer = new VBox();
-        itemContainer.setSpacing(10); 
+        itemContainer.setSpacing(10);
         itemContainer.getChildren().addAll(cardContent, useButton);
-        itemContainer.setPrefWidth(176); 
-        itemContainer.setAlignment(Pos.CENTER); 
+        itemContainer.setPrefWidth(176);
+        itemContainer.setAlignment(Pos.CENTER);
 
-        return itemContainer; 
-    } 
+        return itemContainer;
+    }
 
     @FXML
     private void PC(ActionEvent event) {
@@ -324,7 +317,6 @@ public class PcController implements Initializable{
         profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
         SceneSwitcher.switchToShop(event, SceneSwitcher.getCurrentUsername());
     }
-
 
     @FXML
     private void home(ActionEvent event) {
@@ -349,5 +341,5 @@ public class PcController implements Initializable{
         SceneSwitcher.switchToProfile(event, SceneSwitcher.getCurrentUsername());
 
     }
-    
+
 }
