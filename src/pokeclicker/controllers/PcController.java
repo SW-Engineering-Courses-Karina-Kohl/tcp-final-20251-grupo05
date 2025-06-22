@@ -2,7 +2,6 @@ package pokeclicker.controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,12 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,6 +30,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.scene.Node;
 import pokeclicker.manager.PCManager;
@@ -151,10 +149,10 @@ public class PcController implements Initializable {
         card.setSpacing(15);
         card.setStyle(
                 "-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
-        card.setPrefSize(282, 120);
+        card.setPrefSize(270, 120);
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(50);
+        imageView.setFitWidth(90);
         imageView.setPreserveRatio(true);
 
         try {
@@ -187,6 +185,7 @@ public class PcController implements Initializable {
         }
 
         typeValue.setStyle("-fx-font-weight: bold;");
+        typeLabelFlow.setTextAlignment(TextAlignment.CENTER);
         typeLabelFlow.getChildren().addAll(typePrefix, typeValue);
 
         Label healthLabel = new Label("Health: " + pokemon.getTotalHealth());
@@ -214,7 +213,14 @@ public class PcController implements Initializable {
         info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, abilityLabel, xpLabel, detailsButton,
                 favoriteButton);
 
-        card.getChildren().addAll(imageView, info);
+        HBox blank = new HBox();
+        blank.setPrefWidth(20);
+
+        info.setAlignment(Pos.CENTER);
+        card.setAlignment(Pos.CENTER);
+
+        card.getChildren().addAll(blank, imageView, info);
+
         return card;
     }
 
@@ -275,20 +281,20 @@ public class PcController implements Initializable {
         gridPane.setVgap(15);
         gridPane.setPadding(new Insets(20));
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             ColumnConstraints column = new ColumnConstraints();
-            column.setPercentWidth(100.0 / 3);
+            column.setPercentWidth(100.0 / 2);
             column.setHalignment(HPos.CENTER);
             gridPane.getColumnConstraints().add(column);
         }
-        int numRows = Math.ceilDiv(pokemonArray.length, 3);
+        int numRows = Math.ceilDiv(pokemonArray.length, 2);
 
         for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < 3; col++) {
-                if (pokemonArray.length == (row * 3) + col) {
+            for (int col = 0; col < 2; col++) {
+                if (pokemonArray.length == (row * 2) + col) {
                     break;
                 } else {
-                    Node pokemonCard = createPokemonCard(pokemonArray[(row * 3) + col]);
+                    Node pokemonCard = createPokemonCard(pokemonArray[(row * 2) + col]);
                     gridPane.add(pokemonCard, col, row);
                 }
 
