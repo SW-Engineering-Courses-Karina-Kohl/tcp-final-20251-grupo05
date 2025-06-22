@@ -40,6 +40,7 @@ import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import pokeclicker.game.PC;
+import pokeclicker.manager.item.ItemManager;
 
 public class PcController implements Initializable {
     @FXML
@@ -295,6 +296,16 @@ public class PcController implements Initializable {
         itemContainer.getChildren().addAll(cardContent, useButton);
         itemContainer.setPrefWidth(176);
         itemContainer.setAlignment(Pos.CENTER);
+
+        useButton.setOnAction(event -> {
+            try {
+                ItemManager.activateItem(item.getName(), UserManager.getUser(SceneSwitcher.getCurrentUsername()));
+                System.out.println("Used item: " + item.getName());
+                ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
+            } catch (Exception e) {
+                System.err.println("Error using item: " + e.getMessage());
+            }
+        });
 
         return itemContainer;
     }

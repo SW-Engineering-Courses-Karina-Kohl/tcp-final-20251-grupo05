@@ -55,7 +55,7 @@ public class User
         if (multiplier <= 0) {
             throw new IllegalArgumentException("Multiplier must be greater than zero");
         }
-        this.moneyMultiplier += multiplier;
+        this.moneyMultiplier *= multiplier;
     }
 
     public void spendMoney(double money) {
@@ -72,6 +72,6 @@ public class User
         if (money < 0) {
             throw new IllegalArgumentException("Cannot earn negative money");
         }
-        this.money += money * moneyMultiplier;
+        this.money += money; // * moneyMultiplier;
     }
 }
