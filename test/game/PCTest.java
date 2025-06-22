@@ -8,7 +8,13 @@ import java.util.*;
 import pokeclicker.model.pokemon.LevelType;
 import pokeclicker.model.item.ItemType;
 import pokeclicker.model.common.Activatable; 
-/*
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+
 class DummyItem extends pokeclicker.model.item.Item {
     private final String name;
 
@@ -74,22 +80,24 @@ class DummyPokemon extends pokeclicker.model.pokemon.Pokemon {
     @Override
     public int hashCode() { return Objects.hash(name); }
 }
-*/
+
 public class PCTest {
 
-   /* private DummyPokemon p1, p2, p3;
+    private DummyPokemon p1, p2, p3;
+    private DummyPokemon testPokemon; 
     private DummyItem i1, i2, i3;
     private pokeclicker.game.PC pc;
 
     @BeforeEach
     void setUp() {
+        testPokemon = new DummyPokemon("TestXP"); 
         p1 = new DummyPokemon("Pikachu");
         p2 = new DummyPokemon("Bulbasaur");
         p3 = new DummyPokemon("Charmander");
         i1 = new DummyItem("Potion");
         i2 = new DummyItem("Pokeball");
         i3 = new DummyItem("Revive");
-        pc = new pokeclicker.game.PC(Arrays.asList(p1, p2), Arrays.asList(i1, i2), p1);
+        pc = new pokeclicker.game.PC(Arrays.asList(p1, p2), Arrays.asList(i1, i2)); 
     }
 
     @Test
@@ -97,7 +105,6 @@ public class PCTest {
         List<pokeclicker.model.pokemon.Pokemon> pokemons = pc.getPokemons();
         assertTrue(pokemons.contains(p1));
         assertTrue(pokemons.contains(p2));
-        assertEquals(p1, pc.getFavoritePokemon());
         assertEquals(0, pc.getItemCount(i1));
         assertEquals(0, pc.getItemCount(i2));
         assertEquals(0, pc.getItemCount(i3));
@@ -149,10 +156,4 @@ public class PCTest {
     void testGetItemCountForAbsentItem() {
         assertEquals(0, pc.getItemCount(i3));
     }
-
-    @Test
-    void testSetAndGetFavoritePokemon() {
-        pc.setFavoritePokemon(p2);
-        assertEquals(p2, pc.getFavoritePokemon());
-    }*/
 }

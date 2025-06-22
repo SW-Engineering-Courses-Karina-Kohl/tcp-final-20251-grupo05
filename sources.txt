@@ -37,7 +37,6 @@ D:\tcp-final-20251-grupo05\test\database\PokemonAbilityDBTest.java
 D:\tcp-final-20251-grupo05\test\database\PokemonDBTest.java
 D:\tcp-final-20251-grupo05\test\database\SQLiteConnectionTest.java
 D:\tcp-final-20251-grupo05\test\database\UserDBTest.java
-D:\tcp-final-20251-grupo05\test\game\BatalhaTest.java
 D:\tcp-final-20251-grupo05\test\game\PCTest.java
 D:\tcp-final-20251-grupo05\test\game\ShopTest.java
 D:\tcp-final-20251-grupo05\test\game\clicker\ClickerTest.java

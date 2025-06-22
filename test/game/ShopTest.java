@@ -8,32 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import pokeclicker.model.pokemon.Pokemon;
+// Pokemon and LevelType are now imported by DummyPokemon, but it's good practice to keep them if used directly.
+import pokeclicker.model.pokemon.Pokemon; 
 import pokeclicker.model.pokemon.LevelType;
 
 import pokeclicker.game.Shop;
 import pokeclicker.model.User;
 import pokeclicker.model.common.Purchasable;
 
-class DummyPokemon extends Pokemon {
-    public DummyPokemon(String name) {
-        super(
-            name,
-            LevelType.BEGINNER, 
-            0.0,    
-            1,     
-            10,    
-            false,  
-            5.0,    
-            "Normal"
-        );
-    }
-
-    @Override
-    public String getType() {
-        return "Normal";
-    }
-}
+// The DummyPokemon class is no longer here!
 
 class DummyPurchasable implements Purchasable {
     private final String name;
@@ -85,6 +68,7 @@ public class ShopTest {
 
     @BeforeEach
     void setUp() {
+        // Now uses the new, shared DummyPokemon class from its own file
         dummyPokemon = new DummyPokemon("TestMon");
 
         user = new User("TestPlayer", 1.0, 100.0, dummyPokemon);

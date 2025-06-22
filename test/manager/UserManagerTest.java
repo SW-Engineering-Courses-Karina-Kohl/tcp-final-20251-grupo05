@@ -35,7 +35,6 @@ class UserManagerTest {
         assertEquals(0, user.getMoney());
         assertNull(user.getFavoritePokemon());
 
-        // Verify user exists in DB
         User dbUser = UserDB.getUser("testUser");
         assertNotNull(dbUser);
     }
@@ -62,21 +61,17 @@ class UserManagerTest {
 
     @Test
     void testUpdateUser_Success() {
-        // Create initial user
         UserManager.createUser("updateUser");
         User originalUser = UserManager.getUser("updateUser");
 
-        // Modify user
         User modifiedUser = new User("updateUser", 2.0, 100.0, null);
         User updatedUser = UserManager.updateUser(modifiedUser);
 
-        // Verify updates
         assertNotNull(updatedUser);
         assertEquals("updateUser", updatedUser.getName());
         assertEquals(2.0, updatedUser.getMoneyMultiplier());
         assertEquals(100.0, updatedUser.getMoney());
 
-        // Verify DB was updated
         User dbUser = UserManager.getUser("updateUser");
         assertEquals(2.0, dbUser.getMoneyMultiplier());
         assertEquals(100.0, dbUser.getMoney());
@@ -129,13 +124,10 @@ class UserManagerTest {
     void testDeleteUser_Success() {
         UserManager.createUser("deleteMe");
 
-        // Verify exists first
         assertNotNull(UserManager.getUser("deleteMe"));
 
-        // Delete
         UserManager.deleteUser("deleteMe");
 
-        // Verify deleted
         assertThrows(IllegalArgumentException.class,
                 () -> UserManager.getUser("deleteMe"),
                 "Should throw after deletion");
