@@ -94,3 +94,14 @@ public class ClickerTest {
         assertEquals(initialGlobalClicks + 2, Clicker.getTotalGlobalClicks(), "Global clicks should not be affected by reset.");
     }
 }
+
+class DummyPokemon extends Pokemon {
+    public DummyPokemon(String name) {
+        super(name, LevelType.BEGINNER, 0, 1, 1, false, 1, "Dummy");
+    }
+
+    @Override
+    public String getType() {
+        return "Dummy";
+    }
+}
