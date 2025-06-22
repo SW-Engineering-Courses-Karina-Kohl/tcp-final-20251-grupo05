@@ -1,21 +1,23 @@
-.root{
+.root {
     -fx-background-color: rgb(7, 88, 88);
     -fx-font-family: "C&C Red Alert [INET]";
 }
-.scroll-pane
-{
+
+.scroll-pane {
     -fx-background-color: rgb(7, 88, 88);
 }
+
 .tab .tab-label {
-    -fx-text-fill: black; 
+    -fx-text-fill: black;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 
 }
 
 .tab:selected {
-    -fx-background-color: #2A5058; 
+    -fx-background-color: #2A5058;
 }
+
 .tab:selected .tab-label {
     -fx-text-fill: SNOW;
     -fx-background-color: #2A5058;
@@ -24,11 +26,17 @@
     -fx-cursor: hand;
 }
 
+#popupName {
+    -fx-font-size: 20px;
+
+}
+
 .tab:hover {
     -fx-background-color: #61a2b1;
     -fx-cursor: hand;
 }
-.tab:hover .tab-label{
+
+.tab:hover .tab-label {
     -fx-background-color: #61a2b1;
 }
 
@@ -46,4 +54,3 @@
 .button:hover {
     -fx-background-color: rgb(10, 196, 196);
 }
-

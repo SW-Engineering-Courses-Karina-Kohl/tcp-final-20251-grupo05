@@ -81,9 +81,7 @@ public class ProfileController implements Initializable {
         System.out.println("ProfileController initialized");
         SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
 
-        Image image5 = new Image(getClass().getResource("/img/pikachu.png").toExternalForm());
         Image image6 = new Image(getClass().getResource("/img/money.png").toExternalForm());
-        favPokemonimg.setImage(image5);
         moneydisplay.setImage(image6);
         moneydisplay.setPreserveRatio(true);
         moneydisplay.setFitWidth(40);
@@ -179,7 +177,7 @@ public class ProfileController implements Initializable {
         ispressed = false;
         homerectangle.setFill(javafx.scene.paint.Color.TEAL);
         PCrectangle.setFill(javafx.scene.paint.Color.TEAL);
-        profilerectangle.setFill(javafx.scene.paint.Color.PURPLE);
+        profilerectangle.setFill(javafx.scene.paint.Color.web("#7d5a94"));
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
 
     }

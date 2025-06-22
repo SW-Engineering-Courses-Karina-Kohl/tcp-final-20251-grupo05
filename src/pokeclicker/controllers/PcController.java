@@ -22,6 +22,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -35,6 +36,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.Node;
 import pokeclicker.manager.PCManager;
 import pokeclicker.manager.UserManager;
+import pokeclicker.model.User;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.util.SceneIconUtil;
@@ -87,6 +89,29 @@ public class PcController implements Initializable {
     @FXML
     private Button profile;
 
+    // Popup FXML fields
+    @FXML
+    private AnchorPane overlayPane;
+    @FXML
+    private VBox popupContent;
+    @FXML
+    private ImageView popupImage;
+    @FXML
+    private Label popupName;
+    @FXML
+    private Label popupType;
+    @FXML
+    private Label popupHealth;
+    @FXML
+    private Label popupXP;
+    private Pokemon currentPopupPokemon;
+    @FXML
+    private Label popupXpPrice;
+    @FXML
+    private Button buyXpButton;
+    @FXML
+    private Label popupAbility;
+
     private PC pc;
 
     @Override
@@ -99,6 +124,7 @@ public class PcController implements Initializable {
 
         pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
         pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
+
     }
 
     private HBox createPokemonCard(Pokemon pokemon) {
@@ -106,7 +132,7 @@ public class PcController implements Initializable {
         card.setSpacing(15);
         card.setStyle(
                 "-fx-padding: 10; -fx-border-color: #ccc; -fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-font-size: 16px;");
-        card.setPrefSize(176, 120);
+        card.setPrefSize(270, 120);
 
         ImageView imageView = new ImageView();
         imageView.setFitWidth(50);
@@ -152,8 +178,15 @@ public class PcController implements Initializable {
 
         Label xpLabel = new Label("XP: " + pokemon.getXp());
 
+        // Add Details button
+        Button detailsButton = new Button("Details");
+        detailsButton.setOnAction(e -> {
+            System.out.println("Details clicked for: " + pokemon.getName());
+            PokemonPopup(pokemon);
+        });
+
         HBox.setHgrow(info, Priority.ALWAYS);
-        info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, abilityLabel, xpLabel);
+        info.getChildren().addAll(nameLabel, typeLabelFlow, healthLabel, abilityLabel, xpLabel, detailsButton);
 
         card.getChildren().addAll(imageView, info);
         return card;
@@ -308,6 +341,57 @@ public class PcController implements Initializable {
         });
 
         return itemContainer;
+    }
+
+    public void PokemonPopup(Pokemon pokemon) {
+        if (pokemon == null)
+            return;
+        currentPopupPokemon = pokemon;
+
+        try {
+            URL imageUrl = getClass().getResource(pokemon.getImagePath());
+            if (imageUrl != null) {
+                popupImage.setImage(new Image(imageUrl.toExternalForm()));
+            } else {
+                popupImage.setImage(null);
+            }
+        } catch (Exception e) {
+            popupImage.setImage(null);
+        }
+        popupName.setText("Name: " + pokemon.getName());
+        popupType.setText("Type: " + pokemon.getType());
+        popupHealth.setText("Health: " + pokemon.getTotalHealth());
+        popupXP.setText("XP: " + pokemon.getXp());
+        popupAbility.setText("Ability: " + pokemon.getAbilities());
+
+        popupXpPrice.setText("XP Price: $" + String.format("%.2f", pokemon.getXp() + 1));
+
+        overlayPane.setVisible(true);
+        overlayPane.toFront();
+    }
+
+    @FXML
+    private void buyXp(ActionEvent event) {
+        if (currentPopupPokemon == null)
+            return;
+        User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
+        PC pc = this.pc;
+
+        try {
+            boolean evolved = PCManager.buyXp(pc, currentPopupPokemon, user);
+            PokemonPopup(currentPopupPokemon);
+            if (evolved) {
+                System.out.println(currentPopupPokemon.getName() + " evolved!");
+            }
+        } catch (Exception e) {
+            System.out.println("Could not buy XP: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void closePopup(ActionEvent event) {
+        overlayPane.setVisible(false);
+        overlayPane.toBack();
     }
 
     @FXML
