@@ -83,7 +83,7 @@ public class AbilityController implements Initializable {
                 }
                 break;
             case 1:
-
+                System.out.println(currentIndex);
                 if (input != null && !input.isEmpty()) {
                     inputField.clear();
                     descriptionlabel.setText(input);
@@ -100,25 +100,29 @@ public class AbilityController implements Initializable {
                 break;
             case 2:
 
+                System.out.println(currentIndex);
                 inputField.clear();
                 if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
                     damagelabel.setText(input);
                     damage = Double.parseDouble(input);
                     cureline.toFront();
                     damageline.toBack();
+                    descriptionErrorlabel.toBack();
                 } else {
                     currentIndex--;
-                    damageErrorlabel.toFront();
+                    descriptionErrorlabel.setText("Damage cannot be null!");
+                    descriptionErrorlabel.toFront();
 
                 }
                 System.out.println(currentIndex);
                 break;
             case 3:
-
+                System.out.println(currentIndex);
                 inputField.clear();
                 if (input != null && !input.isEmpty() && Integer.valueOf(input) > 0) {
                     curelabel.setText(input);
                     cure = Double.parseDouble(input);
+                    cureErrorlabel.toBack();
                 } else {
                     currentIndex--;
                     cureErrorlabel.toFront();
@@ -128,8 +132,6 @@ public class AbilityController implements Initializable {
                 break;
 
             case 4:
-
-                System.out.println(currentIndex);
                 if (abilityname != null && damage > 0 && cure > 0 && type != null && description != null) {
                     Ability ability = AbilityManager.createAbility(abilityname, description, type, damage, cure);
                     inputErrorlabel.toBack();
@@ -139,6 +141,7 @@ public class AbilityController implements Initializable {
                 } else {
                     inputErrorlabel.toFront();
                     createpokemonlabel.toBack();
+                    currentIndex--;
                 }
                 break;
             default:

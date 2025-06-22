@@ -25,7 +25,8 @@ public class Main extends Application {
             scene.getStylesheets().add(cssPath);
 
             // Set window icon
-            Image windowIcon = new Image("/img/windowIcon.png");
+            Image windowIcon = new Image(getClass().getResource("/img/windowIcon.png").toExternalForm());
+
             stage.getIcons().add(windowIcon);
             scene.setFill(Color.BLUE);
             // Set title

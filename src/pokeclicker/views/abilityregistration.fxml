@@ -23,7 +23,7 @@
             <Font name="Segoe UI Black" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="descriptionErrorlabel" layoutX="108.0" layoutY="311.0" text="description cannot be null! " textFill="RED">
+      <Label fx:id="descriptionErrorlabel" layoutX="75.0" layoutY="311.0" text="Description cannot be null! " textFill="RED">
          <font>
             <Font name="Segoe UI Black" size="12.0" />
          </font>
@@ -35,8 +35,8 @@
       </Label>
       <Label fx:id="nameerrorlabel" layoutX="123.0" layoutY="311.0" text="Please input a name" textFill="RED" />
       <Label fx:id="cureErrorlabel" layoutX="112.0" layoutY="311.0" text="Cure cannot be null!" textFill="RED" />
-      <Label fx:id="createpokemonlabel" layoutX="65.0" layoutY="311.0" text="Press the OK button to create a Pokémon!" textFill="TEAL" />
-      <Label fx:id="inputErrorlabel" layoutX="133.0" layoutY="311.0" text=" missing input!" textFill="RED" />
+      <Label fx:id="createpokemonlabel" layoutX="45.0" layoutY="311.0" text="Press the OK button to create a Pokémon!" textFill="TEAL" />
+      <Label fx:id="inputErrorlabel" layoutX="133.0" layoutY="311.0" text=" Missing input!" textFill="RED" />
       <TextField fx:id="inputField" layoutX="105.0" layoutY="408.0" prefHeight="74.0" prefWidth="158.0" />
       <Rectangle fx:id="textfieldrectangle" arcHeight="5.0" arcWidth="5.0" fill="#5ec4b7" height="74.0" layoutX="105.0" layoutY="408.0" stroke="BLACK" strokeType="INSIDE" width="158.0" />
       <ImageView fx:id="pokedexbg" fitHeight="525.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">

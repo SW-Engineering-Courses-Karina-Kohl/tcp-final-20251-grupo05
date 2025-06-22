@@ -104,7 +104,7 @@ public class ImageSelectController implements Initializable {
             RegistrationController controller = loader.getController();
             controller.setPokemonData(pokemonName, totalHealth, price, type, SelectedImagePath);
             controller.setCurrentIndex(3);
-
+            controller.setCreatePokemonlabel();
         } catch (IOException e) {
             e.printStackTrace();
         }
