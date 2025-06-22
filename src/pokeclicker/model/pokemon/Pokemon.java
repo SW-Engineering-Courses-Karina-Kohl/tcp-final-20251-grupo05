@@ -95,10 +95,10 @@ public abstract class Pokemon implements Activatable, Purchasable {
     }
 
     private boolean updateLevel() {
-        if (xp >= ADVANCED_MIN_XP) {
+        if (level == LevelType.INTERMEDIATE && xp >= ADVANCED_MIN_XP) {
             level = LevelType.ADVANCED;
             return true;
-        } else if (xp >= INTERMEDIATE_MIN_XP) {
+        } else if (level == LevelType.BEGINNER && xp >= INTERMEDIATE_MIN_XP) {
             level = LevelType.INTERMEDIATE;
             return true;
         }
