@@ -60,7 +60,7 @@ public class ImageSelectController implements Initializable {
         switch (type) {
             case FIRE:
                 imagePath1 = "/img/charmander.png";
-                imagePath2 = "/img/cyndaquilPng.png";
+                imagePath2 = "/img/cyndaquil.png";
                 break;
             case WATER:
                 imagePath1 = "/img/squirtle.png";
@@ -68,7 +68,7 @@ public class ImageSelectController implements Initializable {
                 break;
             case GRASS:
                 imagePath1 = "/img/bulbasaur.png";
-                imagePath2 = "/img/turtwig (1).png";
+                imagePath2 = "/img/turtwig.png";
                 break;
         }
 
