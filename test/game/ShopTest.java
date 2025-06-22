@@ -8,12 +8,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import pokeclicker.model.pokemon.Pokemon;
+import pokeclicker.model.pokemon.LevelType;
 
 import pokeclicker.game.Shop;
 import pokeclicker.model.User;
 import pokeclicker.model.common.Purchasable;
 
-/*
+class DummyPokemon extends Pokemon {
+    public DummyPokemon(String name) {
+        super(
+            name,
+            LevelType.BEGINNER, 
+            0.0,    
+            1,     
+            10,    
+            false,  
+            5.0,    
+            "Normal"
+        );
+    }
+
+    @Override
+    public String getType() {
+        return "Normal";
+    }
+}
+
 class DummyPurchasable implements Purchasable {
     private final String name;
     private final double price;
@@ -51,11 +72,11 @@ class DummyPurchasable implements Purchasable {
     public int hashCode() {
         return Objects.hash(name, price);
     }
-}*/
+}
 
 public class ShopTest {
 
-    /*private User user;
+    private User user;
     private Shop shop;
     private DummyPurchasable affordableItem;
     private DummyPurchasable expensiveItem;
@@ -127,5 +148,5 @@ public class ShopTest {
 
         double expectedMoney = initialMoney - itemPrice;
         assertEquals(expectedMoney, user.getMoney(), "User's money should be deducted by the item's price after purchase.");
-    }*/
+    }
 }

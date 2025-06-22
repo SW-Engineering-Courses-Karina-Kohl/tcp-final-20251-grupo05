@@ -7,6 +7,7 @@ import pokeclicker.database.*;
 import pokeclicker.manager.ability.AbilityFilter;
 import pokeclicker.manager.item.ItemFilter;
 import pokeclicker.model.Ability;
+import pokeclicker.model.User;
 import pokeclicker.model.common.PokeType;
 import pokeclicker.model.item.ItemType;
 import pokeclicker.model.item.MoneyMultiplierItem;
@@ -101,5 +102,20 @@ public class TestUtils {
             "src/img/charmander.png"
         );
         PokemonDB.insertPokemon(firePokemon, "testUser");
+    }
+
+    public static void insertUser() throws SQLException {
+        FirePokemon firePokemon = new FirePokemon(
+            "Charmander",        
+            LevelType.BEGINNER,        
+            0.0,                   
+            40,                     
+            40,                     
+            true,                  
+            200.0,                 
+            "src/img/charmander.png"
+        );
+        User user = new User("testUser", 2.0, 1000.0, firePokemon);
+        UserDB.insertUser(user);
     }
 }
