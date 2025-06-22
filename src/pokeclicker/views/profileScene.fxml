@@ -33,6 +33,6 @@
       <ImageView fx:id="favoritepokemonimage" fitHeight="104.0" fitWidth="148.0" layoutX="79.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="favPokemonimg" fitHeight="112.0" fitWidth="158.0" layoutX="57" layoutY="214" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="favpokemonlabel" layoutX="46.0" layoutY="180.0" text="Label" />
-      <Button fx:id="logout" layoutX="440.0" layoutY="236.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+      <Button fx:id="logout" layoutX="449.0" layoutY="176.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
    </children>
 </AnchorPane>

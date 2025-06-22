@@ -26,7 +26,9 @@
 
 /* Style for buttons */
 .button {
-    -fx-background-color: #3498db;
+    -fx-font-family: "C&C Red Alert [INET]";
+    -fx-background-color: TEAL;
+    -fx-font-size: 22px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8 16;
@@ -36,7 +38,7 @@
 }
 
 .button:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: rgb(10, 196, 196);
 }
 
 /* Style for TextField or TextArea if used */
