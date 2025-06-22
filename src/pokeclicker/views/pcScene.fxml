@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
@@ -13,16 +14,48 @@
 <?import javafx.scene.control.ProgressBar?>
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.PcController">
    <children>
-      <AnchorPane fx:id="overlayPane" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.7);" pickOnBounds="true" prefWidth="600.0" prefHeight="404.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="abilityPane" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.7);" pickOnBounds="true" prefWidth="600.0" prefHeight="404.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Rectangle fill="TEAL" width="200" height="404"
+            <Rectangle fill="TEAL" width="175" height="404"
             AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
             AnchorPane.leftAnchor="0.0" />
-            <Rectangle fill="TEAL" width="200" height="404"
+            <Rectangle fill="TEAL" width="175" height="404"
             AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
             AnchorPane.rightAnchor="0.0" /> 
-            <VBox fx:id="popupContent" alignment="CENTER" spacing="10" layoutX="200" layoutY="-12"
-                  maxWidth="200" prefWidth="200" style="-fx-background-color: white; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;"
+            <VBox fx:id="abilityPopupContent" alignment="CENTER" spacing="10" layoutX="175" layoutY="-8"
+                  maxWidth="250" prefWidth="250" style="-fx-background-color: white; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;"
+>
+               <ScrollPane fx:id="scrollPane"
+                    style="-fx-background-color: transparent; -fx-border-color: transparent;"
+                    fitToWidth="true"
+                    prefHeight="404.0" minHeight="404.0" maxHeight="404.0"
+                    prefWidth="250.0">
+                      <content>
+                  <VBox fx:id="abilitydisplaybox" alignment="CENTER" spacing="10.0" 
+                  style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 30 30 0 30;"/>
+                     </content>
+               </ScrollPane>
+               <ImageView fx:id="popupImage" fitWidth="150" preserveRatio="true" />
+               <Label fx:id="abilityName" />
+               <TextFlow fx:id="abilityTypeFlow" />
+               <Label fx:id="abilityDamage" />
+               <Label fx:id="abilityCure" /> 
+            </VBox>
+            <Button fx:id="returnToPokemonButton" text="Return" onAction="#returnToPokemonPopup"
+               layoutX="20" layoutY="20"
+               style="-fx-background-color: white; -fx-text-fill: teal; -fx-font-weight: bold;"/>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="overlayPane" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.7);" pickOnBounds="true" prefWidth="600.0" prefHeight="404.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Rectangle fill="TEAL" width="175" height="404"
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0" />
+            <Rectangle fill="TEAL" width="175" height="404"
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" /> 
+            <VBox fx:id="popupContent" alignment="CENTER" spacing="10" layoutX="175" layoutY="-8"
+                  maxWidth="250" prefWidth="250" style="-fx-background-color: white; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;"
                   >
                <ImageView fx:id="popupImage" fitWidth="150" preserveRatio="true" />
                <Label fx:id="popupName" />
@@ -34,8 +67,13 @@
                <Button fx:id="buyXpButton" text="Buy XP" onAction="#buyXp" /> 
             </VBox>
             <Button text="Close" onAction="#closePopup"
-               layoutX="20" layoutY="20"
+               layoutX="20" layoutY="62"
                style="-fx-background-color: white; -fx-text-fill: teal; -fx-font-weight: bold;"/>
+            
+            <Button fx:id="showAbilitiesButton" text="Show Abilities" onAction="#showAbilitiesPopup" layoutX="20" layoutY="20"
+               style="-fx-background-color: white; -fx-text-fill: teal; -fx-font-weight: bold;"/>
+            
+            
             <Label fx:id="popupXpPrice" layoutX="460" layoutY="20" style= "-fx-text-fill: white" />
             <Label fx:id="moneyerrorxp" layoutX="410" layoutY="40" style= "-fx-text-fill: red"  />
          </children>

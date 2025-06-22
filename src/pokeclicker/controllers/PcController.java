@@ -37,6 +37,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.Node;
 import pokeclicker.manager.PCManager;
 import pokeclicker.manager.UserManager;
+import pokeclicker.model.Ability;
 import pokeclicker.model.User;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
@@ -91,9 +92,12 @@ public class PcController implements Initializable {
     @FXML
     private Button profile;
 
-    // Popup FXML fields
     @FXML
     private AnchorPane overlayPane;
+    @FXML
+    private AnchorPane abilityPane;
+    @FXML
+    private VBox abilitydisplaybox;
     @FXML
     private VBox popupContent;
     @FXML
@@ -110,6 +114,7 @@ public class PcController implements Initializable {
     private Label popupHealth;
     @FXML
     private Label popupXP;
+    @FXML
     private Pokemon currentPopupPokemon;
     @FXML
     private Label popupXpPrice;
@@ -117,6 +122,8 @@ public class PcController implements Initializable {
     private Button buyXpButton;
     @FXML
     private Label popupAbility;
+    @FXML
+    private TextFlow abilityTypeFlow;
     private PC pc;
 
     @Override
@@ -130,6 +137,13 @@ public class PcController implements Initializable {
         pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
         pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
 
+    }
+
+    private String getAbilityNames(Pokemon pokemon) {
+        List<Ability> abilities = pokemon.getAbilities();
+        if (abilities == null || abilities.isEmpty())
+            return "None";
+        return abilities.stream().map(Ability::getName).collect(java.util.stream.Collectors.joining(", "));
     }
 
     private HBox createPokemonCard(Pokemon pokemon) {
@@ -178,7 +192,7 @@ public class PcController implements Initializable {
         Label healthLabel = new Label("Health: " + pokemon.getTotalHealth());
         healthLabel.setWrapText(true);
 
-        Label abilityLabel = new Label("Ability: " + pokemon.getAbilities());
+        Label abilityLabel = new Label("Ability: " + getAbilityNames(pokemon));
 
         Label xpLabel = new Label("XP: " + pokemon.getXp());
 
@@ -201,6 +215,57 @@ public class PcController implements Initializable {
                 favoriteButton);
 
         card.getChildren().addAll(imageView, info);
+        return card;
+    }
+
+    private VBox createAbilityCard(Ability ability) {
+        VBox card = new VBox();
+        card.setSpacing(8);
+        card.setStyle(
+                "-fx-padding: 10; -fx-background-color: #e0f7fa; -fx-border-radius: 8; -fx-font-size: 15px; -fx-background-radius: 8;");
+        card.setPrefWidth(250);
+
+        Label nameLabel = new Label("Name: " + ability.getName());
+        nameLabel.setStyle("-fx-font-weight: bold;");
+        TextFlow typeFlow = new TextFlow();
+        Text typeLabel = new Text("Type: ");
+        Text typeValue = new Text(ability.getType());
+        switch (ability.getType().toUpperCase()) {
+            case "FIRE" -> typeValue.setFill(Color.RED);
+            case "WATER" -> typeValue.setFill(Color.BLUE);
+            case "GRASS" -> typeValue.setFill(Color.GREEN);
+            default -> typeValue.setFill(Color.BLACK);
+        }
+        typeValue.setStyle("-fx-font-weight: bold;");
+        typeFlow.getChildren().addAll(typeLabel, typeValue);
+
+        Label damageLabel = new Label("Damage: " + ability.getDamage());
+        Label cureLabel = new Label("Cure: " + ability.getCure());
+        Label descLabel = new Label("Description: " + ability.getDescription());
+        descLabel.setWrapText(true);
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setStyle(
+                "-fx-background-color: #e57373; -fx-text-fill: white; -fx-font-size:12px; -fx-font-weight: bold;");
+
+        deleteButton.setPrefWidth(75);
+        deleteButton.setMinHeight(0);
+        deleteButton.setPrefHeight(28);
+        deleteButton.setOnAction(e -> {
+            try {
+                pokeclicker.manager.ability.AbilityManager.deleteAbility(ability.getName());
+                currentPopupPokemon.getAbilities().removeIf(a -> a.getName().equals(ability.getName()));
+                showAbilitiesPopup(null);
+
+                pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(),
+                        Optional.empty());
+                pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
+            } catch (Exception ex) {
+                System.err.println("Error deleting ability: " + ex.getMessage());
+            }
+        });
+
+        card.getChildren().addAll(nameLabel, typeFlow, damageLabel, cureLabel, descLabel, deleteButton);
         return card;
     }
 
@@ -382,7 +447,7 @@ public class PcController implements Initializable {
         popupType.setText("Type: " + pokemon.getType());
         popupHealth.setText("Health: " + pokemon.getTotalHealth());
         popupXP.setText("XP: " + pokemon.getXp());
-        popupAbility.setText("Ability: " + pokemon.getAbilities());
+        popupAbility.setText("Ability: " + getAbilityNames(pokemon));
         popupXpPrice.setText("XP Price: $" + String.format("%.2f", pokemon.getXp() + 1));
         overlayPane.setVisible(true);
         overlayPane.toFront();
@@ -413,6 +478,37 @@ public class PcController implements Initializable {
             moneyerrorxp.setText("Not enough money to buy XP");
 
         }
+    }
+
+    @FXML
+    private void showAbilitiesPopup(ActionEvent event) {
+        if (currentPopupPokemon == null)
+            return;
+        abilitydisplaybox.getChildren().clear();
+        for (Ability ability : currentPopupPokemon.getAbilities()) {
+            abilitydisplaybox.getChildren().add(createAbilityCard(ability));
+        }
+        overlayPane.setVisible(false);
+        overlayPane.toBack();
+        abilityPane.setVisible(true);
+        abilityPane.toFront();
+    }
+
+    @FXML
+    private void returnToPokemonPopup(ActionEvent event) {
+        currentPopupPokemon = PCManager
+                .getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(), Optional.empty())
+                .getPokemons()
+                .stream()
+                .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
+                .findFirst()
+                .orElse(currentPopupPokemon);
+        PokemonPopup(currentPopupPokemon);
+
+        abilityPane.setVisible(false);
+        abilityPane.toBack();
+        overlayPane.setVisible(true);
+        overlayPane.toFront();
     }
 
     @FXML
@@ -465,4 +561,20 @@ public class PcController implements Initializable {
 
     }
 
+    private void setAbilityTypeFlow(String type) {
+        abilityTypeFlow.getChildren().clear();
+
+        Text label = new Text("Type: ");
+        Text typeText = new Text(type);
+
+        switch (type.toUpperCase()) {
+            case "FIRE" -> typeText.setFill(Color.RED);
+            case "WATER" -> typeText.setFill(Color.BLUE);
+            case "GRASS" -> typeText.setFill(Color.GREEN);
+            default -> typeText.setFill(Color.BLACK);
+        }
+
+        typeText.setStyle("-fx-font-weight: bold;");
+        abilityTypeFlow.getChildren().addAll(label, typeText);
+    }
 }

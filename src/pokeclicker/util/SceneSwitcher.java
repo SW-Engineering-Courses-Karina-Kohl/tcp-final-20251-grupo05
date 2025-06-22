@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import pokeclicker.controllers.ProfileController;
 import pokeclicker.controllers.ShopController;
+import pokeclicker.controllers.AbilityController;
 import pokeclicker.controllers.HomeController;
 import pokeclicker.manager.UserManager;
 import pokeclicker.model.User;
@@ -131,10 +132,14 @@ public class SceneSwitcher {
         return loader;
     }
 
-    public static void switchToAbilityRegistration(ActionEvent event) {
+    public static void switchToAbilityRegistration(ActionEvent event, String username) {
         try {
-            Parent root = FXMLLoader
-                    .load(SceneSwitcher.class.getResource("/pokeclicker/views/abilityregistration.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    SceneSwitcher.class.getResource("/pokeclicker/views/abilityregistration.fxml"));
+            Parent root = loader.load();
+            AbilityController controller = loader.getController();
+            controller.setUsername(username); // <-- set the username here
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             String cssPath = SceneSwitcher.class.getResource("/css/abilityregistration.css").toExternalForm();
@@ -147,7 +152,6 @@ public class SceneSwitcher {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public static void switchToItemRegistration(ActionEvent event) {

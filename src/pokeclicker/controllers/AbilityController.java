@@ -1,8 +1,14 @@
 
 package pokeclicker.controllers;
 
+import pokeclicker.manager.pokemon.PokemonManager;
+import pokeclicker.model.pokemon.Pokemon;
+import pokeclicker.manager.pokemon.PokemonFilter;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import pokeclicker.manager.ability.AbilityManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -62,6 +69,10 @@ public class AbilityController implements Initializable {
         inputField.toFront();
 
     }
+
+    @FXML
+    private MenuButton pokemonMenuButton;
+    private String selectedPokemonName;
 
     @FXML
 
@@ -146,6 +157,11 @@ public class AbilityController implements Initializable {
                     Ability ability = AbilityManager.createAbility(abilityname, description, type, damage, cure);
                     inputErrorlabel.toBack();
 
+                    // Add the ability to the selected Pokémon
+                    if (selectedPokemonName != null) {
+                        PokemonManager.addAbilityToPokemon(selectedPokemonName, abilityname);
+                    }
+
                     System.out.println("Ability created: " + ability.getName());
                     SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
                 } else {
@@ -166,6 +182,50 @@ public class AbilityController implements Initializable {
 
     }
 
+    private void updatePokemonMenuButton() {
+        pokemonMenuButton.getItems().clear();
+        if (type == null || username == null) {
+            MenuItem infoItem = new MenuItem("Please set a type");
+            infoItem.setDisable(true);
+            pokemonMenuButton.getItems().add(infoItem);
+            pokemonMenuButton.setText("Select Pokémon");
+            selectedPokemonName = null;
+            return;
+        }
+
+        PokemonFilter filter = new PokemonFilter();
+        filter.setUser(username);
+
+        List<Pokemon> pokemons = PokemonManager.getAllPokemons(java.util.Optional.of(filter))
+                .stream()
+                .filter(p -> {
+                    try {
+                        return PokeType.valueOf(p.getType().toUpperCase()) == type;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        if (pokemons.isEmpty()) {
+            MenuItem infoItem = new MenuItem("No Pokémon of this type");
+            infoItem.setDisable(true);
+            pokemonMenuButton.getItems().add(infoItem);
+            pokemonMenuButton.setText("Select Pokémon");
+            selectedPokemonName = null;
+            return;
+        }
+
+        for (Pokemon p : pokemons) {
+            MenuItem item = new MenuItem(p.getName());
+            item.setOnAction(e -> {
+                pokemonMenuButton.setText(p.getName());
+                selectedPokemonName = p.getName();
+            });
+            pokemonMenuButton.getItems().add(item);
+        }
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -181,7 +241,7 @@ public class AbilityController implements Initializable {
         type = PokeType.FIRE;
         typebutton.setText("Fire");
         typebutton.setTextFill(Color.RED);
-
+        updatePokemonMenuButton();
     }
 
     @FXML
@@ -190,6 +250,7 @@ public class AbilityController implements Initializable {
         typebutton.setText("Water");
         typebutton.setTextFill(Color.BLUE);
         System.out.println(type);
+        updatePokemonMenuButton();
     }
 
     @FXML
@@ -197,6 +258,7 @@ public class AbilityController implements Initializable {
         type = PokeType.GRASS;
         typebutton.setText("Grass");
         typebutton.setTextFill(Color.GREEN);
+        updatePokemonMenuButton();
     }
 
     public String getimageType() {
