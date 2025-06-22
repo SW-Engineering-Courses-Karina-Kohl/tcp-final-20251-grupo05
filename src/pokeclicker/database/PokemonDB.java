@@ -63,14 +63,15 @@ public class PokemonDB {
     }
 
     public static void updatePokemon(Pokemon pokemon) {
-        String sql = "UPDATE pokemon SET level = ?, xp = ?, health = ?, available = ? WHERE name = ?";
+        String sql = "UPDATE pokemon SET level = ?, xp = ?, health = ?, available = ?, image_path = ? WHERE name = ?";
         try (Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, pokemon.getLevel().toInt());
             pstmt.setDouble(2, pokemon.getXp());
             pstmt.setInt(3, pokemon.getHealth());
             pstmt.setBoolean(4, pokemon.isAvailable());
-            pstmt.setString(5, pokemon.getName());
+            pstmt.setString(5, pokemon.getImagePath());
+            pstmt.setString(6, pokemon.getName());
             pstmt.executeUpdate();
             System.out.println("Pokemon updated successfully!");
         } catch (SQLException e) {

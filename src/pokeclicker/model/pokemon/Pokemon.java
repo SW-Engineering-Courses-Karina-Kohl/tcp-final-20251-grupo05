@@ -125,6 +125,13 @@ public abstract class Pokemon implements Activatable, Purchasable {
         }
     }
 
+    public void setImagePath(String imagePath) {
+        if (imagePath == null || imagePath.isEmpty()) {
+            throw new IllegalArgumentException("Image path cannot be null or empty");
+        }
+        this.imagePath = imagePath;
+    }
+
     @Override
     public void setAvailable(boolean captured) {
         this.available = captured;
