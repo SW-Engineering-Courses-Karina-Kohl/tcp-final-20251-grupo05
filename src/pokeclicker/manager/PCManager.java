@@ -1,5 +1,6 @@
 package pokeclicker.manager;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Optional;
 import pokeclicker.game.PC;
@@ -24,14 +25,33 @@ public class PCManager {
         PokemonFilter pokeFilter = new PokemonFilter();
 
         itemFilter.setAvailable(false);
+        itemFilter.setUser(user.getName());
         pokeFilter.setAvailable(false);
+        pokeFilter.setUser(user.getName());
 
         List<Pokemon> pokemons = PokemonManager.getAllPokemons(Optional.of(pokeFilter));
         List<Item> items = (ItemManager.getAllItems(Optional.of(itemFilter)));
 
-        PC pc = new PC(pokemons, items, user.getFavoritePokemon());
+        PC pc = new PC(pokemons, items);
 
         return pc;
+    }
+
+    public static boolean buyXp(PC pc, Pokemon pokemon, User user) {
+        if (pc == null || pokemon == null) {
+            throw new IllegalArgumentException("PC and Pokemon cannot be null");
+        }
+
+        SimpleEntry<Pokemon, Boolean> result = pc.buyXP(pokemon, user);
+        Pokemon newPokemon = result.getKey();
+        Boolean evolved = result.getValue();
+
+        user.spendMoney(newPokemon.getXp());
+
+        UserManager.updateUser(user);
+        PokemonManager.updatePokemon(newPokemon);
+
+        return evolved;
     }
 
 }

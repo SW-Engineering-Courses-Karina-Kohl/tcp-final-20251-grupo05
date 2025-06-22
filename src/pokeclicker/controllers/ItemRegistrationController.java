@@ -157,7 +157,8 @@ public class ItemRegistrationController implements Initializable {
                 if (itemname != null && !itemname.isEmpty() && price > 0 && type != null && description != null
                         && !description.isEmpty()) {
                     try {
-                        Item item = ItemManager.createItem(itemname, price, description, type, damageOrMultiplier);
+                        Item item = ItemManager.createItem(itemname, price, description, type, damageOrMultiplier,
+                                username);
                         inputErrorlabel.toBack();
                         System.out.println("Item created: " + item.getName());
                         SceneSwitcher.switchToShop(event, username);

@@ -25,7 +25,9 @@ public class PokemonDB {
                 "total_health INTEGER," +
                 "available BOOLEAN," +
                 "price REAL," +
-                "image_path TEXT" +
+                "image_path TEXT," +
+                "user TEXT," +
+                "FOREIGN KEY (user) REFERENCES user(name)" +
                 ");";
         try (Connection conn = SQLiteConnection.connect();
                 Statement stmt = conn.createStatement()) {
@@ -36,9 +38,10 @@ public class PokemonDB {
         }
     }
 
-    public static void insertPokemon(Pokemon pokemon) {
-        String sql = "INSERT INTO pokemon(name, type, level, health, total_health, available, price, xp, image_path) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static void insertPokemon(Pokemon pokemon, String userName) {
+        String sql = "INSERT INTO pokemon(name, type, level, health, total_health, available, price, xp, image_path, user)"
+                +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (
                 Connection conn = SQLiteConnection.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -51,6 +54,7 @@ public class PokemonDB {
             pstmt.setDouble(7, pokemon.getPrice());
             pstmt.setDouble(8, pokemon.getXp());
             pstmt.setString(9, pokemon.getImagePath());
+            pstmt.setString(10, userName);
             pstmt.executeUpdate();
             System.out.println("Pokemon inserted successfully!");
         } catch (SQLException e) {
@@ -192,6 +196,9 @@ public class PokemonDB {
         }
         if (filter.getMaxPrice() != null) {
             conditions.append(" AND price <= ").append(filter.getMaxPrice());
+        }
+        if (filter.getUser() != null) {
+            conditions.append(" AND user = '").append(filter.getUser()).append("'");
         }
         return conditions.toString();
     }

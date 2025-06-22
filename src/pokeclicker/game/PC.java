@@ -1,9 +1,11 @@
 package pokeclicker.game;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import pokeclicker.model.User;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
@@ -15,12 +17,10 @@ Na MAIN é preciso que isso ocorra para que o PC e o User funcione de maneira co
 
 public class PC {
     private final List<Pokemon> pokemons;
-    private Pokemon favoritePokemon;
     private final Map<Item, Integer> itemQuantities;
 
-    public PC(List<Pokemon> pokemons, List<Item> items, Pokemon favoritePokemon) {
+    public PC(List<Pokemon> pokemons, List<Item> items) {
         this.pokemons = new ArrayList<>(pokemons);
-        this.favoritePokemon = favoritePokemon;
         this.itemQuantities = new HashMap<>();
         for (Item item : items) {
             this.itemQuantities.put(item, 0);
@@ -65,11 +65,19 @@ public class PC {
         return this.itemQuantities.getOrDefault(item, 0);
     }
 
-    public void setFavoritePokemon(Pokemon pokemon) {
-        this.favoritePokemon = pokemon;
+    public SimpleEntry<Pokemon, Boolean> buyXP(Pokemon pokemon, User user) {
+        if (pokemon == null) {
+            throw new IllegalArgumentException("Pokemon cannot be null");
+        }
+        if (!pokemons.contains(pokemon)) {
+            throw new IllegalArgumentException("Pokemon is not yours!");
+        }
+        if (user.getMoney() >= pokemon.getXp() + 1) {
+            Boolean evolved = pokemon.gainXp(1);
+            return new SimpleEntry<>(pokemon, evolved);
+        } else {
+            throw new IllegalArgumentException("Not enough money to buy XP.");
+        }
     }
 
-    public Pokemon getFavoritePokemon() {
-        return favoritePokemon;
-    }
 }
