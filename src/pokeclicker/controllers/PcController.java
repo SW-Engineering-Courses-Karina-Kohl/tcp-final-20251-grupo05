@@ -516,6 +516,8 @@ public class PcController implements Initializable {
             return;
         currentPopupPokemon = pokemon;
 
+        popupImage.setFitHeight(150); 
+        popupImage.setPreserveRatio(true); 
         try {
             URL imageUrl = getClass().getResource(pokemon.getImagePath());
             if (imageUrl != null) {
@@ -565,27 +567,27 @@ public class PcController implements Initializable {
             maxLvl.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
         } else {
             switch (currentPopupPokemon.getImagePath()) {
-                case "/img/charmander.png":
-                    currentPopupPokemon.setImagePath("/img/evolutions/charizard.png");
-                    break;
-                case "/img/squirtle.png":
-                    currentPopupPokemon.setImagePath("/img/evolutions/blastoise.png");
-                    break;
-                case "/img/bulbasaur.png":
-                    currentPopupPokemon.setImagePath("/img/evolutions/venusaur.png");
-                    break;
-                case "/img/cyndaquil.png":
-                    currentPopupPokemon.setImagePath("/img/evolutions/typhlosion.png");
-                    break;
-                case "/img/piplup.png":
-                    currentPopupPokemon.setImagePath("/img/evolutions/empoleon.png");
-                    break;
-                case "/img/turtwig.png":
-                    currentPopupPokemon.setImagePath("/img/evolutions/torterra.png");
-                    break;
-                default:
-                    break;
-            }
+            case "/img/basic/charmander.gif":
+                currentPopupPokemon.setImagePath("/img/evolutions/charizard.gif");
+                break;
+            case "/img/basic/squirtle.gif":
+                currentPopupPokemon.setImagePath("/img/evolutions/blastoise.gif");
+                break;
+            case "/img/basic/bulbasaur.gif":
+                currentPopupPokemon.setImagePath("/img/evolutions/venusaur.gif");
+                break;
+            case "/img/basic/cyndaquil.gif":
+                currentPopupPokemon.setImagePath("/img/evolutions/typhlosion.gif");
+                break;
+            case "/img/basic/piplup.gif":
+                currentPopupPokemon.setImagePath("/img/evolutions/empoleon.gif");
+                break;
+            case "/img/basic/turtwig.gif":
+                currentPopupPokemon.setImagePath("/img/evolutions/torterra.gif");
+                break;
+            default:
+                break;
+        }
             maxLvl.setText("");
         }
 
