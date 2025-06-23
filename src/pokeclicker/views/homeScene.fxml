@@ -28,9 +28,9 @@
       <Button id="btnpc" fx:id="PC" layoutY="337.0" mnemonicParsing="false" onAction="#PC" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnprofile" fx:id="profile" layoutX="459.0" layoutY="336.0" mnemonicParsing="false" onAction="#profile" opacity="0.0" prefHeight="66.0" prefWidth="142.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnshop" fx:id="shop" layoutX="151.0" layoutY="336.0" mnemonicParsing="false" onAction="#shop" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
-<ImageView fx:id="abilityregistrationimg" fitHeight="183.0" fitWidth="204.0" layoutX="429.0" layoutY="86.0" onMouseClicked="#abilitybutton" onMouseEntered="#handleGlow" onMouseExited="#handleGlowExit" pickOnBounds="true" preserveRatio="true">
+<ImageView fx:id="abilityregistrationimg" fitHeight="138.0" fitWidth="158.0" layoutX="450.0" layoutY="100.0" onMouseClicked="#abilitybutton" onMouseEntered="#handleGlow" onMouseExited="#handleGlowExit" pickOnBounds="true" preserveRatio="true">
    <image>
-      <Image url="@../../img/abilitytest.png" />
+      <Image url="@../../img/abilityregistration2.png" />
    </image>
 </ImageView>
 <ImageView fx:id="pokemonregistrationimg" fitHeight="138.0" fitWidth="158.0" layoutX="152.0" layoutY="100.0" onMouseClicked="#registrationswitch" onMouseEntered="#handleGlow" onMouseExited="#handleGlowExit" pickOnBounds="true" preserveRatio="true">
