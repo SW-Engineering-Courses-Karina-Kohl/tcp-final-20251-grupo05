@@ -38,6 +38,7 @@ import pokeclicker.manager.UserManager;
 import pokeclicker.model.Ability;
 import pokeclicker.model.User;
 import pokeclicker.model.item.Item;
+import pokeclicker.model.pokemon.LevelType;
 import pokeclicker.model.pokemon.Pokemon;
 import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
@@ -105,6 +106,13 @@ public class PcController implements Initializable {
     @FXML
     private ProgressBar popupXPBar;
     @FXML
+    private Label maxLvl;
+    @FXML
+    private Label evolveLabel;
+    @FXML
+    private Button evolveButton;
+
+    @FXML
     private Label popupName;
     @FXML
     private Label popupType;
@@ -128,9 +136,11 @@ public class PcController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
         PCrectangle.setFill(javafx.scene.paint.Color.RED);
-
+        
         pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(),
                 Optional.empty());
+
+        evolveButton.setStyle("-fx-background-color: transparent; -fx-text-fill: transparent;");
 
         pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
         pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
@@ -154,6 +164,8 @@ public class PcController implements Initializable {
         ImageView imageView = new ImageView();
         imageView.setFitWidth(90);
         imageView.setPreserveRatio(true);
+
+        System.out.println("Pokemon: " + pokemon.getName() + "pokemon.getImagePath(): " + pokemon.getImagePath()); 
 
         try {
             URL imageUrl = getClass().getResource(pokemon.getImagePath());
@@ -220,6 +232,8 @@ public class PcController implements Initializable {
         card.setAlignment(Pos.CENTER);
 
         card.getChildren().addAll(blank, imageView, info);
+
+        PokemonManager.updatePokemon(pokemon);
 
         return card;
     }
@@ -356,8 +370,9 @@ public class PcController implements Initializable {
         String itemType = item.getType().toString();
 
         try {
-            URL imageUrl = itemType.equals("Pokemon") ? getClass().getResource("../../img/potion.png")
-                    : getClass().getResource("../../img/amuletcoin.png");
+            URL imageUrl = itemType.equals("Pokemon") 
+                ? getClass().getResource("../../img/potion.png")
+                : getClass().getResource("../../img/amuletcoin.png");
             if (imageUrl != null) {
                 imageView.setImage(new Image(imageUrl.toExternalForm()));
             } else {
@@ -426,14 +441,6 @@ public class PcController implements Initializable {
         return itemContainer;
     }
 
-    private void refreshPokemonGrid() {
-        // User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
-        // pc = PCManager.getPC(user, Optional.empty(), Optional.empty());
-        Pokemon[] updatedPokemons = pc.getPokemons().toArray(new Pokemon[0]);
-        GridPane newGrid = createPokemonGrid(updatedPokemons);
-        pcPokemonSP.setContent(newGrid);
-    }
-
     public void PokemonPopup(Pokemon pokemon) {
         if (pokemon == null)
             return;
@@ -452,38 +459,99 @@ public class PcController implements Initializable {
         popupName.setText("Name: " + pokemon.getName());
         popupType.setText("Type: " + pokemon.getType());
         popupHealth.setText("Health: " + pokemon.getTotalHealth());
-        popupXP.setText("XP: " + pokemon.getXp());
+        
+        popupXP.setText("XP: " + pokemon.getXp() + "/100.0");
         popupAbility.setText("Ability: " + getAbilityNames(pokemon));
+
         popupXpPrice.setText("XP Price: $" + String.format("%.2f", pokemon.getXp() + 1));
         overlayPane.setVisible(true);
         overlayPane.toFront();
         double progress = (double) pokemon.getXp() / 100;
         popupXPBar.setProgress(progress);
         popupXPBar.setStyle("-fx-accent: TEAL;");
+
+
     }
 
     @FXML
     private void buyXp(ActionEvent event) {
         if (currentPopupPokemon == null)
             return;
-        User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
-        PC pc = this.pc;
-
+            User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
         try {
             boolean evolved = PCManager.buyXp(pc, currentPopupPokemon, user);
             PokemonPopup(currentPopupPokemon);
             if (evolved) {
-                System.out.println(currentPopupPokemon.getName() + " evolved!");
-                currentPopupPokemon.setImagePath(
-                        currentPopupPokemon.getImagePath().replace("1", "2"));
-                PokemonManager.updatePokemon(currentPopupPokemon);
-                refreshPokemonGrid();
+                evolveButton.setStyle("-fx-background-color: white; -fx-text-fill: teal; -fx-font-weight: bold;");
             }
         } catch (Exception e) {
             System.out.println("Could not buy XP: " + e.getMessage());
-            moneyerrorxp.setText("Not enough money to buy XP");
+            moneyerrorxp.setText("Not enough money to buy XP");  
+        }  
+    }
 
+    private void evolvePokemon(Pokemon pokemon)
+    {
+        if(currentPopupPokemon.getXp() < 100)
+        {
+            maxLvl.setText("This pokemon cannot evolve yet");
+            maxLvl.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
+        } 
+        else
+        {
+            switch (currentPopupPokemon.getImagePath()) {
+            case "/img/charmander.png":
+                currentPopupPokemon.setImagePath("/img/evolutions/charizard.png");
+                break;
+            case "/img/squirtle.png":
+                currentPopupPokemon.setImagePath("/img/evolutions/blastoise.png");
+                break;
+            case "/img/bulbasaur.png":
+                currentPopupPokemon.setImagePath("/img/evolutions/venusaur.png");
+                break;
+            case "/img/cyndaquil.png":
+                currentPopupPokemon.setImagePath("/img/evolutions/typhlosion.png");
+                break;
+            case "/img/piplup.png":
+                currentPopupPokemon.setImagePath("/img/evolutions/empoleon.png");
+                break;
+            case "/img/turtwig.png":
+                currentPopupPokemon.setImagePath("/img/evolutions/torterra.png");
+                break;
+            default:
+                break;
         }
+            maxLvl.setText("");
+        }
+
+        PokemonManager.updatePokemon(currentPopupPokemon);
+    }
+
+    private void refreshPokemonGrid() {
+        Pokemon[] updatedPokemons = pc.getPokemons().toArray(new Pokemon[0]);
+        GridPane newGrid = createPokemonGrid(updatedPokemons);
+        pcPokemonSP.setContent(newGrid); 
+    }
+
+    @FXML 
+    private void evolveButton()
+    {
+        evolvePokemon(currentPopupPokemon);
+        try {
+            URL imageUrl = getClass().getResource(currentPopupPokemon.getImagePath());
+            if (imageUrl != null) {
+                popupImage.setImage(new Image(imageUrl.toExternalForm()));
+            } else {
+                popupImage.setImage(null);
+            }
+        } catch (Exception e) {
+            popupImage.setImage(null);
+        }
+        refreshPokemonGrid();
+        String message = !currentPopupPokemon.getImagePath().contains("evolutions")
+            ? ""
+            : currentPopupPokemon.getName() + " evolved!";
+            evolveLabel.setText(message);
     }
 
     @FXML
@@ -522,6 +590,8 @@ public class PcController implements Initializable {
         overlayPane.setVisible(false);
         overlayPane.toBack();
         moneyerrorxp.setText("");
+        maxLvl.setText("");
+        evolveLabel.setText("");
     }
 
     @FXML

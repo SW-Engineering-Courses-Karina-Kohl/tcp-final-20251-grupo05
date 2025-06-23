@@ -90,7 +90,12 @@ public abstract class Pokemon implements Activatable, Purchasable {
         if (xp < 0) {
             throw new IllegalArgumentException("XP cannot be negative");
         }
-        this.xp += xp;
+        
+        double finalXp = this.xp += xp;
+        if(finalXp > 100)
+        {
+            this.xp = 100;
+        }
         return updateLevel();
     }
 
@@ -125,13 +130,6 @@ public abstract class Pokemon implements Activatable, Purchasable {
         }
     }
 
-    public void setImagePath(String imagePath) {
-        if (imagePath == null || imagePath.isEmpty()) {
-            throw new IllegalArgumentException("Image path cannot be null or empty");
-        }
-        this.imagePath = imagePath;
-    }
-
     @Override
     public void setAvailable(boolean captured) {
         this.available = captured;
@@ -139,6 +137,13 @@ public abstract class Pokemon implements Activatable, Purchasable {
 
     public boolean isAlive() {
         return health > 0;
+    }
+
+    public void setImagePath(String imagePath) {
+        if (imagePath == null || imagePath.isEmpty()) {
+            throw new IllegalArgumentException("Image path cannot be null or empty");
+        }
+        this.imagePath = imagePath;
     }
 
     public abstract String getType();

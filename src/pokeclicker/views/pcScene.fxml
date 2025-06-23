@@ -76,6 +76,11 @@
             
             <Label fx:id="popupXpPrice" layoutX="460" layoutY="20" style= "-fx-text-fill: white" />
             <Label fx:id="moneyerrorxp" layoutX="410" layoutY="40" style= "-fx-text-fill: red"  />
+            <Label fx:id="maxLvl" layoutX="415" layoutY="40" style= "-fx-text-fill: red; -fx-font-size: 14px;" />
+            <Label fx:id="evolveLabel" layoutX="460" layoutY="40" style= "-fx-text-fill: black; -fx-font-size: 14px;" />
+            <Button fx:id= "evolveButton" text="Evolve!" onAction="#evolveButton"
+               layoutX="460" layoutY="60"
+               style="-fx-background-color: white; -fx-text-fill: teal; -fx-font-weight: bold;"/>
          </children>
       </AnchorPane>
 

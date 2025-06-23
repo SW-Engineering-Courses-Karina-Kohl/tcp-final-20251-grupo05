@@ -46,7 +46,10 @@ public class PCManager {
         Pokemon newPokemon = result.getKey();
         Boolean evolved = result.getValue();
 
-        user.spendMoney(newPokemon.getXp());
+        if(newPokemon.getXp() < 100)
+        {
+            user.spendMoney(newPokemon.getXp());
+        }
 
         UserManager.updateUser(user);
         PokemonManager.updatePokemon(newPokemon);
