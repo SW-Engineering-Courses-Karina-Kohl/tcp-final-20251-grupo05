@@ -160,7 +160,7 @@ public class PcController implements Initializable {
         for (pokeclicker.model.common.PokeType type : pokeclicker.model.common.PokeType.values()) {
             filterTypeCombo.getItems().add(type.toString());
         }
-        filterLevelCombo.getItems().addAll("BEGINNER", "INTERMEDIATE");
+        filterLevelCombo.getItems().addAll("BEGINNER", "ADVANCED");
     }
 
     private String getAbilityNames(Pokemon pokemon) {
@@ -650,31 +650,46 @@ public class PcController implements Initializable {
         abilityPane.toFront();
     }
 
-    @FXML
-    private void returnToPokemonPopup(ActionEvent event) {
-        currentPopupPokemon = PCManager
-                .getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(), Optional.empty())
-                .getPokemons()
-                .stream()
-                .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
-                .findFirst()
-                .orElse(currentPopupPokemon);
-        PokemonPopup(currentPopupPokemon);
 
-        abilityPane.setVisible(false);
-        abilityPane.toBack();
-        overlayPane.setVisible(true);
-        overlayPane.toFront();
-    }
 
-    @FXML
-    private void closePopup(ActionEvent event) {
-        overlayPane.setVisible(false);
-        overlayPane.toBack();
-        moneyerrorxp.setText("");
-        maxLvl.setText("");
-        evolveLabel.setText("");
-    }
+@FXML
+private void returnToPokemonPopup(ActionEvent event) {
+    String username = SceneSwitcher.getCurrentUsername();
+    pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
+    List<Pokemon> userPokemons = pc.getPokemons();
+
+    currentPopupPokemon = userPokemons.stream()
+            .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
+            .findFirst()
+            .orElse(currentPopupPokemon);
+
+    PokemonPopup(currentPopupPokemon);
+
+    abilityPane.setVisible(false);
+    abilityPane.toBack();
+    overlayPane.setVisible(true);
+    overlayPane.toFront();
+}
+
+
+@FXML
+private void closePopup(ActionEvent event) {
+    String username = SceneSwitcher.getCurrentUsername();
+    pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
+    List<Pokemon> userPokemons = pc.getPokemons();
+    currentPopupPokemon = userPokemons.stream()
+            .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
+            .findFirst()
+            .orElse(currentPopupPokemon);
+
+    pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
+
+    overlayPane.setVisible(false);
+    overlayPane.toBack();
+    moneyerrorxp.setText("");
+    maxLvl.setText("");
+    evolveLabel.setText("");
+}
 
     @FXML
     private void PC(ActionEvent event) {
@@ -702,7 +717,6 @@ public class PcController implements Initializable {
         PCrectangle.setFill(javafx.scene.paint.Color.TEAL);
         profilerectangle.setFill(javafx.scene.paint.Color.TEAL);
         shoprectangle.setFill(javafx.scene.paint.Color.TEAL);
-
         SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
 
     }
