@@ -1,123 +1,133 @@
 package pokeclicker.model.item;
-/* 
+
 import pokeclicker.model.common.Activatable;
-import pokeclicker.model.common.MockActivatable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;*/
+import static org.junit.jupiter.api.Assertions.*;
+
+class ConcreteItem extends Item {
+    private ItemType type = ItemType.MONEY_MULTIPLIER;
+    private double value;
+
+    public ConcreteItem(String name, double price, String description, double value) {
+        super(name, price, description);
+        this.value = value;
+    }
+
+    @Override
+    public Activatable activate(Activatable activatable) {
+        return activatable;
+    }
+
+    @Override
+    public double getMultiplierOrDamage() {
+        return value;
+    }
+
+    @Override
+    public ItemType getType() {
+        return type;
+    }
+}
+
+class MockActivatable implements Activatable {}
 
 class ItemTest {
-/*/
     private ConcreteItem testItem;
     private String initialName = "Lucky Egg";
     private double initialPrice = 2000.0;
     private String initialDescription = "Aumenta o dinheiro ganho.";
-    // **CORREÇÃO AQUI:** Usando ItemType.MONEY_MULTIPLIER
     private ItemType initialType = ItemType.MONEY_MULTIPLIER;
-    private double initialValue = 2.0; // Multiplicador de dinheiro
+    private double initialValue = 2.0;
 
     @BeforeEach
     void setUp() {
-        testItem = new ConcreteItem(initialName, initialPrice, initialDescription, initialType, initialValue);
+        testItem = new ConcreteItem(initialName, initialPrice, initialDescription, initialValue);
     }
 
     @Test
-    @DisplayName("Deve inicializar Item com valores corretos através do construtor")
     void testConstructorInitialization() {
-        assertNotNull(testItem, "O item não deve ser nulo após a inicialização");
-        assertEquals(initialName, testItem.getName(), "O nome do item deve ser 'Lucky Egg'");
-        assertEquals(initialPrice, testItem.getPrice(), "O preço do item deve ser 2000.0");
-        assertEquals(initialDescription, testItem.getDescription(), "A descrição do item deve ser a esperada");
-        assertTrue(testItem.isAvailable(), "O item deve estar disponível por padrão");
-        // **CORREÇÃO AQUI:** Verificando ItemType.MONEY_MULTIPLIER
-        assertEquals(initialType, testItem.getType(), "O tipo do item deve ser MONEY_MULTIPLIER");
-        assertEquals(initialValue, testItem.getMultiplierOrDamage(), "O valor (multiplicador) deve ser 2.0");
+        assertNotNull(testItem);
+        assertEquals(initialName, testItem.getName());
+        assertEquals(initialPrice, testItem.getPrice());
+        assertEquals(initialDescription, testItem.getDescription());
+        assertTrue(testItem.isAvailable());
+        assertEquals(initialType, testItem.getType());
+        assertEquals(initialValue, testItem.getMultiplierOrDamage());
     }
 
     @Test
-    @DisplayName("Deve retornar o nome correto do item")
     void testGetName() {
-        assertEquals(initialName, testItem.getName(), "getName deve retornar o nome correto");
+        assertEquals(initialName, testItem.getName());
     }
 
     @Test
-    @DisplayName("Deve retornar o preço correto do item")
     void testGetPrice() {
-        assertEquals(initialPrice, testItem.getPrice(), "getPrice deve retornar o preço correto");
+        assertEquals(initialPrice, testItem.getPrice());
     }
 
     @Test
-    @DisplayName("Deve retornar o status de disponibilidade correto")
     void testIsAvailable() {
-        assertTrue(testItem.isAvailable(), "isAvailable deve retornar true por padrão");
+        assertTrue(testItem.isAvailable());
         testItem.setAvailable(false);
-        assertFalse(testItem.isAvailable(), "isAvailable deve retornar false após ser desativado");
+        assertFalse(testItem.isAvailable());
     }
 
     @Test
-    @DisplayName("Deve mudar o status de disponibilidade para true")
     void testSetAvailableTrue() {
         testItem.setAvailable(false);
         assertFalse(testItem.isAvailable());
         testItem.setAvailable(true);
-        assertTrue(testItem.isAvailable(), "setAvailable deve mudar o status para true");
+        assertTrue(testItem.isAvailable());
     }
 
     @Test
-    @DisplayName("Deve mudar o status de disponibilidade para false")
     void testSetAvailableFalse() {
         testItem.setAvailable(true);
         assertTrue(testItem.isAvailable());
         testItem.setAvailable(false);
-        assertFalse(testItem.isAvailable(), "setAvailable deve mudar o status para false");
+        assertFalse(testItem.isAvailable());
     }
 
     @Test
-    @DisplayName("Deve retornar a descrição correta do item")
     void testGetDescription() {
-        assertEquals(initialDescription, testItem.getDescription(), "getDescription deve retornar a descrição correta");
+        assertEquals(initialDescription, testItem.getDescription());
     }
 
     @Test
-    @DisplayName("Deve permitir a atualização da descrição do item")
     void testSetDescription() {
         String newDescription = "Um item que dobra o dinheiro!";
         testItem.setDescription(newDescription);
-        assertEquals(newDescription, testItem.getDescription(), "setDescription deve atualizar a descrição");
+        assertEquals(newDescription, testItem.getDescription());
     }
 
     @Test
-    @DisplayName("Deve retornar o tipo de item correto")
     void testGetType() {
-        assertEquals(initialType, testItem.getType(), "getType deve retornar o tipo de item correto");
+        assertEquals(initialType, testItem.getType());
     }
 
     @Test
-    @DisplayName("Deve retornar o multiplicador ou dano correto")
     void testGetMultiplierOrDamage() {
-        assertEquals(initialValue, testItem.getMultiplierOrDamage(), "getMultiplierOrDamage deve retornar o valor correto");
+        assertEquals(initialValue, testItem.getMultiplierOrDamage());
     }
 
     @Test
-    @DisplayName("O método activate deve retornar a instância de Activatable fornecida")
     void testActivate() {
         MockActivatable mockActivatable = new MockActivatable();
         Activatable activated = testItem.activate(mockActivatable);
-        assertSame(mockActivatable, activated, "O método activate deve retornar a mesma instância de Activatable");
+        assertSame(mockActivatable, activated);
     }
 
     @Test
-    @DisplayName("Deve lidar com descrição nula")
     void testSetDescriptionNull() {
         testItem.setDescription(null);
-        assertNull(testItem.getDescription(), "A descrição deve ser nula se definida como nula");
+        assertNull(testItem.getDescription());
     }
 
     @Test
-    @DisplayName("Deve lidar com descrição vazia")
     void testSetDescriptionEmpty() {
         testItem.setDescription("");
-        assertEquals("", testItem.getDescription(), "A descrição deve ser vazia se definida como vazia");
-    }*/
+        assertEquals("", testItem.getDescription());
+    }
 }

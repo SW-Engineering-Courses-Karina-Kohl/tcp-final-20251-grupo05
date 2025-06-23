@@ -3,12 +3,10 @@ package test.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-// Import the required classes from the correct package
 import pokeclicker.model.common.PokeType;
 import pokeclicker.model.Ability;
 
 public class AbilityTest {
-/*
     @Test
     public void testAbilityConstructorAndGetters() {
         PokeType type = PokeType.FIRE;
@@ -16,7 +14,7 @@ public class AbilityTest {
 
         assertEquals("Flame Burst", ability.getName());
         assertEquals("A burst of fire", ability.getDescription());
-        assertEquals(type, ability.getType());
+        assertEquals("Fire", ability.getType());
         assertEquals(50.0, ability.getDamage(), 0.0001);
         assertEquals(10.0, ability.getCure(), 0.0001);
     }
@@ -39,5 +37,4 @@ public class AbilityTest {
             // Exception was thrown as expected
         }
     }
-        */
 }
