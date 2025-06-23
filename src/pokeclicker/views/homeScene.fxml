@@ -14,10 +14,9 @@
             <Image url="@../../img/itemregistration3.png" />
          </image></ImageView>
       <Rectangle fx:id="profilerectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutX="461.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="142.0" />
-      <Rectangle fx:id="homerectangle" arcHeight="5.0" arcWidth="5.0" fill="#39d1d1" height="73.0" layoutX="300.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="158.0" />
+      <Rectangle fx:id="homerectangle" arcHeight="5.0" arcWidth="5.0" fill="#3fdddd" height="73.0" layoutX="300.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="158.0" />
       <Rectangle fx:id="shoprectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutX="150.0" layoutY="335.0" stroke="TRANSPARENT" strokeType="INSIDE" width="148.0" />
       <Rectangle fx:id="PCrectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutY="333.0" stroke="TRANSPARENT" strokeType="INSIDE" width="148.0" />
-      <Line id="line0" fx:id="longline" endX="499.0" layoutX="100.0" layoutY="334.0" startX="-100.0" strokeWidth="5.0" />
       <Line id="line3" fx:id="shortline3" endX="-99.99996948242188" endY="123.70001220703125" layoutX="559.0" layoutY="284.0" startX="-100.0" startY="50" strokeWidth="5.0" />
       <Line id="line1" fx:id="shortline1" endX="-99.99996948242188" endY="126.0999755859375" layoutX="250.0" layoutY="284.0" startX="-100.0" startY="50" strokeWidth="5.0" />
       <Line id="line2" fx:id="shortline2" endX="-155.99996948242188" endY="123.0" layoutX="456.0" layoutY="284.0" startX="-156.0" startY="50" strokeWidth="5.0" />
@@ -44,7 +43,8 @@
             <Image url="@../../img/clicker2.png" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="59.0" layoutX="-2.0" layoutY="272.0" stroke="BLACK" strokeType="INSIDE" width="604.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="66.0" layoutX="-17.0" layoutY="-7.0" stroke="BLACK" strokeType="INSIDE" width="626.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#115b4e" height="59.0" layoutX="-2.0" layoutY="272.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="626.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#115b4e" height="66.0" layoutX="-51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="673.0" />
+      <Line id="line0" fx:id="longline" endX="499.0" layoutX="100.0" layoutY="334.0" startX="-100.0" strokeWidth="5.0" />
    </children>
 </AnchorPane>
