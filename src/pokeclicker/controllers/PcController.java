@@ -450,6 +450,7 @@ public class PcController implements Initializable {
                 if (itemTypeName.equals("Money Multiplier")) {
                     ItemManager.activateItem(item.getName(), UserManager.getUser(SceneSwitcher.getCurrentUsername()));
                     ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
+                    SceneSwitcher.switchToHome(event, SceneSwitcher.getCurrentUsername());
                 } else if (itemTypeName.equals("Pokemon")) {
                     showPokemonSelectPopup(item, itemContainer);
                     // ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
@@ -504,7 +505,8 @@ public class PcController implements Initializable {
                 ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
                 // Atualiza a lista de itens
                 refreshPokemonGrid();
-                PokemonPopup(pokemon);
+                SceneSwitcher.switchToPC(e, SceneSwitcher.getCurrentUsername());
+                // PokemonPopup(pokemon);
                 // pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
             });
             selectBox.getChildren().add(pokeBtn);
@@ -530,8 +532,8 @@ public class PcController implements Initializable {
             return;
         currentPopupPokemon = pokemon;
 
-        popupImage.setFitHeight(150); 
-        popupImage.setPreserveRatio(true); 
+        popupImage.setFitHeight(150);
+        popupImage.setPreserveRatio(true);
         try {
             URL imageUrl = getClass().getResource(pokemon.getImagePath());
             if (imageUrl != null) {
@@ -581,27 +583,27 @@ public class PcController implements Initializable {
             maxLvl.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
         } else {
             switch (currentPopupPokemon.getImagePath()) {
-            case "/img/basic/charmander.gif":
-                currentPopupPokemon.setImagePath("/img/evolutions/charizard.gif");
-                break;
-            case "/img/basic/squirtle.gif":
-                currentPopupPokemon.setImagePath("/img/evolutions/blastoise.gif");
-                break;
-            case "/img/basic/bulbasaur.gif":
-                currentPopupPokemon.setImagePath("/img/evolutions/venusaur.gif");
-                break;
-            case "/img/basic/cyndaquil.gif":
-                currentPopupPokemon.setImagePath("/img/evolutions/typhlosion.gif");
-                break;
-            case "/img/basic/piplup.gif":
-                currentPopupPokemon.setImagePath("/img/evolutions/empoleon.gif");
-                break;
-            case "/img/basic/turtwig.gif":
-                currentPopupPokemon.setImagePath("/img/evolutions/torterra.gif");
-                break;
-            default:
-                break;
-        }
+                case "/img/basic/charmander.gif":
+                    currentPopupPokemon.setImagePath("/img/evolutions/charizard.gif");
+                    break;
+                case "/img/basic/squirtle.gif":
+                    currentPopupPokemon.setImagePath("/img/evolutions/blastoise.gif");
+                    break;
+                case "/img/basic/bulbasaur.gif":
+                    currentPopupPokemon.setImagePath("/img/evolutions/venusaur.gif");
+                    break;
+                case "/img/basic/cyndaquil.gif":
+                    currentPopupPokemon.setImagePath("/img/evolutions/typhlosion.gif");
+                    break;
+                case "/img/basic/piplup.gif":
+                    currentPopupPokemon.setImagePath("/img/evolutions/empoleon.gif");
+                    break;
+                case "/img/basic/turtwig.gif":
+                    currentPopupPokemon.setImagePath("/img/evolutions/torterra.gif");
+                    break;
+                default:
+                    break;
+            }
             maxLvl.setText("");
         }
 
