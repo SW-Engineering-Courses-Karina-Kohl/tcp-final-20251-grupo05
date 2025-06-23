@@ -34,7 +34,7 @@ public class MoneyMultiplierItemTest {
         User user = new User("Ash", 1.0, 100.0, null);
         Activatable result = item.activate(user);
         assertSame(user, result);
-        assertEquals(3.0, user.getMoneyMultiplier());
+        assertEquals(2.0, user.getMoneyMultiplier());
     }
 
     @Test

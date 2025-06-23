@@ -15,8 +15,7 @@ public abstract class Pokemon implements Activatable, Purchasable {
     private boolean available = true;
     private double price;
     private String imagePath;
-    private static final double INTERMEDIATE_MIN_XP = 100;
-    private static final double ADVANCED_MIN_XP = 300;
+    private static final double ADVANCED_MIN_XP = 100;
 
     public Pokemon(String name, LevelType level, double xp, int health, int totalHealth,
             boolean available, double price, String imagePath) {
@@ -100,13 +99,10 @@ public abstract class Pokemon implements Activatable, Purchasable {
     }
 
     private boolean updateLevel() {
-        if (level == LevelType.INTERMEDIATE && xp >= ADVANCED_MIN_XP) {
+        if (level == LevelType.BEGINNER && xp >= ADVANCED_MIN_XP) {
             level = LevelType.ADVANCED;
             return true;
-        } else if (level == LevelType.BEGINNER && xp >= INTERMEDIATE_MIN_XP) {
-            level = LevelType.INTERMEDIATE;
-            return true;
-        }
+        } 
         return false;
     }
 

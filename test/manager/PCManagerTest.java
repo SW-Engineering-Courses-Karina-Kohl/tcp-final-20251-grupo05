@@ -12,11 +12,11 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DummyUser extends User {
+class DummyUserPC extends User {
     private double spent = 0;
 
-    public DummyUser(String name, double money) {
-        super(name, 1.0, money, new DummyPokemon("dummy"));
+    public DummyUserPC(String name, double money) {
+        super(name, 1.0, money, new DummyPokemonPCManager("dummy"));
     }
 
     @Override
@@ -30,10 +30,10 @@ class DummyUser extends User {
     }
 }
 
-class DummyPokemon extends Pokemon {
+class DummyPokemonPCManager extends Pokemon {
     private double xp = 10.0;
 
-    public DummyPokemon(String name) {
+    public DummyPokemonPCManager(String name) {
         super(name, pokeclicker.model.pokemon.LevelType.BEGINNER, 0, 1, 1, false, 1, "Dummy");
     }
 
@@ -91,14 +91,14 @@ class DummyPC extends PC {
 
 public class PCManagerTest {
 
-    private DummyUser user;
-    private DummyPokemon pokemon;
+    private DummyUserPC user;
+    private DummyPokemonPCManager pokemon;
     private DummyItem item;
 
     @BeforeEach
     void setUp() {
-        user = new DummyUser("Ash", 100.0);
-        pokemon = new DummyPokemon("Pikachu");
+        user = new DummyUserPC("Ash", 100.0);
+        pokemon = new DummyPokemonPCManager("Pikachu");
         item = new DummyItem("Potion");
     }
 

@@ -66,7 +66,7 @@ public class PokemonDBTest {
         assertFalse(updated.isAvailable());
         assertEquals(40, updated.getHealth());
         assertEquals(100.0, updated.getXp());
-        assertEquals(LevelType.INTERMEDIATE, updated.getLevel());
+        assertEquals(LevelType.ADVANCED, updated.getLevel());
     }
 
     @Test

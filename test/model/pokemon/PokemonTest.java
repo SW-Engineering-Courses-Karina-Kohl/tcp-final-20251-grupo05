@@ -64,10 +64,7 @@ public class PokemonTest {
         assertEquals(50.0, pokemon.getXp());
         assertEquals(LevelType.BEGINNER, pokemon.getLevel());
 
-        assertTrue(pokemon.gainXp(100)); // Should level up to INTERMEDIATE
-        assertEquals(LevelType.INTERMEDIATE, pokemon.getLevel());
-
-        assertTrue(pokemon.gainXp(200)); // Should level up to ADVANCED
+        assertTrue(pokemon.gainXp(100)); // Should level up to ADVANCED
         assertEquals(LevelType.ADVANCED, pokemon.getLevel());
     }
 

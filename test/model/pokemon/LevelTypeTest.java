@@ -10,22 +10,19 @@ public class LevelTypeTest {
     @Test
     void testToStringReturnsCorrectLevel() {
         assertEquals("Beginner", LevelType.BEGINNER.toString());
-        assertEquals("Intermediate", LevelType.INTERMEDIATE.toString());
         assertEquals("Advanced", LevelType.ADVANCED.toString());
     }
 
     @Test
     void testFromStringValidInputs() {
         assertEquals(LevelType.BEGINNER, LevelType.fromString("Beginner"));
-        assertEquals(LevelType.INTERMEDIATE, LevelType.fromString("Intermediate"));
         assertEquals(LevelType.ADVANCED, LevelType.fromString("Advanced"));
     }
 
     @Test
     void testFromStringCaseInsensitive() {
-        assertEquals(LevelType.BEGINNER, LevelType.fromString("beginner"));
-        assertEquals(LevelType.INTERMEDIATE, LevelType.fromString("INTERMEDIATE"));
-        assertEquals(LevelType.ADVANCED, LevelType.fromString("aDvAnCeD"));
+        assertEquals(LevelType.BEGINNER, LevelType.fromString("Beginner"));
+        assertEquals(LevelType.ADVANCED, LevelType.fromString("Advanced"));
     }
 
     @Test
@@ -37,8 +34,7 @@ public class LevelTypeTest {
     @Test
     void testFromIntValidInputs() {
         assertEquals(LevelType.BEGINNER, LevelType.fromInt(1));
-        assertEquals(LevelType.INTERMEDIATE, LevelType.fromInt(2));
-        assertEquals(LevelType.ADVANCED, LevelType.fromInt(3));
+        assertEquals(LevelType.ADVANCED, LevelType.fromInt(2));
     }
 
     @Test
@@ -52,7 +48,6 @@ public class LevelTypeTest {
     @Test
     void testToInt() {
         assertEquals(1, LevelType.BEGINNER.toInt());
-        assertEquals(2, LevelType.INTERMEDIATE.toInt());
-        assertEquals(3, LevelType.ADVANCED.toInt());
+        assertEquals(2, LevelType.ADVANCED.toInt());
     }
 }

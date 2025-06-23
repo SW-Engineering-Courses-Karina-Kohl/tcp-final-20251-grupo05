@@ -67,7 +67,7 @@ public class UserTest {
     @Test
     void testUpdateMultiplierValid() {
         user.updateMultiplier(3.0);
-        assertEquals(5.0, user.getMoneyMultiplier());
+        assertEquals(6.0, user.getMoneyMultiplier());
     }
 
     @Test

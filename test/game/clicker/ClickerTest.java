@@ -12,12 +12,12 @@ import pokeclicker.model.pokemon.LevelType;
 public class ClickerTest {
     private User user;
     private Clicker clicker;
-    private DummyPokemon dummyPokemon;
+    private DummyPokemonClicker dummyPokemonClicker;
 
     @BeforeEach
     void setUp() {
-        dummyPokemon = new DummyPokemon("ClickyMon");
-        user = new User("ClickerPlayer", 1.0, 0.0, dummyPokemon);
+        dummyPokemonClicker = new DummyPokemonClicker("ClickyMon");
+        user = new User("ClickerPlayer", 1.0, 0.0, dummyPokemonClicker);
         clicker = new Clicker(user);
     }
 
@@ -57,7 +57,7 @@ public class ClickerTest {
 
     @Test
     void testRegisterClickWithMultiplier() {
-        User userWithMultiplier = new User("MultiplierPlayer", 2.5, 0.0, dummyPokemon);
+        User userWithMultiplier = new User("MultiplierPlayer", 2.5, 0.0, dummyPokemonClicker);
         Clicker clickerForMultiplier = new Clicker(userWithMultiplier);
         
         clickerForMultiplier.registerClick();
@@ -95,8 +95,8 @@ public class ClickerTest {
     }
 }
 
-class DummyPokemon extends Pokemon {
-    public DummyPokemon(String name) {
+class DummyPokemonClicker extends Pokemon {
+    public DummyPokemonClicker(String name) {
         super(name, LevelType.BEGINNER, 0, 1, 1, false, 1, "Dummy");
     }
 

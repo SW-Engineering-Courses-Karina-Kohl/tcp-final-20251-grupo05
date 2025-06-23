@@ -3,7 +3,6 @@ package pokeclicker.model.pokemon;
 
 public enum LevelType {
     BEGINNER("Beginner"),
-    INTERMEDIATE("Intermediate"),
     ADVANCED("Advanced");
 
     private final String level;
@@ -29,8 +28,7 @@ public enum LevelType {
     public static LevelType fromInt(int number) {
         return switch (number) {
             case 1 -> BEGINNER;
-            case 2 -> INTERMEDIATE;
-            case 3 -> ADVANCED;
+            case 2 -> ADVANCED;
             default -> throw new IllegalArgumentException("Invalid level number: " + number);
         };
     }
@@ -38,8 +36,7 @@ public enum LevelType {
     public int toInt() {
         return switch (this) {
             case BEGINNER -> 1;
-            case INTERMEDIATE -> 2;
-            case ADVANCED -> 3;
+            case ADVANCED -> 2;
         };
     }
 }

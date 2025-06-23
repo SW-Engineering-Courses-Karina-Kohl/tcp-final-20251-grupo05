@@ -21,7 +21,7 @@ class SQLiteConnectionTest {
 
     @AfterEach
     void tearDown() throws SQLException {
-        //TestUtils.cleanTestDatabase();
+        TestUtils.cleanTestDatabase();
         if (connection != null && !connection.isClosed()) {
             connection.close();
         }
