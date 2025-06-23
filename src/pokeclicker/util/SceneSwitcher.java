@@ -3,6 +3,7 @@ package pokeclicker.util;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
@@ -104,7 +105,7 @@ public class SceneSwitcher {
         }
     }
 
-    public static void switchToPokemonRegistration(ActionEvent event) {
+    public static void switchToPokemonRegistration(MouseEvent event) {
         try {
             Parent root = FXMLLoader
                     .load(SceneSwitcher.class.getResource("/pokeclicker/views/pokemonregistration.fxml"));
@@ -132,7 +133,7 @@ public class SceneSwitcher {
         return loader;
     }
 
-    public static void switchToAbilityRegistration(ActionEvent event, String username) {
+    public static void switchToAbilityRegistration(MouseEvent event, String username) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     SceneSwitcher.class.getResource("/pokeclicker/views/abilityregistration.fxml"));
@@ -154,7 +155,7 @@ public class SceneSwitcher {
         }
     }
 
-    public static void switchToItemRegistration(ActionEvent event) {
+    public static void switchToItemRegistration(MouseEvent event) {
         try {
             Parent root = FXMLLoader
                     .load(SceneSwitcher.class.getResource("/pokeclicker/views/itemregistration.fxml"));
@@ -172,7 +173,7 @@ public class SceneSwitcher {
         }
     }
 
-    public static void switchToClicker(ActionEvent event) {
+    public static void switchToClicker(MouseEvent event) {
         try {
             Parent root = FXMLLoader.load(SceneSwitcher.class.getResource("/pokeclicker/views/clickerScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

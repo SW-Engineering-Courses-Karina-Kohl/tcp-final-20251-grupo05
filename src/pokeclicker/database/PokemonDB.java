@@ -184,7 +184,7 @@ public class PokemonDB {
             conditions.append(" AND name LIKE '%").append(filter.getName()).append("%'");
         }
         if (filter.getType() != null) {
-            conditions.append(" AND type = '").append(filter.getType().toString()).append("'");
+            conditions.append(" AND type = '").append(filter.getType().name()).append("'");
         }
         if (filter.getMinLevel() != null) {
             conditions.append(" AND level >= ").append(filter.getMinLevel().toInt());

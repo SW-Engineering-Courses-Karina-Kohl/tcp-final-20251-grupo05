@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.HomeController">
+<AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" style="-fx-background-color: #075858;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.HomeController">
    <children>
-      <Label fx:id="cadastropokemon" layoutX="10.0" layoutY="170.0" text="Label" />
-      <Label fx:id="clickerscene" layoutX="489.0" layoutY="-3.0" text="Label" />
-      <ImageView fx:id="upperdesignimage" fitHeight="150.0" fitWidth="200.0" layoutX="403.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="lowerdesignimage" fitHeight="150.0" fitWidth="200.0" layoutX="2.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="clickerButton" layoutX="413.0" layoutY="6.0" mnemonicParsing="false" onAction="#clickerButton" opacity="0.0" prefHeight="148.0" prefWidth="186.0" text="Button" textFill="TRANSPARENT" />
-      <Button fx:id="registrationbutton" layoutX="8.0" layoutY="181.0" mnemonicParsing="false" onAction="#registrationswitch" opacity="0.0" prefHeight="138.0" prefWidth="185.0" text="Button" />
+      <ImageView fx:id="itemregistrationimg" fitHeight="138.0" fitWidth="148.0" layoutX="2.0" layoutY="100.0" onMouseClicked="#itembutton" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/itemregistration3.png" />
+         </image></ImageView>
       <Rectangle fx:id="profilerectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutX="461.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="142.0" />
-      <Rectangle fx:id="homerectangle" arcHeight="5.0" arcWidth="5.0" fill="#39d1d1" height="73.0" layoutX="300.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="158.0" />
+      <Rectangle fx:id="homerectangle" arcHeight="5.0" arcWidth="5.0" fill="#3fdddd" height="73.0" layoutX="300.0" layoutY="334.0" stroke="TRANSPARENT" strokeType="INSIDE" width="158.0" />
       <Rectangle fx:id="shoprectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutX="150.0" layoutY="335.0" stroke="TRANSPARENT" strokeType="INSIDE" width="148.0" />
       <Rectangle fx:id="PCrectangle" arcHeight="5.0" arcWidth="5.0" fill="TEAL" height="73.0" layoutY="333.0" stroke="TRANSPARENT" strokeType="INSIDE" width="148.0" />
-      <Line id="line0" fx:id="longline" endX="499.0" layoutX="100.0" layoutY="334.0" startX="-100.0" strokeWidth="5.0" />
       <Line id="line3" fx:id="shortline3" endX="-99.99996948242188" endY="123.70001220703125" layoutX="559.0" layoutY="284.0" startX="-100.0" startY="50" strokeWidth="5.0" />
       <Line id="line1" fx:id="shortline1" endX="-99.99996948242188" endY="126.0999755859375" layoutX="250.0" layoutY="284.0" startX="-100.0" startY="50" strokeWidth="5.0" />
       <Line id="line2" fx:id="shortline2" endX="-155.99996948242188" endY="123.0" layoutX="456.0" layoutY="284.0" startX="-156.0" startY="50" strokeWidth="5.0" />
@@ -32,19 +28,28 @@
       <Button id="btnpc" fx:id="PC" layoutY="337.0" mnemonicParsing="false" onAction="#PC" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnprofile" fx:id="profile" layoutX="459.0" layoutY="336.0" mnemonicParsing="false" onAction="#profile" opacity="0.0" prefHeight="66.0" prefWidth="142.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnshop" fx:id="shop" layoutX="151.0" layoutY="336.0" mnemonicParsing="false" onAction="#shop" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
-      <ImageView fx:id="itemimage" fitHeight="150.0" fitWidth="200.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="abilityimage" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="25.0" layoutY="-2.0" text="Item Registration" textFill="#2c3e50">
-         <font>
-            <Font name="Segoe UI" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="414.0" layoutY="169.0" text="Ability Registration" textFill="#2c3e50">
-         <font>
-            <Font name="Segoe UI Bold" size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="abilitybutton" layoutX="418.0" layoutY="195.0" mnemonicParsing="false" onAction="#abilitybutton" opacity="0.0" prefHeight="110.0" prefWidth="148.0" text="Button" />
-      <Button fx:id="itembutton" layoutX="23.0" layoutY="31.0" mnemonicParsing="false" onAction="#itembutton" opacity="0.0" prefHeight="118.0" prefWidth="158.0" text="Button" />
+      <ImageView fx:id="abilityregistrationimg" fitHeight="138.0" fitWidth="158.0" layoutX="451.0" layoutY="100.0" onMouseClicked="#abilitybutton" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/abilityregistration2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pokemonregistrationimg" fitHeight="138.0" fitWidth="158.0" layoutX="152.0" layoutY="100.0" onMouseClicked="#registrationswitch" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/pokemonregistration4.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="clickerimg" fitHeight="138.0" fitWidth="158.0" layoutX="302.0" layoutY="100.0" onMouseClicked="#clickerButton" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/clicker2.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#115b4e" height="59.0" layoutX="-2.0" layoutY="272.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="626.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#115b4e" height="66.0" layoutX="-51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="673.0" />
+      <Line id="line0" fx:id="longline" endX="499.0" layoutX="100.0" layoutY="334.0" startX="-100.0" strokeWidth="5.0" />
+      <ImageView fitHeight="130.0" fitWidth="136.0" layoutX="237.0" layoutY="-32.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

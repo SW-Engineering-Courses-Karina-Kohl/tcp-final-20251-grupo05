@@ -14,10 +14,12 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,6 +46,7 @@ import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import pokeclicker.game.PC;
 import pokeclicker.manager.item.ItemManager;
+import pokeclicker.manager.pokemon.PokemonFilter;
 import pokeclicker.manager.pokemon.PokemonManager;
 
 public class PcController implements Initializable {
@@ -132,6 +135,13 @@ public class PcController implements Initializable {
     private Label popupAbility;
     @FXML
     private TextFlow abilityTypeFlow;
+    @FXML
+    private ComboBox<String> filterTypeCombo;
+    @FXML
+    private TextField filterNameField;
+    @FXML
+    private ComboBox<String> filterLevelCombo;
+
     private PC pc;
 
     @Override
@@ -146,7 +156,11 @@ public class PcController implements Initializable {
 
         pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
         pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
-
+        filterTypeCombo.getItems().clear();
+        for (pokeclicker.model.common.PokeType type : pokeclicker.model.common.PokeType.values()) {
+            filterTypeCombo.getItems().add(type.toString());
+        }
+        filterLevelCombo.getItems().addAll("BEGINNER", "INTERMEDIATE");
     }
 
     private String getAbilityNames(Pokemon pokemon) {
@@ -719,4 +733,38 @@ public class PcController implements Initializable {
         typeText.setStyle("-fx-font-weight: bold;");
         abilityTypeFlow.getChildren().addAll(label, typeText);
     }
+
+    @FXML
+    private void applyFilter(ActionEvent event) {
+        PokemonFilter filter = new PokemonFilter();
+        if (filterTypeCombo.getValue() != null && !filterTypeCombo.getValue().isEmpty()) {
+            filter.setType(pokeclicker.model.common.PokeType.fromString(filterTypeCombo.getValue()));
+        }
+        if (filterNameField.getText() != null && !filterNameField.getText().isEmpty()) {
+            filter.setName(filterNameField.getText());
+        }
+        if (filterLevelCombo.getValue() != null && !filterLevelCombo.getValue().isEmpty()) {
+            filter.setMinLevel(pokeclicker.model.pokemon.LevelType.valueOf(filterLevelCombo.getValue()));
+        }
+        filter.setUser(SceneSwitcher.getCurrentUsername());
+        List<Pokemon> filtered = PokemonManager.getAllPokemons(Optional.of(filter));
+        pcPokemonSP.setContent(createPokemonGrid(filtered.toArray(new Pokemon[0])));
+        for (Pokemon p : filtered) {
+            System.out.println("Pokemon: " + p.getName() + ", type: " + p.getType());
+        }
+        System.out.println("Filter type: " + filter.getType() + " (enum name: "
+                + (filter.getType() != null ? filter.getType().name() : "null") + ")");
+    }
+
+    @FXML
+    private void clearFilter(ActionEvent event) {
+        filterTypeCombo.setValue(null);
+        filterNameField.clear();
+        filterLevelCombo.setValue(null);
+
+        // Fetch all Pokémon for the user (no filter)
+        List<Pokemon> allPokemons = PokemonManager.getAllPokemons(Optional.empty());
+        pcPokemonSP.setContent(createPokemonGrid(allPokemons.toArray(new Pokemon[0])));
+    }
+
 }

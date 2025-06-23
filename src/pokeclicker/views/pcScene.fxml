@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Button?>
@@ -12,6 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.PcController">
    <children>
       <AnchorPane fx:id="overlayPane2" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.7);" pickOnBounds="true" prefWidth="600.0" prefHeight="404.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
@@ -103,11 +106,21 @@
       <Button id="btnshop" fx:id="shop" layoutX="151.0" layoutY="336.0" mnemonicParsing="false" onAction="#shop" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
       <TabPane fx:id="pcTabPane" prefHeight="331.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Pokemons">
-               <content>
-                  <ScrollPane fx:id="pcPokemonSP" prefHeight="304.0" prefWidth="604.0" />
-               </content>
-          </Tab>
+       <Tab text="Pokemons">
+   <content>
+      <VBox spacing="10" alignment="TOP_LEFT">
+         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 0 10;">
+            <Label text="Filter:"/>
+            <ComboBox fx:id="filterTypeCombo" promptText="Type" prefWidth="90"/>
+            <TextField fx:id="filterNameField" promptText="Name" prefWidth="90"/>
+            <ComboBox fx:id="filterLevelCombo" promptText="Level" prefWidth="90"/>
+            <Button text="Apply" onAction="#applyFilter"/>
+            <Button text="Clear" onAction="#clearFilter"/>
+         </HBox>
+         <ScrollPane fx:id="pcPokemonSP" prefHeight="304.0" prefWidth="604.0" />
+      </VBox>
+   </content>
+</Tab>
           <Tab text="Items">
                <content>
                   <ScrollPane fx:id="pcItemSP" prefHeight="304.0" prefWidth="604.0" />

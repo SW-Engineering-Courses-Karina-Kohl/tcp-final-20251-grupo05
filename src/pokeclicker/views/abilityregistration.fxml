@@ -80,5 +80,6 @@
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#62c6b9" height="18.0" layoutX="116.0" layoutY="380.0" stroke="TRANSPARENT" strokeType="INSIDE" width="121.0" />
    </children>
 </AnchorPane>

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
@@ -73,25 +74,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
-        Image upperdesignimage1 = new Image(getClass().getResource("/img/upperdesignimage.png").toExternalForm());
 
-        upperdesignimage.setImage(upperdesignimage1);
-        upperdesignimage.setPreserveRatio(true);
-        upperdesignimage.setFitWidth(420);
-        Image lowerdesignimage1 = new Image(getClass().getResource("/img/lowerdesignimage.png").toExternalForm());
-        lowerdesignimage.setImage(lowerdesignimage1);
-        lowerdesignimage.setPreserveRatio(true);
-        lowerdesignimage.setFitWidth(360);
-        cadastropokemon.setText("Pokemon Registration");
-        clickerscene.setText("Clicker");
-        Image abilityImage = new Image(getClass().getResource("/img/abilityimage.png").toExternalForm());
-        abilityimage.setImage(abilityImage);
-        abilityimage.setFitWidth(240);
-        abilityimage.setFitHeight(190);
-        Image itemImage = new Image(getClass().getResource("/img/itemimage.png").toExternalForm());
-        itemimage.setImage(itemImage);
-        itemimage.setPreserveRatio(true);
-        itemimage.setFitHeight(420);
     }
 
     @FXML
@@ -101,40 +84,6 @@ public class HomeController implements Initializable {
         this.x = imageView.getLayoutX();
         this.y = imageView.getLayoutY();
         System.out.println("Selected image. x: " + x + ", y: " + y);
-    }
-
-    public void up(ActionEvent e) {
-
-        if (selectedImage == null)
-            return;
-        y -= 5;
-        selectedImage.setLayoutY(y);
-        System.out.println("layout y: " + selectedImage.getLayoutY());
-    }
-
-    public void down(ActionEvent e) {
-
-        if (selectedImage == null)
-            return;
-        y += 5;
-        selectedImage.setLayoutY(y);
-        System.out.println("layout y: " + selectedImage.getLayoutY());
-    }
-
-    public void left(ActionEvent e) {
-        if (selectedImage == null)
-            return;
-        x -= 5;
-        selectedImage.setLayoutX(x);
-        System.out.println("layout x: " + selectedImage.getLayoutX());
-    }
-
-    public void right(ActionEvent e) {
-        if (selectedImage == null)
-            return;
-        x += 5;
-        selectedImage.setLayoutX(x);
-        System.out.println("layout x: " + selectedImage.getLayoutX());
     }
 
     @FXML
@@ -193,27 +142,27 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void registrationswitch(ActionEvent event) {
+    private void registrationswitch(MouseEvent event) {
 
         pokeclicker.util.SceneSwitcher.switchToPokemonRegistration(event);
 
     }
 
     @FXML
-    public void abilitybutton(ActionEvent event) {
+    public void abilitybutton(MouseEvent event) {
 
         pokeclicker.util.SceneSwitcher.switchToAbilityRegistration(event, SceneSwitcher.getCurrentUsername());
     }
 
     @FXML
-    public void itembutton(ActionEvent event) {
+    public void itembutton(MouseEvent event) {
 
         pokeclicker.util.SceneSwitcher.switchToItemRegistration(event);
 
     }
 
     @FXML
-    public void clickerButton(ActionEvent event) {
+    public void clickerButton(MouseEvent event) {
 
         pokeclicker.util.SceneSwitcher.switchToClicker(event);
 
