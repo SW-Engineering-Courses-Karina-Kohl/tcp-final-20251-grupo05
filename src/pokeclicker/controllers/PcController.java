@@ -142,6 +142,13 @@ public class PcController implements Initializable {
     @FXML
     private ComboBox<String> filterLevelCombo;
 
+    @FXML
+    private ComboBox<String> itemFilterTypeCombo;
+    @FXML
+    private TextField itemFilterNameField;
+    @FXML
+    private ComboBox<String> itemFilterAvailableCombo;
+
     private PC pc;
 
     @Override
@@ -161,6 +168,12 @@ public class PcController implements Initializable {
             filterTypeCombo.getItems().add(type.toString());
         }
         filterLevelCombo.getItems().addAll("BEGINNER", "ADVANCED");
+        itemFilterTypeCombo.getItems().clear();
+        for (pokeclicker.model.item.ItemType type : pokeclicker.model.item.ItemType.values()) {
+            itemFilterTypeCombo.getItems().add(type.toString());
+        }
+        itemFilterAvailableCombo.getSelectionModel().selectFirst();
+
     }
 
     private String getAbilityNames(Pokemon pokemon) {
@@ -650,46 +663,43 @@ public class PcController implements Initializable {
         abilityPane.toFront();
     }
 
+    @FXML
+    private void returnToPokemonPopup(ActionEvent event) {
+        String username = SceneSwitcher.getCurrentUsername();
+        pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
+        List<Pokemon> userPokemons = pc.getPokemons();
 
+        currentPopupPokemon = userPokemons.stream()
+                .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
+                .findFirst()
+                .orElse(currentPopupPokemon);
 
-@FXML
-private void returnToPokemonPopup(ActionEvent event) {
-    String username = SceneSwitcher.getCurrentUsername();
-    pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
-    List<Pokemon> userPokemons = pc.getPokemons();
+        PokemonPopup(currentPopupPokemon);
 
-    currentPopupPokemon = userPokemons.stream()
-            .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
-            .findFirst()
-            .orElse(currentPopupPokemon);
+        abilityPane.setVisible(false);
+        abilityPane.toBack();
+        overlayPane.setVisible(true);
+        overlayPane.toFront();
+    }
 
-    PokemonPopup(currentPopupPokemon);
+    @FXML
+    private void closePopup(ActionEvent event) {
+        String username = SceneSwitcher.getCurrentUsername();
+        pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
+        List<Pokemon> userPokemons = pc.getPokemons();
+        currentPopupPokemon = userPokemons.stream()
+                .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
+                .findFirst()
+                .orElse(currentPopupPokemon);
 
-    abilityPane.setVisible(false);
-    abilityPane.toBack();
-    overlayPane.setVisible(true);
-    overlayPane.toFront();
-}
+        pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
 
-
-@FXML
-private void closePopup(ActionEvent event) {
-    String username = SceneSwitcher.getCurrentUsername();
-    pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
-    List<Pokemon> userPokemons = pc.getPokemons();
-    currentPopupPokemon = userPokemons.stream()
-            .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
-            .findFirst()
-            .orElse(currentPopupPokemon);
-
-    pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
-
-    overlayPane.setVisible(false);
-    overlayPane.toBack();
-    moneyerrorxp.setText("");
-    maxLvl.setText("");
-    evolveLabel.setText("");
-}
+        overlayPane.setVisible(false);
+        overlayPane.toBack();
+        moneyerrorxp.setText("");
+        maxLvl.setText("");
+        evolveLabel.setText("");
+    }
 
     @FXML
     private void PC(ActionEvent event) {
@@ -781,6 +791,49 @@ private void closePopup(ActionEvent event) {
         // Fetch all Pokémon for the user (no filter)
         List<Pokemon> allPokemons = PokemonManager.getAllPokemons(Optional.empty());
         pcPokemonSP.setContent(createPokemonGrid(allPokemons.toArray(new Pokemon[0])));
+    }
+
+    @FXML
+    private void applyItemFilter(ActionEvent event) {
+        pokeclicker.manager.item.ItemFilter filter = new pokeclicker.manager.item.ItemFilter();
+
+        String typeValue = itemFilterTypeCombo.getValue();
+        if (typeValue != null && !typeValue.isEmpty()) {
+            filter.setType(pokeclicker.model.item.ItemType.valueOf(typeValue.replace(" ", "_").toUpperCase()));
+        }
+
+        String nameValue = itemFilterNameField.getText();
+        if (nameValue != null && !nameValue.isEmpty()) {
+            filter.setNameContains(nameValue);
+        }
+
+        String availValue = itemFilterAvailableCombo.getValue();
+        if ("Available".equals(availValue)) {
+            filter.setAvailable(true);
+        } else if ("Unavailable".equals(availValue)) {
+            filter.setAvailable(false);
+        }
+
+        filter.setUser(pokeclicker.util.SceneSwitcher.getCurrentUsername());
+
+        java.util.List<pokeclicker.model.item.Item> filtered = pokeclicker.manager.item.ItemManager
+                .getAllItems(java.util.Optional.of(filter));
+        pcItemSP.setContent(
+                createItemGrid(filtered.stream().collect(java.util.stream.Collectors.toMap(i -> i, i -> 1))));
+    }
+
+    @FXML
+    private void clearItemFilter(ActionEvent event) {
+        itemFilterTypeCombo.setValue(null);
+        itemFilterNameField.clear();
+        itemFilterAvailableCombo.getSelectionModel().selectFirst();
+
+        pokeclicker.manager.item.ItemFilter filter = new pokeclicker.manager.item.ItemFilter();
+        filter.setUser(pokeclicker.util.SceneSwitcher.getCurrentUsername());
+        java.util.List<pokeclicker.model.item.Item> allItems = pokeclicker.manager.item.ItemManager
+                .getAllItems(java.util.Optional.of(filter));
+        pcItemSP.setContent(
+                createItemGrid(allItems.stream().collect(java.util.stream.Collectors.toMap(i -> i, i -> 1))));
     }
 
 }

@@ -15,6 +15,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.PcController">
    <children>
       <AnchorPane fx:id="overlayPane2" visible="false" style="-fx-background-color: rgba(0, 0, 0, 0.7);" pickOnBounds="true" prefWidth="600.0" prefHeight="404.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
@@ -122,9 +124,28 @@
    </content>
 </Tab>
           <Tab text="Items">
+               
                <content>
-                  <ScrollPane fx:id="pcItemSP" prefHeight="304.0" prefWidth="604.0" />
-               </content>
+                  <VBox spacing="10" alignment="TOP_LEFT">
+                     <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 0 10;">
+                        <Label text="Filter:"/>
+                        <ComboBox fx:id="itemFilterTypeCombo" promptText="Type" prefWidth="90"/>
+                        <TextField fx:id="itemFilterNameField" promptText="Name" prefWidth="90"/>
+                        <ComboBox fx:id="itemFilterAvailableCombo" promptText="Available" prefWidth="90">
+                           <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                 <String fx:value="All"/>
+                                 <String fx:value="Available"/>
+                                 <String fx:value="Unavailable"/>
+                              </FXCollections>
+                           </items>
+                        </ComboBox>
+                        <Button text="Apply" onAction="#applyItemFilter"/>
+                        <Button text="Clear" onAction="#clearItemFilter"/>
+                     </HBox>
+                     <ScrollPane fx:id="pcItemSP" prefHeight="304.0" prefWidth="604.0" />
+                  </VBox>
+               </content>  
           </Tab>
         </tabs>
       </TabPane>
