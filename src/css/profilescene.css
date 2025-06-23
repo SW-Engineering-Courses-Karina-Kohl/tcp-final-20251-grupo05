@@ -37,6 +37,8 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
 }
 
+
+
 .button:hover {
     -fx-background-color: rgb(10, 196, 196);
 }
