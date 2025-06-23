@@ -94,6 +94,8 @@ public class PcController implements Initializable {
     @FXML
     private AnchorPane overlayPane;
     @FXML
+    private AnchorPane overlayPane2;
+    @FXML
     private AnchorPane abilityPane;
     @FXML
     private VBox abilitydisplaybox;
@@ -136,7 +138,7 @@ public class PcController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
         PCrectangle.setFill(javafx.scene.paint.Color.RED);
-        
+
         pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(),
                 Optional.empty());
 
@@ -165,7 +167,7 @@ public class PcController implements Initializable {
         imageView.setFitWidth(90);
         imageView.setPreserveRatio(true);
 
-        System.out.println("Pokemon: " + pokemon.getName() + "pokemon.getImagePath(): " + pokemon.getImagePath()); 
+        System.out.println("Pokemon: " + pokemon.getName() + "pokemon.getImagePath(): " + pokemon.getImagePath());
 
         try {
             URL imageUrl = getClass().getResource(pokemon.getImagePath());
@@ -370,9 +372,9 @@ public class PcController implements Initializable {
         String itemType = item.getType().toString();
 
         try {
-            URL imageUrl = itemType.equals("Pokemon") 
-                ? getClass().getResource("../../img/potion.png")
-                : getClass().getResource("../../img/amuletcoin.png");
+            URL imageUrl = itemType.equals("Pokemon")
+                    ? getClass().getResource("../../img/potion.png")
+                    : getClass().getResource("../../img/amuletcoin.png");
             if (imageUrl != null) {
                 imageView.setImage(new Image(imageUrl.toExternalForm()));
             } else {
@@ -430,15 +432,83 @@ public class PcController implements Initializable {
 
         useButton.setOnAction(event -> {
             try {
-                ItemManager.activateItem(item.getName(), UserManager.getUser(SceneSwitcher.getCurrentUsername()));
-                System.out.println("Used item: " + item.getName());
-                ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
+                String itemTypeName = item.getType().toString();
+                if (itemTypeName.equals("Money Multiplier")) {
+                    ItemManager.activateItem(item.getName(), UserManager.getUser(SceneSwitcher.getCurrentUsername()));
+                    ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
+                } else if (itemTypeName.equals("Pokemon")) {
+                    showPokemonSelectPopup(item, itemContainer);
+                    // ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
+                }
             } catch (Exception e) {
                 System.err.println("Error using item: " + e.getMessage());
             }
         });
 
         return itemContainer;
+    }
+
+    private void showPokemonSelectPopup(Item item, VBox itemContainer) {
+        // Cria um VBox para listar os pokémons
+        VBox selectBox = new VBox(10);
+        selectBox.setAlignment(Pos.CENTER);
+        selectBox.setStyle(
+                "-fx-background-color: #fff; -fx-padding: 20; -fx-border-radius: 8; -fx-background-radius: 8;");
+        // Limpa e mostra o overlayPane
+        overlayPane2.getChildren().clear();
+        overlayPane2.getChildren().add(selectBox);
+
+        AnchorPane.setTopAnchor(selectBox, (overlayPane2.getHeight() - selectBox.getHeight()) / 2);
+        AnchorPane.setLeftAnchor(selectBox, (overlayPane2.getWidth() - selectBox.getWidth()) / 2);
+
+        selectBox.layoutBoundsProperty().addListener((obs, oldBounds, newBounds) -> {
+            AnchorPane.setTopAnchor(selectBox, (overlayPane2.getHeight() - newBounds.getHeight()) / 2);
+            AnchorPane.setLeftAnchor(selectBox, (overlayPane2.getWidth() - newBounds.getWidth()) / 2);
+        });
+        overlayPane2.heightProperty().addListener((obs, oldVal, newVal) -> {
+            AnchorPane.setTopAnchor(selectBox, (newVal.doubleValue() - selectBox.getHeight()) / 2);
+        });
+        overlayPane2.widthProperty().addListener((obs, oldVal, newVal) -> {
+            AnchorPane.setLeftAnchor(selectBox, (newVal.doubleValue() - selectBox.getWidth()) / 2);
+        });
+        Label title = new Label("Escolha um Pokémon para usar o item:");
+        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+
+        User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
+        List<Pokemon> pokemons = PCManager.getPC(user, Optional.empty(), Optional.empty()).getPokemons();
+
+        for (Pokemon pokemon : pokemons) {
+            Button pokeBtn = new Button(pokemon.getName());
+            pokeBtn.setOnAction(e -> {
+                ItemManager.activateItem(item.getName(), pokemon);
+                User userAtual = UserManager.getUser(SceneSwitcher.getCurrentUsername());
+                pc = PCManager.getPC(userAtual, Optional.empty(), Optional.empty());
+                System.out.println("Used item: " + item.getName() + " on " + pokemon.getName());
+                // Fecha o popup
+                overlayPane2.setVisible(false);
+                overlayPane2.toBack();
+                ((GridPane) itemContainer.getParent()).getChildren().remove(itemContainer);
+                // Atualiza a lista de itens
+                refreshPokemonGrid();
+                PokemonPopup(pokemon);
+                // pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
+            });
+            selectBox.getChildren().add(pokeBtn);
+        }
+
+        // Botão para cancelar
+        Button cancelBtn = new Button("Cancelar");
+        cancelBtn.setOnAction(e -> {
+            overlayPane2.setVisible(false);
+            overlayPane2.toBack();
+        });
+        selectBox.getChildren().add(cancelBtn);
+
+        // Limpa e mostra o overlayPane
+        overlayPane2.getChildren().clear();
+        overlayPane2.getChildren().add(selectBox);
+        overlayPane2.setVisible(true);
+        overlayPane2.toFront();
     }
 
     public void PokemonPopup(Pokemon pokemon) {
@@ -459,7 +529,7 @@ public class PcController implements Initializable {
         popupName.setText("Name: " + pokemon.getName());
         popupType.setText("Type: " + pokemon.getType());
         popupHealth.setText("Health: " + pokemon.getTotalHealth());
-        
+
         popupXP.setText("XP: " + pokemon.getXp() + "/100.0");
         popupAbility.setText("Ability: " + getAbilityNames(pokemon));
 
@@ -470,14 +540,13 @@ public class PcController implements Initializable {
         popupXPBar.setProgress(progress);
         popupXPBar.setStyle("-fx-accent: TEAL;");
 
-
     }
 
     @FXML
     private void buyXp(ActionEvent event) {
         if (currentPopupPokemon == null)
             return;
-            User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
+        User user = UserManager.getUser(SceneSwitcher.getCurrentUsername());
         try {
             boolean evolved = PCManager.buyXp(pc, currentPopupPokemon, user);
             PokemonPopup(currentPopupPokemon);
@@ -486,41 +555,37 @@ public class PcController implements Initializable {
             }
         } catch (Exception e) {
             System.out.println("Could not buy XP: " + e.getMessage());
-            moneyerrorxp.setText("Not enough money to buy XP");  
-        }  
+            moneyerrorxp.setText("Not enough money to buy XP");
+        }
     }
 
-    private void evolvePokemon(Pokemon pokemon)
-    {
-        if(currentPopupPokemon.getXp() < 100)
-        {
+    private void evolvePokemon(Pokemon pokemon) {
+        if (currentPopupPokemon.getXp() < 100) {
             maxLvl.setText("This pokemon cannot evolve yet");
             maxLvl.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
-        } 
-        else
-        {
+        } else {
             switch (currentPopupPokemon.getImagePath()) {
-            case "/img/charmander.png":
-                currentPopupPokemon.setImagePath("/img/evolutions/charizard.png");
-                break;
-            case "/img/squirtle.png":
-                currentPopupPokemon.setImagePath("/img/evolutions/blastoise.png");
-                break;
-            case "/img/bulbasaur.png":
-                currentPopupPokemon.setImagePath("/img/evolutions/venusaur.png");
-                break;
-            case "/img/cyndaquil.png":
-                currentPopupPokemon.setImagePath("/img/evolutions/typhlosion.png");
-                break;
-            case "/img/piplup.png":
-                currentPopupPokemon.setImagePath("/img/evolutions/empoleon.png");
-                break;
-            case "/img/turtwig.png":
-                currentPopupPokemon.setImagePath("/img/evolutions/torterra.png");
-                break;
-            default:
-                break;
-        }
+                case "/img/charmander.png":
+                    currentPopupPokemon.setImagePath("/img/evolutions/charizard.png");
+                    break;
+                case "/img/squirtle.png":
+                    currentPopupPokemon.setImagePath("/img/evolutions/blastoise.png");
+                    break;
+                case "/img/bulbasaur.png":
+                    currentPopupPokemon.setImagePath("/img/evolutions/venusaur.png");
+                    break;
+                case "/img/cyndaquil.png":
+                    currentPopupPokemon.setImagePath("/img/evolutions/typhlosion.png");
+                    break;
+                case "/img/piplup.png":
+                    currentPopupPokemon.setImagePath("/img/evolutions/empoleon.png");
+                    break;
+                case "/img/turtwig.png":
+                    currentPopupPokemon.setImagePath("/img/evolutions/torterra.png");
+                    break;
+                default:
+                    break;
+            }
             maxLvl.setText("");
         }
 
@@ -530,12 +595,11 @@ public class PcController implements Initializable {
     private void refreshPokemonGrid() {
         Pokemon[] updatedPokemons = pc.getPokemons().toArray(new Pokemon[0]);
         GridPane newGrid = createPokemonGrid(updatedPokemons);
-        pcPokemonSP.setContent(newGrid); 
+        pcPokemonSP.setContent(newGrid);
     }
 
-    @FXML 
-    private void evolveButton()
-    {
+    @FXML
+    private void evolveButton() {
         evolvePokemon(currentPopupPokemon);
         try {
             URL imageUrl = getClass().getResource(currentPopupPokemon.getImagePath());
@@ -549,9 +613,9 @@ public class PcController implements Initializable {
         }
         refreshPokemonGrid();
         String message = !currentPopupPokemon.getImagePath().contains("evolutions")
-            ? ""
-            : currentPopupPokemon.getName() + " evolved!";
-            evolveLabel.setText(message);
+                ? ""
+                : currentPopupPokemon.getName() + " evolved!";
+        evolveLabel.setText(message);
     }
 
     @FXML

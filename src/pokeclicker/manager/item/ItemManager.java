@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import pokeclicker.database.ItemDB;
 import pokeclicker.manager.UserManager;
-import pokeclicker.manager.pokemon.PokemonManager;
+import pokeclicker.manager.ability.AbilityManager;
+import pokeclicker.model.Ability;
 import pokeclicker.model.User;
 import pokeclicker.model.common.Activatable;
 import pokeclicker.model.item.Item;
@@ -106,7 +107,12 @@ public class ItemManager {
         updateItem(item);
 
         switch (updateActivatable) {
-            case Pokemon pokemon -> PokemonManager.updatePokemon(pokemon);
+            case Pokemon pokemon -> {
+                for (Ability ability : pokemon.getAbilities()) {
+                    AbilityManager.updateAbility(ability);
+                }
+            }
+
             case User user -> UserManager.updateUser(user);
             default ->
                 throw new IllegalArgumentException("Unsupported activatable type: " + updateActivatable.getClass());
