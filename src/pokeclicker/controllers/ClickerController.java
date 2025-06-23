@@ -47,14 +47,35 @@ public class ClickerController implements Initializable{
         backButton.setText("Back");
         clickButton.setText("Click!");
 
+        
+        String pkmnImagePath;
+        if(user.getFavoritePokemon() == null)
+        {
+            pkmnImagePath = null;
+        }
+        else
+        {
+            pkmnImagePath = user.getFavoritePokemon().getImagePath();
+        }
+
         Image gholdengo = new Image(getClass().getResource("/img/gholdengo.gif").toExternalForm());
-        Image cyndaquil = new Image(getClass().getResource("/img/cyndaquilBack.gif").toExternalForm());
+        Image pkmnImg;
+        if(pkmnImagePath == null)
+        {
+            pkmnImg = new Image(getClass().getResource("/img/substitute-back.png").toExternalForm());
+        }
+        else{
+            pkmnImagePath = pkmnImagePath.replace(".gif", ""); 
+            pkmnImagePath = pkmnImagePath + "-back.gif";
+            System.out.println(pkmnImagePath);
+            pkmnImg = new Image(getClass().getResource(pkmnImagePath).toExternalForm());
+        }
 
         gholdengoViewer.setImage(gholdengo);
         gholdengoViewer.setFitWidth(240);
         gholdengoViewer.setFitHeight(190);
 
-        ourPokemonViewer.setImage(cyndaquil);
+        ourPokemonViewer.setImage(pkmnImg);
         ourPokemonViewer.setFitWidth(200);
         ourPokemonViewer.setFitHeight(100);
     }
@@ -70,7 +91,6 @@ public class ClickerController implements Initializable{
         
         moneyLabel.setText("Money: " + user.getMoney());
         clickLabel.setText("Clicks: " + clicker.getTotalClicks());
-        System.out.println("Money of the man: " + user.getMoney());
     }
 
     @FXML
