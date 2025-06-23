@@ -152,8 +152,6 @@ public class PcController implements Initializable {
         pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(),
                 Optional.empty());
 
-        evolveButton.setStyle("-fx-background-color: transparent; -fx-text-fill: transparent;");
-
         pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
         pcItemSP.setContent(createItemGrid(pc.getItemQuantities()));
         filterTypeCombo.getItems().clear();
@@ -531,6 +529,7 @@ public class PcController implements Initializable {
         if (pokemon == null)
             return;
         currentPopupPokemon = pokemon;
+        showEvolve(pokemon);
 
         popupImage.setFitHeight(150);
         popupImage.setPreserveRatio(true);
@@ -614,6 +613,15 @@ public class PcController implements Initializable {
         Pokemon[] updatedPokemons = pc.getPokemons().toArray(new Pokemon[0]);
         GridPane newGrid = createPokemonGrid(updatedPokemons);
         pcPokemonSP.setContent(newGrid);
+    }
+
+    private void showEvolve(Pokemon pokemon)
+    {
+        evolveButton.setStyle("-fx-background-color: white; -fx-text-fill: teal; -fx-font-weight: bold;");
+        if(pokemon.getXp() < 100 || pokemon.getImagePath().contains("evolutions"))
+        {
+            evolveButton.setStyle("-fx-background-color: transparent; -fx-text-fill: transparent;");
+        }
     }
 
     @FXML
