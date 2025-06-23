@@ -31,7 +31,6 @@ public class AbilityTest {
         Ability ability = new Ability("Tackle", "A physical attack", PokeType.FIRE, 20.0, 0.0);
         try {
             ability.updateDamage(-5.0);
-            // If no exception is thrown, fail the test
             org.junit.jupiter.api.Assertions.fail("Expected IllegalArgumentException to be thrown");
         } catch (IllegalArgumentException e) {
             // Exception was thrown as expected

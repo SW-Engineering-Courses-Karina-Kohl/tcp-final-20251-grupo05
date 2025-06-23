@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import pokeclicker.model.common.PokeType;
 
 public class PokemonDBTest {
     private Connection connection;
@@ -33,8 +32,8 @@ public class PokemonDBTest {
         }
         TestUtils.resetDatabaseUrl();
     }
-    
-     @Test
+
+    @Test
     void testInsertAndGetPokemon() throws SQLException {
         TestUtils.insertTestPokemon();
         Pokemon retrieved = PokemonDB.getPokemon("Charmander");

@@ -17,7 +17,6 @@ public class PokemonManagerTest {
 
     @BeforeEach
     void setUp() {
-        // Clean up test pokemons if they exist
         try { PokemonManager.deletePokemon("Charmander"); } catch (Exception ignored) {}
         try { PokemonManager.deletePokemon("Squirtle"); } catch (Exception ignored) {}
         try { PokemonManager.deletePokemon("Bulbasaur"); } catch (Exception ignored) {}

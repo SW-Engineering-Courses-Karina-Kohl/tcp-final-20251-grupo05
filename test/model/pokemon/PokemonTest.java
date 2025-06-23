@@ -60,11 +60,11 @@ public class PokemonTest {
 
     @Test
     void testGainXpAndLevelUp() {
-        assertFalse(pokemon.gainXp(50)); // Should not level up
+        assertFalse(pokemon.gainXp(50)); 
         assertEquals(50.0, pokemon.getXp());
         assertEquals(LevelType.BEGINNER, pokemon.getLevel());
 
-        assertTrue(pokemon.gainXp(100)); // Should level up to ADVANCED
+        assertTrue(pokemon.gainXp(100));
         assertEquals(LevelType.ADVANCED, pokemon.getLevel());
     }
 
@@ -79,7 +79,7 @@ public class PokemonTest {
         assertEquals(20, pokemon.getHealth());
         pokemon.gainHealth(10);
         assertEquals(30, pokemon.getHealth());
-        pokemon.gainHealth(50); // Should not exceed totalHealth
+        pokemon.gainHealth(50); 
         assertEquals(50, pokemon.getHealth());
     }
 
@@ -92,7 +92,7 @@ public class PokemonTest {
     void testLoseHealth() {
         pokemon.loseHealth(10);
         assertEquals(40, pokemon.getHealth());
-        pokemon.loseHealth(50); // Should not go below 0
+        pokemon.loseHealth(50);
         assertEquals(0, pokemon.getHealth());
     }
 
