@@ -2,7 +2,8 @@ package pokeclicker.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import pokeclicker.util.SceneIconUtil;
 import pokeclicker.util.SceneSwitcher;
 import javafx.event.ActionEvent;
@@ -37,7 +38,8 @@ public class HomeController implements Initializable {
     private ImageView abilityimage;
     @FXML
     private ImageView itemimage;
-
+@FXML
+private ImageView abilityregistrationimg, pokemonregistrationimg, clickerimg;
     @FXML
     private Rectangle PCrectangle;
     @FXML
@@ -167,5 +169,20 @@ public class HomeController implements Initializable {
         pokeclicker.util.SceneSwitcher.switchToClicker(event);
 
     }
+
+@FXML
+private void handleGlow(MouseEvent event) {
+    ImageView img = (ImageView) event.getSource();
+    DropShadow glow = new DropShadow();
+    glow.setColor(Color.web("#39d1d1"));
+    glow.setRadius(30);
+    glow.setSpread(0.5);
+    img.setEffect(glow);
+}
+@FXML
+private void handleGlowExit(MouseEvent event) {
+    ImageView img = (ImageView) event.getSource();
+    img.setEffect(null);
+}
 
 }

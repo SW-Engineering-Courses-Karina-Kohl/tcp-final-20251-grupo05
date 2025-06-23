@@ -9,7 +9,7 @@
 
 <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" style="-fx-background-color: #075858;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pokeclicker.controllers.HomeController">
    <children>
-      <ImageView fx:id="itemregistrationimg" fitHeight="138.0" fitWidth="148.0" layoutX="2.0" layoutY="100.0" onMouseClicked="#itembutton" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="itemregistrationimg" fitHeight="138.0" fitWidth="148.0" layoutX="2.0" layoutY="100.0" onMouseClicked="#itembutton" onMouseEntered="#handleGlow" onMouseExited="#handleGlowExit" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../img/itemregistration3.png" />
          </image></ImageView>
@@ -28,21 +28,21 @@
       <Button id="btnpc" fx:id="PC" layoutY="337.0" mnemonicParsing="false" onAction="#PC" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnprofile" fx:id="profile" layoutX="459.0" layoutY="336.0" mnemonicParsing="false" onAction="#profile" opacity="0.0" prefHeight="66.0" prefWidth="142.0" text="Button" textFill="TRANSPARENT" />
       <Button id="btnshop" fx:id="shop" layoutX="151.0" layoutY="336.0" mnemonicParsing="false" onAction="#shop" opacity="0.0" prefHeight="66.0" prefWidth="148.0" text="Button" textFill="TRANSPARENT" />
-      <ImageView fx:id="abilityregistrationimg" fitHeight="138.0" fitWidth="158.0" layoutX="451.0" layoutY="100.0" onMouseClicked="#abilitybutton" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../img/abilityregistration2.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="pokemonregistrationimg" fitHeight="138.0" fitWidth="158.0" layoutX="152.0" layoutY="100.0" onMouseClicked="#registrationswitch" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../img/pokemonregistration4.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="clickerimg" fitHeight="138.0" fitWidth="158.0" layoutX="302.0" layoutY="100.0" onMouseClicked="#clickerButton" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../img/clicker2.png" />
-         </image>
-      </ImageView>
+<ImageView fx:id="abilityregistrationimg" fitHeight="183.0" fitWidth="204.0" layoutX="429.0" layoutY="86.0" onMouseClicked="#abilitybutton" onMouseEntered="#handleGlow" onMouseExited="#handleGlowExit" pickOnBounds="true" preserveRatio="true">
+   <image>
+      <Image url="@../../img/abilitytest.png" />
+   </image>
+</ImageView>
+<ImageView fx:id="pokemonregistrationimg" fitHeight="138.0" fitWidth="158.0" layoutX="152.0" layoutY="100.0" onMouseClicked="#registrationswitch" onMouseEntered="#handleGlow" onMouseExited="#handleGlowExit" pickOnBounds="true" preserveRatio="true">
+   <image>
+      <Image url="@../../img/pokemonregistration4.png" />
+   </image>
+</ImageView>
+<ImageView fx:id="clickerimg" fitHeight="138.0" fitWidth="158.0" layoutX="302.0" layoutY="100.0" onMouseClicked="#clickerButton" onMouseEntered="#handleGlow" onMouseExited="#handleGlowExit" pickOnBounds="true" preserveRatio="true">
+   <image>
+      <Image url="@../../img/clicker2.png" />
+   </image>
+</ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#115b4e" height="59.0" layoutX="-2.0" layoutY="272.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="626.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#115b4e" height="66.0" layoutX="-51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="673.0" />
       <Line id="line0" fx:id="longline" endX="499.0" layoutX="100.0" layoutY="334.0" startX="-100.0" strokeWidth="5.0" />
