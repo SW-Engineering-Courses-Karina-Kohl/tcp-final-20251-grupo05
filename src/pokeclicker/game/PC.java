@@ -9,12 +9,6 @@ import pokeclicker.model.User;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
 
-/*
-Na MAIN é preciso que isso ocorra para que o PC e o User funcione de maneira correta.
-    User novoUsuario = new User("NomeDoJogador");
-    PC pcDoNovoUsuario = new PC();
-*/
-
 public class PC {
     private final List<Pokemon> pokemons;
     private final Map<Item, Integer> itemQuantities;
@@ -43,17 +37,16 @@ public class PC {
         this.itemQuantities.put(item, this.itemQuantities.getOrDefault(item, 0) + 1);
     }
 
-    public void removeItem(Item item, int amountToRemove) {
-        if (!itemQuantities.containsKey(item)) {
-            throw new IllegalArgumentException("Item " + item.getName() + " not found.");
+    public void removeItem(Item item, int count) {
+        Integer currentCount = itemQuantities.get(item);
+        if (currentCount == null) {
+            throw new IllegalArgumentException("Item not found");
+        }
+        if (currentCount < count) {
+            throw new IllegalArgumentException("Not enough items");
         }
 
-        int currentAmount = itemQuantities.get(item);
-        if (currentAmount < amountToRemove) {
-            throw new IllegalArgumentException("Not enough available to remove: " + item.getName());
-        }
-
-        int newAmount = currentAmount - amountToRemove;
+        int newAmount = currentCount - count;
         if (newAmount == 0) {
             itemQuantities.remove(item);
         } else {

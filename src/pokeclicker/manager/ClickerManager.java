@@ -8,7 +8,7 @@ public class ClickerManager {
 
     }
 
-    public void click(User user) {
+    public static void click(User user) {
         Clicker clicker = new Clicker(user);
         User updatedUser = clicker.registerClick();
 

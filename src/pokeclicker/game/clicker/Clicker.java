@@ -4,7 +4,7 @@ import pokeclicker.model.User;
 
 public class Clicker {
     // constante para debug: public static final double MULTIPLIER = 1.2;
-    private int totalMoney = 0;
+    private double totalMoney = 0;
     private int moneyPerClick = 1;
     private final User user;
     private int totalClicks = 0;
@@ -34,7 +34,7 @@ public class Clicker {
         return totalGlobalClicks;
     }
 
-    public int getTotalMoney() {
+    public double getTotalMoney() {
         return totalMoney;
     }
 
