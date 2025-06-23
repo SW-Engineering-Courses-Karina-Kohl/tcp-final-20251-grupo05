@@ -48,10 +48,7 @@
       <Label fx:id="inputErrorlabel" layoutX="133.0" layoutY="311.0" text=" missing input!" textFill="RED" />
       <TextField fx:id="inputField" layoutX="105.0" layoutY="408.0" prefHeight="74.0" prefWidth="158.0" />
       <Rectangle fx:id="textfieldrectangle" arcHeight="5.0" arcWidth="5.0" fill="#5ec4b7" height="74.0" layoutX="105.0" layoutY="408.0" stroke="BLACK" strokeType="INSIDE" width="158.0" />
-      <ImageView fx:id="pokedexbg" fitHeight="525.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../img/pokedexbg.png" />
-         </image></ImageView>
+      <ImageView fx:id="pokedexbg" fitHeight="525.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true"></ImageView>
       <Button fx:id="okbutton" layoutX="294.0" layoutY="442.0" mnemonicParsing="false" onAction="#okbutton" opacity="0.0" prefHeight="30.0" prefWidth="30.0" text="Button" />
       <MenuButton fx:id="typebutton" layoutX="60.0" layoutY="201.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="89.0" text="Type:">
         <items>
