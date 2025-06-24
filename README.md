@@ -104,6 +104,7 @@ To run the PokeClicker application:
   </a>
   <br>
 </div>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="playing-the-game"></a>
 ### Playing the Game
@@ -181,3 +182,5 @@ The newly registered item will now appear on your PC.
         <img src="src/img/readme/pc_items.png" width="600" height="400">
     </a>
 </div>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
