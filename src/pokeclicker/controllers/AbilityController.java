@@ -61,7 +61,7 @@ public class AbilityController implements Initializable {
         pokedexbg.setPreserveRatio(true);
 
         nameline.toFront();
-
+        updatePokemonMenuButton();
     }
 
     @FXML

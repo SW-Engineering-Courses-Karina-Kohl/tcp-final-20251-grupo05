@@ -650,46 +650,43 @@ public class PcController implements Initializable {
         abilityPane.toFront();
     }
 
+    @FXML
+    private void returnToPokemonPopup(ActionEvent event) {
+        String username = SceneSwitcher.getCurrentUsername();
+        pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
+        List<Pokemon> userPokemons = pc.getPokemons();
 
+        currentPopupPokemon = userPokemons.stream()
+                .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
+                .findFirst()
+                .orElse(currentPopupPokemon);
 
-@FXML
-private void returnToPokemonPopup(ActionEvent event) {
-    String username = SceneSwitcher.getCurrentUsername();
-    pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
-    List<Pokemon> userPokemons = pc.getPokemons();
+        PokemonPopup(currentPopupPokemon);
 
-    currentPopupPokemon = userPokemons.stream()
-            .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
-            .findFirst()
-            .orElse(currentPopupPokemon);
+        abilityPane.setVisible(false);
+        abilityPane.toBack();
+        overlayPane.setVisible(true);
+        overlayPane.toFront();
+    }
 
-    PokemonPopup(currentPopupPokemon);
+    @FXML
+    private void closePopup(ActionEvent event) {
+        String username = SceneSwitcher.getCurrentUsername();
+        pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
+        List<Pokemon> userPokemons = pc.getPokemons();
+        currentPopupPokemon = userPokemons.stream()
+                .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
+                .findFirst()
+                .orElse(currentPopupPokemon);
 
-    abilityPane.setVisible(false);
-    abilityPane.toBack();
-    overlayPane.setVisible(true);
-    overlayPane.toFront();
-}
+        pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
 
-
-@FXML
-private void closePopup(ActionEvent event) {
-    String username = SceneSwitcher.getCurrentUsername();
-    pc = PCManager.getPC(UserManager.getUser(username), Optional.empty(), Optional.empty());
-    List<Pokemon> userPokemons = pc.getPokemons();
-    currentPopupPokemon = userPokemons.stream()
-            .filter(p -> p.getName().equals(currentPopupPokemon.getName()))
-            .findFirst()
-            .orElse(currentPopupPokemon);
-
-    pcPokemonSP.setContent(createPokemonGrid(pc.getPokemons().toArray(new Pokemon[0])));
-
-    overlayPane.setVisible(false);
-    overlayPane.toBack();
-    moneyerrorxp.setText("");
-    maxLvl.setText("");
-    evolveLabel.setText("");
-}
+        overlayPane.setVisible(false);
+        overlayPane.toBack();
+        moneyerrorxp.setText("");
+        maxLvl.setText("");
+        evolveLabel.setText("");
+    }
 
     @FXML
     private void PC(ActionEvent event) {
@@ -752,24 +749,32 @@ private void closePopup(ActionEvent event) {
 
     @FXML
     private void applyFilter(ActionEvent event) {
-        PokemonFilter filter = new PokemonFilter();
-        if (filterTypeCombo.getValue() != null && !filterTypeCombo.getValue().isEmpty()) {
-            filter.setType(pokeclicker.model.common.PokeType.fromString(filterTypeCombo.getValue()));
-        }
-        if (filterNameField.getText() != null && !filterNameField.getText().isEmpty()) {
-            filter.setName(filterNameField.getText());
-        }
-        if (filterLevelCombo.getValue() != null && !filterLevelCombo.getValue().isEmpty()) {
-            filter.setMinLevel(pokeclicker.model.pokemon.LevelType.valueOf(filterLevelCombo.getValue()));
-        }
-        filter.setUser(SceneSwitcher.getCurrentUsername());
-        List<Pokemon> filtered = PokemonManager.getAllPokemons(Optional.of(filter));
+
+        pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(),
+                Optional.empty());
+
+        List<Pokemon> filtered = pc.getPokemons().stream()
+                .filter(p -> {
+                    if (filterTypeCombo.getValue() != null && !filterTypeCombo.getValue().isEmpty()) {
+                        if (!p.getType().equalsIgnoreCase(filterTypeCombo.getValue()))
+                            return false;
+                    }
+                    if (filterNameField.getText() != null && !filterNameField.getText().isEmpty()) {
+                        if (!p.getName().toLowerCase().contains(filterNameField.getText().toLowerCase()))
+                            return false;
+                    }
+                    if (filterLevelCombo.getValue() != null && !filterLevelCombo.getValue().isEmpty()) {
+                        if (!p.getLevel().name().equalsIgnoreCase(filterLevelCombo.getValue()))
+                            return false;
+                    }
+                    return true;
+                })
+                .toList();
+
         pcPokemonSP.setContent(createPokemonGrid(filtered.toArray(new Pokemon[0])));
         for (Pokemon p : filtered) {
             System.out.println("Pokemon: " + p.getName() + ", type: " + p.getType());
         }
-        System.out.println("Filter type: " + filter.getType() + " (enum name: "
-                + (filter.getType() != null ? filter.getType().name() : "null") + ")");
     }
 
     @FXML
@@ -778,9 +783,10 @@ private void closePopup(ActionEvent event) {
         filterNameField.clear();
         filterLevelCombo.setValue(null);
 
-        // Fetch all Pokémon for the user (no filter)
-        List<Pokemon> allPokemons = PokemonManager.getAllPokemons(Optional.empty());
+        PokemonFilter filter = new PokemonFilter();
+        filter.setUser(SceneSwitcher.getCurrentUsername());
+        filter.setAvailable(false);
+        List<Pokemon> allPokemons = PokemonManager.getAllPokemons(Optional.of(filter));
         pcPokemonSP.setContent(createPokemonGrid(allPokemons.toArray(new Pokemon[0])));
     }
-
 }
