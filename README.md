@@ -28,6 +28,7 @@
       <ul>
         <li><a href="#installation">Installation</a></li>
         <li><a href="#testing-with-junit">Testing With JUnit</a></li>
+        <li><a href="#pre-requisites">Prerequisites</a></li>
       </ul>
     </li>
     <li>
@@ -48,6 +49,10 @@
 
 <a id="getting-started"></a>
 ## Getting Started
+
+<a id="pre-requisites"></a>
+### Prerequisites
+Make sure you have Java Runtime Environment (JRE) or Java Development Kit (JDK) version 11 or above installed on your machine.
 
 <a id="installation"></a>
 ### Installation
