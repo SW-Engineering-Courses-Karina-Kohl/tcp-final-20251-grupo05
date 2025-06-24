@@ -221,6 +221,8 @@ public class AbilityController implements Initializable {
             item.setOnAction(e -> {
                 pokemonMenuButton.setText(p.getName());
                 selectedPokemonName = p.getName();
+                createpokemonlabel.setText("Press the OK button to create the ability!");
+                createpokemonlabel.toFront();
             });
             pokemonMenuButton.getItems().add(item);
         }
