@@ -77,7 +77,7 @@ To set up the project in your VS Code environment, follow these steps:
 <a id="testing-with-junit"></a>
 ### Testing with JUnit
 
-**Note**: JUnit tests currently only function on Windows operating systems. Before running the tests, ensure there are no .class files outside the out folder. If you find any, simply delete them.
+**Note**: JUnit tests currently only function on Windows operating systems. Before running the tests, ensure there are no .class files outside the out/pokeclicker or out/test folders. If you find any, simply delete them.
 
 1.  **Compile Files**:
     Execute the compilation script:
