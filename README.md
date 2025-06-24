@@ -33,6 +33,9 @@
     <li>
       <a href="#usage">Usage</a>
     </li>
+    <li>
+      <a href="#playing-the-game">Playing the Game</a>
+    </li>
   </ol>
 </details>
 
@@ -69,18 +72,15 @@ To set up the project in your VS Code environment, follow these steps:
 <a id="testing-with-junit"></a>
 ### Testing with JUnit
 
-**Note:** JUnit tests currently only function on **Windows operating systems**.
+**Note**: JUnit tests currently only function on Windows operating systems. Before running the tests, ensure there are no .class files outside the out folder. If you find any, simply delete them.
 
-1.  **Update `sources.txt`**:
-    Populate `sources.txt` with the paths to the files you intend to compile. It's recommended to include all files located in the `src/pokeclicker/database`, `src/pokeclicker/game`, `src/pokeclicker/manager`, and `src/pokeclicker/model` folders.
-
-2.  **Compile Files**:
+1.  **Compile Files**:
     Execute the compilation script:
     ```sh
     ./compilar.bat
     ```
 
-3.  **Run Tests**:
+2.  **Run Tests**:
     Run the JUnit tests using the following command:
     ```sh
     java -jar lib\junit-platform-console-standalone-1.11.0.jar --class-path "out;lib\sqlite-jdbc-3.50.1.0.jar" --scan-class-path
@@ -147,4 +147,37 @@ The newly registered item will now appear on your PC.
 </div>
 3.2. Similarly, to register a new Pokémon, you must fill out the form with its details, select its type, and upload an image for it, as shown in the example. Once registered, the Pokémon will be added to your collection, which can also be viewed on the PC.
 <br>
-
+<br>
+3.3. To earn money in the Clicker, simply click the button repeatedly!
+<div align="center">
+    <a>
+        <img src="src/img/readme/clicker.png" width="600" height="400">
+    </a>
+</div>
+<br>
+<br>
+3.4. Registering a new Ability follows a similar process. Fill out the form with the ability's details and select its type as shown in the example.
+<div align="center">
+    <a>
+        <img src="src/img/readme/ability.png" width="345" height="552">
+        <img src="src/img/readme/hability2.png" width="345" height="552">
+    </a>
+</div>
+<br>
+<br>
+4. By selecting the money icon in the navigation bar, you can visit the Shop, where all created items are available for purchase.
+<div align="center">
+    <a>
+        <img src="src/img/readme/shop.png" width="600" height="400">
+    </a>
+</div>
+<br>
+<br>
+5. The Pokéball icon takes you to the PC, which stores all of your captured Pokémons and purchased items.
+5.1. You can filter your Pokémon collection by different criteria and clear the filters to view all of them. You can also switch between viewing your Pokémon and your items.
+<div align="center">
+    <a>
+        <img src="src/img/readme/pc.png" width="600" height="400">
+        <img src="src/img/readme/pc_items.png" width="600" height="400">
+    </a>
+</div>
