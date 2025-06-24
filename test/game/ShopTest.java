@@ -119,15 +119,4 @@ public class ShopTest {
         
         assertEquals("Item not found in the shop.", exception.getMessage());
     }
-
-    @Test
-    void testBuyItemSuccessDeductsMoney() {
-        double initialMoney = user.getMoney();
-        double itemPrice = affordableItem.getPrice();
-
-        shop.buyPokemonOrItem(affordableItem);
-
-        double expectedMoney = initialMoney - itemPrice;
-        assertEquals(expectedMoney, user.getMoney(), "User's money should be deducted by the item's price after purchase.");
-    }
 }

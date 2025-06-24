@@ -4,17 +4,30 @@ import org.junit.jupiter.api.*;
 import pokeclicker.manager.ability.AbilityManager;
 import pokeclicker.model.Ability;
 import pokeclicker.model.common.PokeType;
+import test.TestUtils;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AbilityManagerTest {
+    private Connection connection;
 
     @BeforeEach
-    void setUp() {
-        try { AbilityManager.deleteAbility("Thunder"); } catch (Exception ignored) {}
-        try { AbilityManager.deleteAbility("Heal"); } catch (Exception ignored) {}
+    void setUp() throws SQLException {
+        TestUtils.setupTestDatabase();
+        connection = TestUtils.getConnection();
+    }
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        TestUtils.cleanTestDatabase();
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
+        TestUtils.resetDatabaseUrl();
     }
 
     @Test
