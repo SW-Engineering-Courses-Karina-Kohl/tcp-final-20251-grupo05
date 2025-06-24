@@ -1,5 +1,6 @@
 package test.manager;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pokeclicker.game.PC;
@@ -7,10 +8,14 @@ import pokeclicker.manager.PCManager;
 import pokeclicker.model.User;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.pokemon.Pokemon;
+import test.TestUtils;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class DummyUserPC extends User {
     private double spent = 0;
@@ -90,16 +95,27 @@ class DummyPC extends PC {
 }
 
 public class PCManagerTest {
-
+    private Connection connection;
     private DummyUserPC user;
     private DummyPokemonPCManager pokemon;
     private DummyItem item;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws SQLException {
+        TestUtils.setupTestDatabase();
+        connection = TestUtils.getConnection();
         user = new DummyUserPC("Ash", 100.0);
         pokemon = new DummyPokemonPCManager("Pikachu");
         item = new DummyItem("Potion");
+    }
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        TestUtils.cleanTestDatabase();
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
+        TestUtils.resetDatabaseUrl();
     }
 
     @Test

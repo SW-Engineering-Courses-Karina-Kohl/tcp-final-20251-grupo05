@@ -7,19 +7,31 @@ import pokeclicker.manager.pokemon.PokemonManager;
 import pokeclicker.model.Ability;
 import pokeclicker.model.common.PokeType;
 import pokeclicker.model.pokemon.Pokemon;
+import test.TestUtils;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PokemonManagerTest {
+    private Connection connection;
 
     @BeforeEach
-    void setUp() {
-        try { PokemonManager.deletePokemon("Charmander"); } catch (Exception ignored) {}
-        try { PokemonManager.deletePokemon("Squirtle"); } catch (Exception ignored) {}
-        try { PokemonManager.deletePokemon("Bulbasaur"); } catch (Exception ignored) {}
+    void setUp() throws SQLException {
+        TestUtils.setupTestDatabase();
+        connection = TestUtils.getConnection();
+    }
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        TestUtils.cleanTestDatabase();
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
+        TestUtils.resetDatabaseUrl();
     }
 
     @Test

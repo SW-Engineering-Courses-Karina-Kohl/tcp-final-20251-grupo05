@@ -749,25 +749,32 @@ public class PcController implements Initializable {
 
     @FXML
     private void applyFilter(ActionEvent event) {
-        PokemonFilter filter = new PokemonFilter();
-        if (filterTypeCombo.getValue() != null && !filterTypeCombo.getValue().isEmpty()) {
-            filter.setType(pokeclicker.model.common.PokeType.valueOf(filterTypeCombo.getValue().toUpperCase()));
-        }
-        if (filterNameField.getText() != null && !filterNameField.getText().isEmpty()) {
-            filter.setName(filterNameField.getText());
-        }
-        if (filterLevelCombo.getValue() != null && !filterLevelCombo.getValue().isEmpty()) {
-            filter.setMinLevel(pokeclicker.model.pokemon.LevelType.valueOf(filterLevelCombo.getValue()));
-        }
-        filter.setUser(SceneSwitcher.getCurrentUsername());
-        filter.setAvailable(false);
-        List<Pokemon> filtered = PokemonManager.getAllPokemons(Optional.of(filter));
+
+        pc = PCManager.getPC(UserManager.getUser(SceneSwitcher.getCurrentUsername()), Optional.empty(),
+                Optional.empty());
+
+        List<Pokemon> filtered = pc.getPokemons().stream()
+                .filter(p -> {
+                    if (filterTypeCombo.getValue() != null && !filterTypeCombo.getValue().isEmpty()) {
+                        if (!p.getType().equalsIgnoreCase(filterTypeCombo.getValue()))
+                            return false;
+                    }
+                    if (filterNameField.getText() != null && !filterNameField.getText().isEmpty()) {
+                        if (!p.getName().toLowerCase().contains(filterNameField.getText().toLowerCase()))
+                            return false;
+                    }
+                    if (filterLevelCombo.getValue() != null && !filterLevelCombo.getValue().isEmpty()) {
+                        if (!p.getLevel().name().equalsIgnoreCase(filterLevelCombo.getValue()))
+                            return false;
+                    }
+                    return true;
+                })
+                .toList();
+
         pcPokemonSP.setContent(createPokemonGrid(filtered.toArray(new Pokemon[0])));
         for (Pokemon p : filtered) {
             System.out.println("Pokemon: " + p.getName() + ", type: " + p.getType());
         }
-        System.out.println("Filter type: " + filter.getType() + " (enum name: "
-                + (filter.getType() != null ? filter.getType().name() : "null") + ")");
     }
 
     @FXML
@@ -782,5 +789,4 @@ public class PcController implements Initializable {
         List<Pokemon> allPokemons = PokemonManager.getAllPokemons(Optional.of(filter));
         pcPokemonSP.setContent(createPokemonGrid(allPokemons.toArray(new Pokemon[0])));
     }
-
 }
