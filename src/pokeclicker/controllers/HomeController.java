@@ -38,8 +38,8 @@ public class HomeController implements Initializable {
     private ImageView abilityimage;
     @FXML
     private ImageView itemimage;
-@FXML
-private ImageView abilityregistrationimg, pokemonregistrationimg, clickerimg;
+    @FXML
+    private ImageView itemregistrationimg, abilityregistrationimg, pokemonregistrationimg, clickerimg, logoImgView;
     @FXML
     private Rectangle PCrectangle;
     @FXML
@@ -77,6 +77,17 @@ private ImageView abilityregistrationimg, pokemonregistrationimg, clickerimg;
     public void initialize(URL location, ResourceBundle resources) {
         SceneIconUtil.setupSelectionBarImages(pokeballimg, homeimg, profileimg, shopimg);
 
+        Image itemregistration = new Image(getClass().getResource("../../img/itemregistration3.png").toExternalForm());
+        Image abilityregistration = new Image(getClass().getResource("../../img/abilityregistration2.png").toExternalForm());
+        Image pokemonregistration = new Image(getClass().getResource("../../img/pokemonregistration4.png").toExternalForm());
+        Image clicker = new Image(getClass().getResource("../../img/clicker2.png").toExternalForm());
+        Image logoImage = new Image(getClass().getResource("../../img/logo.png").toExternalForm());
+        
+        itemregistrationimg.setImage(itemregistration);
+        abilityregistrationimg.setImage(abilityregistration);
+        pokemonregistrationimg.setImage(pokemonregistration);
+        clickerimg.setImage(clicker);
+        logoImgView.setImage(logoImage);
     }
 
     @FXML

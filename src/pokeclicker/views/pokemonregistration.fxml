@@ -40,9 +40,7 @@
       <TextField fx:id="inputField" layoutX="105.0" layoutY="408.0" prefHeight="74.0" prefWidth="158.0" />
       <Rectangle fx:id="textfieldrectangle" arcHeight="5.0" arcWidth="5.0" fill="#5ec4b7" height="74.0" layoutX="105.0" layoutY="408.0" stroke="BLACK" strokeType="INSIDE" width="158.0" />
       <ImageView fx:id="pokedexbg" fitHeight="525.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../img/pokedexbg.png" />
-         </image></ImageView>
+      </ImageView>
       <Label fx:id="namelabel" layoutX="100.0" layoutY="106.0" />
       <Label fx:id="healthlabel" layoutX="100.0" layoutY="139.0" />
       <Label fx:id="pricelabel" layoutX="99.0" layoutY="169.0" />
