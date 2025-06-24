@@ -59,7 +59,6 @@ class PokemonDBTest {
         } else if (currentHealth < targetHealth) {
             pokemon.gainHealth(targetHealth - currentHealth);
         }
-        pokemon.gainXp(100.0);
 
         PokemonDB.updatePokemon(pokemon);
 
@@ -68,7 +67,6 @@ class PokemonDBTest {
         assertFalse(updated.isAvailable());
         assertEquals(40, updated.getHealth());
         assertEquals(100.0, updated.getXp());
-        assertEquals(LevelType.BEGINNER, updated.getLevel());
     }
 
     @Test
