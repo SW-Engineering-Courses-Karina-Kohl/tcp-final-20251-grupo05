@@ -52,7 +52,6 @@ D:\tcp-final-20251-grupo05\test\manager\pokemon\PokemonFilterTest.java
 D:\tcp-final-20251-grupo05\test\manager\pokemon\PokemonManagerTest.java
 D:\tcp-final-20251-grupo05\test\model\AbilityTest.java
 D:\tcp-final-20251-grupo05\test\model\UserTest.java
-D:\tcp-final-20251-grupo05\test\model\common\ActivatableTest.java
 D:\tcp-final-20251-grupo05\test\model\common\PokeTypeTest.java
 D:\tcp-final-20251-grupo05\test\model\common\PurchasableTest.java
 D:\tcp-final-20251-grupo05\test\model\item\ItemTest.java
