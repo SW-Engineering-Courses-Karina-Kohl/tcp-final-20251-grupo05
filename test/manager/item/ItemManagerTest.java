@@ -4,18 +4,31 @@ import org.junit.jupiter.api.*;
 import pokeclicker.manager.item.ItemManager;
 import pokeclicker.model.item.Item;
 import pokeclicker.model.item.ItemType;
+import test.TestUtils;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemManagerTest {
 
+    private Connection connection;
+
     @BeforeEach
-    void setUp() {
-        // Remove test items if they exist
-        try { ItemManager.deleteItem("Potion"); } catch (Exception ignored) {}
-        try { ItemManager.deleteItem("Multiplier"); } catch (Exception ignored) {}
+    void setUp() throws SQLException {
+        TestUtils.setupTestDatabase();
+        connection = TestUtils.getConnection();
+    }
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        TestUtils.cleanTestDatabase();
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
+        TestUtils.resetDatabaseUrl();
     }
 
     @Test
